@@ -1,0 +1,3 @@
+[submodule "PurePursuit"]
+	path = PurePursuit
+	url = https://github.com/RegisJesuitRobotics/PurePursuit

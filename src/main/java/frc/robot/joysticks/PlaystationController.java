@@ -1,12 +1,13 @@
 package frc.robot.joysticks;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.utils.MathUtils;
 
 @SuppressWarnings("unused")
-public class PlaystationController extends PS4Controller {
+public class PlaystationController extends Joystick {
 
     public final JoystickButton square = new JoystickButton(this, Button.kSquare.value);
     public final JoystickButton x = new JoystickButton(this, Button.kCross.value);
@@ -75,13 +76,6 @@ public class PlaystationController extends PS4Controller {
 
         public double getYAxis() {
             return -MathUtils.deadZone(parent.getRawAxis(yAxisPort), thumbStickDeadZone);
-        }
-
-        public static double getDeadZoneClamped(double rawAxis, double deadZone) {
-            if (Math.abs(rawAxis) <= deadZone) {
-                return 0;
-            }
-            return rawAxis;
         }
     }
 

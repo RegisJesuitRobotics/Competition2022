@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -18,10 +20,36 @@ public final class Constants {
     public static final boolean autoSwitchShuffleboardTab = false;
 
     public static class DriveConstants {
-        public static final int leftLeaderPort = 0;
-        public static final int leftFollowerPort = 1;
-        public static final int rightLeaderPort = 2;
-        public static final int rightFollowerPort = 3;
+        public static final int leftLeaderPort = 2;
+        public static final int leftFollowerPort = 15;
+        public static final int rightLeaderPort = 1;
+        public static final int rightFollowerPort = 13;
+
+        public static final double wheelDiameterMeters = Units.inchesToMeters(4);
+        public static final double countPerRotation = 2048;
+        public static final double gearing = 85.0 / 12;
+        public static final double distancePerCount = (wheelDiameterMeters * Math.PI) / (countPerRotation * gearing);
+
+        /*
+         * Steps to tune PID
+         * https://docs.wpilib.org/en/stable/docs/software/advanced-controls/
+         * introduction/tuning-pid-controller.html
+         */
+        public static final double driveDistanceP = 4;
+        public static final double driveDistanceI = 0;
+        public static final double driveDistanceD = 0.329;
+
+        public static final double driveRotateP = 0;
+        public static final double driveRotateI = 0;
+        public static final double driveRotateD = 0;
+    }
+
+    public static class PurePursuitConstants {
+        public static final double KV = 0.34;
+        public static final double KA = 0.002;
+        public static final double KP = 0.01;
+
+        public static final double MAX_VELOCITY = 2;
     }
 
     public static class LimeLightConstants {

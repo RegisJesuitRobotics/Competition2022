@@ -33,25 +33,14 @@ public class LimeLight extends SubsystemBase {
     private final NetworkTableEntry camMode = limelightNetworkTable.getEntry("camMode");
     private final NetworkTableEntry pipeline = limelightNetworkTable.getEntry("pipeline");
 
-    private final NetworkTableEntry validTargetShuffleboard;
-    private final NetworkTableEntry horizontalOffsetShuffleboard;
-    private final NetworkTableEntry verticalOffsetShuffleboard;
-
     public LimeLight() {
         ShuffleboardTab limelightTab = Shuffleboard.getTab("limelight");
 
-        validTargetShuffleboard = limelightTab.add("Valid Target", false).getEntry();
-        horizontalOffsetShuffleboard = limelightTab.add("Horizontal Offset", 0).getEntry();
-        verticalOffsetShuffleboard = limelightTab.add("Vertical Offset", 0).getEntry();
+        limelightTab.addBoolean("Valid Target?", () -> validTarget.getBoolean(false));
+        limelightTab.addNumber("Horizontal Offset", () -> horizontalOffset.getDouble(0));
+        limelightTab.addNumber("Vertical Offset", () -> verticalOffset.getDouble(0));
 
         limelightTab.addCamera("Limelight", "Limelight", LimeLightConstants.streamURL);
-    }
-
-    @Override
-    public void periodic() {
-        validTargetShuffleboard.setBoolean(hasValidTarget());
-        horizontalOffsetShuffleboard.setNumber(getHorizontalOffset());
-        verticalOffsetShuffleboard.setNumber(getVerticalOffset());
     }
 
     public boolean hasValidTarget() {

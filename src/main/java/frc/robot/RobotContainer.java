@@ -8,13 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.auto.AutoCommand;
+import frc.robot.commands.auto.PurePursuitCommand;
 import frc.robot.commands.drive.TeleopDrive;
 import frc.robot.joysticks.PlaystationController;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.LimeLight;
-import frc.robot.subsystems.Shooter;
+import frc.robot.utils.ShuffleboardTabs;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -26,9 +24,9 @@ import frc.robot.subsystems.Shooter;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
-    private final Climber climber = new Climber();
-    private final LimeLight limeLight = new LimeLight();
-    private final Shooter shooter = new Shooter();
+//    private final Climber climber = new Climber();
+//    private final LimeLight limeLight = new LimeLight();
+//    private final Shooter shooter = new Shooter();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
@@ -64,6 +62,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new AutoCommand();
+        return new PurePursuitCommand(driveTrain);
     }
 }
