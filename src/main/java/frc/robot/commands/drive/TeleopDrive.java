@@ -16,22 +16,27 @@ public class TeleopDrive extends CommandBase {
     }
 
     @Override
+    public void initialize() {
+        driveTrain.setBrakeMode(true);
+    }
+
+    @Override
     public void execute() {
         double leftTrigger = driverController.leftTrigger.getAxis();
         double rightTrigger = driverController.rightTrigger.getAxis();
-        double leftStickX = driverController.getLeftX();
+        double leftStickX = driverController.leftThumb.getXAxis();
 
         double speed = rightTrigger - leftTrigger;
         double turn = 2 * leftStickX;
 
         double leftSpeed = speed;
         double rightSpeed = speed;
-        if (leftStickX > 0) {
+        if (turn > 0) {
             rightSpeed -= turn * speed;
-        } else if (leftStickX < 0) {
+        } else if (turn < 0) {
             leftSpeed += turn * speed;
         }
-        driveTrain.tankDrive(leftSpeed * 0.8, rightSpeed * 0.8);
+        driveTrain.tankDrive(leftSpeed * 0.6, rightSpeed * 0.6);
     }
 
     @Override
