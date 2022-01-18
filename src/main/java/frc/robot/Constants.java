@@ -30,18 +30,8 @@ public final class Constants {
         public static final double gearing = 85.0 / 12;
         public static final double distancePerCount = (wheelDiameterMeters * Math.PI) / (countPerRotation * gearing);
 
-        /*
-         * Steps to tune PID
-         * https://docs.wpilib.org/en/stable/docs/software/advanced-controls/
-         * introduction/tuning-pid-controller.html
-         */
-        public static final double driveDistanceP = 4;
-        public static final double driveDistanceI = 0;
-        public static final double driveDistanceD = 0.329;
-
-        public static final double driveRotateP = 0;
-        public static final double driveRotateI = 0;
-        public static final double driveRotateD = 0;
+        // Distance between wheels of opposite sides
+        public static final double trackWidthMeters = Units.inchesToMeters(26);
     }
 
     public static class PurePursuitConstants {
@@ -50,6 +40,13 @@ public final class Constants {
         public static final double KP = 0.01;
 
         public static final double MAX_VELOCITY = 2;
+
+        public static final double SMOOTHING_A = 0.3;
+        public static final double SMOOTHING_B = 0.7;
+        public static final double SMOOTHING_TOLERANCE = 0.001;
+
+        // How fast to go around turns (1-5)
+        public static final double VELOCITY_CONSTANT = 5;
     }
 
     public static class LimeLightConstants {

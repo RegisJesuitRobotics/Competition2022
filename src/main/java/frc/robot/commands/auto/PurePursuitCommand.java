@@ -3,15 +3,13 @@ package frc.robot.commands.auto;
 import com.regisjesuit.purepursuit.PurePursuit;
 import com.regisjesuit.purepursuit.path.PurePursuitPath;
 import com.regisjesuit.purepursuit.utils.Point2d;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.ShuffleboardTabs;
-
 
 import static frc.robot.Constants.PurePursuitConstants.*;
 
@@ -28,11 +26,11 @@ public class PurePursuitCommand extends CommandBase {
     private final NetworkTableEntry actualLeftEntry;
     private final NetworkTableEntry actualRightEntry;
 
+    private DifferentialDriveWheelSpeeds previousSpeeds = new DifferentialDriveWheelSpeeds(0, 0);
+
     public PurePursuitCommand(DriveTrain driveTrain, int lookaheadDistance, Point2d... points) {
         this.driveTrain = driveTrain;
-        // each subsystem used by the command must be passed into the addRequirements()
-        // method (which takes a vararg of Subsystem)
-        addRequirements(driveTrain);
+
         PurePursuitPath path = new PurePursuitPath(MAX_VELOCITY, lookaheadDistance);
 
         for (Point2d point : points) {
@@ -40,13 +38,14 @@ public class PurePursuitCommand extends CommandBase {
         }
 
         path.injectPoints();
-        path.smoothPoints(0.3, 0.7, 0.001);
+        path.smoothPoints(SMOOTHING_A, SMOOTHING_B, SMOOTHING_TOLERANCE);
 
         path.calculateCurvatures();
-        path.calculateMaxVelocities(5);
+        path.calculateMaxVelocities(VELOCITY_CONSTANT);
         path.calculateVelocities(MAX_VELOCITY);
 
-        purePursuit = new PurePursuit(path, Units.inchesToMeters(26));
+        purePursuit = new PurePursuit(path, Constants.DriveConstants.trackWidthMeters);
+        // Want to go zero to max in 1 second
         leftRateLimiter = new SlewRateLimiter(MAX_VELOCITY);
         rightRateLimiter = new SlewRateLimiter(MAX_VELOCITY);
 
@@ -54,15 +53,10 @@ public class PurePursuitCommand extends CommandBase {
         targetRightEntry = ShuffleboardTabs.getAutoTab().add("Target Right", 0).getEntry();
         actualLeftEntry = ShuffleboardTabs.getAutoTab().add("Actual Left", 0).getEntry();
         actualRightEntry = ShuffleboardTabs.getAutoTab().add("Actual Right", 0).getEntry();
-    }
 
-    /**
-     * The initial subroutine of a command. Called once when the command is
-     * initially scheduled.
-     */
-    @Override
-    public void initialize() {
+        ShuffleboardTabs.getAutoTab().add("PurePursuit", purePursuit);
 
+        addRequirements(driveTrain);
     }
 
     /**
@@ -85,15 +79,16 @@ public class PurePursuitCommand extends CommandBase {
         double rightFeedback = KP * (speeds.rightMetersPerSecond - driveTrain.getRightEncoderRate());
 
         double leftFeedforward = KV * speeds.leftMetersPerSecond
-                + KA * getAccel(speeds.leftMetersPerSecond, driveTrain.getLeftEncoderRate());
+                + KA * getAccel(speeds.leftMetersPerSecond, previousSpeeds.leftMetersPerSecond);
         double rightFeedforward = KV * speeds.rightMetersPerSecond
-                + KA * getAccel(speeds.rightMetersPerSecond, driveTrain.getRightEncoderRate());
+                + KA * getAccel(speeds.rightMetersPerSecond, previousSpeeds.rightMetersPerSecond);
 
+        previousSpeeds = speeds;
         driveTrain.tankDrive(leftFeedforward + leftFeedback, rightFeedforward + rightFeedback);
     }
 
-    private double getAccel(double targetVel, double actualVel) {
-        return MathUtil.clamp((targetVel - actualVel) / 0.02, -0.625, 0.625);
+    private double getAccel(double targetVel, double previousTarget) {
+        return (targetVel - previousTarget) / 0.02;
     }
 
     /**
