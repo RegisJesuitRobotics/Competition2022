@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.regisjesuit.purepursuit.utils.Point2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -62,6 +63,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new PurePursuitCommand(driveTrain);
+        return new PurePursuitCommand(driveTrain, 1, new Point2d(0, 0), new Point2d(10, 0));
     }
 }
