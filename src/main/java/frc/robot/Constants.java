@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -32,6 +33,7 @@ public final class Constants {
 
         // Distance between wheels of opposite sides
         public static final double trackWidthMeters = Units.inchesToMeters(26);
+        public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidthMeters);
     }
 
     public static class PurePursuitConstants {
@@ -47,6 +49,20 @@ public final class Constants {
 
         // How fast to go around turns (1-5)
         public static final double VELOCITY_CONSTANT = 5;
+    }
+
+    public static class TrajectoryConstants {
+        public static final double sVolts = 0;
+        public static final double vVoltSecondsPerMeter = 0;
+        public static final double aVoltSecondsSquaredPerMeter = 0;
+
+        public static final double pDriveVel = 0;
+
+        public static final double maxSpeedMetersPerSecond = 3;
+        public static final double maxAccelerationMetersPerSecondSquared = 3;
+
+        public static final double ramseteB = 2;
+        public static final double ramseteZeta = 0.7;
     }
 
     public static class LimeLightConstants {

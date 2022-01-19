@@ -67,8 +67,6 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     testImplementation 'junit:junit:4.12'
-
-    implementation project('PurePursuit:lib')
 }
 
 // Simulation configuration (e.g. environment variables).
