@@ -59,6 +59,15 @@ public class PurePursuitCommand extends CommandBase {
         addRequirements(driveTrain);
     }
 
+    @Override
+    public void initialize() {
+        driveTrain.resetOdometry();
+
+        // Rate limiters are time based, so we have to call it at the beginning.
+        leftRateLimiter.calculate(0);
+        rightRateLimiter.calculate(0);
+    }
+
     /**
      * The main body of a command. Called repeatedly while the command is scheduled.
      * (That is, it is called repeatedly until {@link #isFinished()}) returns true.)

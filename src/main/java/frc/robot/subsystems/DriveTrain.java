@@ -57,6 +57,15 @@ public class DriveTrain extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
+    public void resetOdometry(Pose2d pose) {
+        resetEncoders();
+        odometry.resetPosition(new Pose2d(), gyro.getRotation2d());
+    }
+
+    public void resetOdometry() {
+        resetOdometry(new Pose2d());
+    }
+
     public void arcadeDrive(double xSpeed, double zRotation) {
         System.out.println(xSpeed);
         differentialDrive.arcadeDrive(xSpeed, zRotation);
