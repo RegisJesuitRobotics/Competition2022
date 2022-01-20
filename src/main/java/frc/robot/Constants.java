@@ -36,21 +36,6 @@ public final class Constants {
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidthMeters);
     }
 
-    public static class PurePursuitConstants {
-        public static final double KV = 0.34;
-        public static final double KA = 0.002;
-        public static final double KP = 0.01;
-
-        public static final double MAX_VELOCITY = 2;
-
-        public static final double SMOOTHING_A = 0.3;
-        public static final double SMOOTHING_B = 0.7;
-        public static final double SMOOTHING_TOLERANCE = 0.001;
-
-        // How fast to go around turns (1-5)
-        public static final double VELOCITY_CONSTANT = 5;
-    }
-
     public static class TrajectoryConstants {
         public static final double sVolts = 0;
         public static final double vVoltSecondsPerMeter = 0;
