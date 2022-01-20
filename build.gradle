@@ -88,6 +88,7 @@ wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
 spotless {
+    enforceCheck false
     java {
         target fileTree('.') {
             include '**/*.java'
