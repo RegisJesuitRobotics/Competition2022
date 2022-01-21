@@ -35,7 +35,7 @@ public class TrajectoryCommandGenerator {
 
         Trajectory trajectory;
         try {
-            Path twoBall = Filesystem.getDeployDirectory().toPath().resolve("output/Unnamed.wpilib.json");
+            Path twoBall = Filesystem.getDeployDirectory().toPath().resolve("output/SimpleCurve.wpilib.json");
             trajectory = TrajectoryUtil.fromPathweaverJson(twoBall);
         } catch (IOException ex) {
             DriverStation.reportError("IT no work", ex.getStackTrace());
