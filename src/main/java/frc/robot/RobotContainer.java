@@ -62,6 +62,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return TrajectoryCommandGenerator.getCommand(driveTrain);
+        return TrajectoryCommandGenerator.getCommandFromFile("SimpleCurve", driveTrain);
     }
 }

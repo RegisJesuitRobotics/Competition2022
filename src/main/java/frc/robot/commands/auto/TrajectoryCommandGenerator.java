@@ -4,9 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,24 +19,13 @@ import java.nio.file.Path;
 import static frc.robot.Constants.TrajectoryConstants.*;
 
 public class TrajectoryCommandGenerator {
-    public static Command getCommand(DriveTrain driveTrain) {
-        DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(sVolts, vVoltSecondsPerMeter, aVoltSecondsSquaredPerMeter),
-                Constants.DriveConstants.kinematics, 4);
-
-        TrajectoryConfig config = new TrajectoryConfig(maxSpeedMetersPerSecond, maxAccelerationMetersPerSecondSquared)
-                .setKinematics(Constants.DriveConstants.kinematics).addConstraint(voltageConstraint);
-
-//        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-//                List.of(new Translation2d(1, 1), new Translation2d(2, -1)), new Pose2d(3, 0, new Rotation2d(0)),
-//                config);
-
+    public static Command getCommandFromFile(String pathName, DriveTrain driveTrain) {
         Trajectory trajectory;
         try {
-            Path twoBall = Filesystem.getDeployDirectory().toPath().resolve("output/SimpleCurve.wpilib.json");
+            Path twoBall = Filesystem.getDeployDirectory().toPath().resolve("output/" + pathName + ".wpilib.json");
             trajectory = TrajectoryUtil.fromPathweaverJson(twoBall);
         } catch (IOException ex) {
-            DriverStation.reportError("IT no work", ex.getStackTrace());
+            DriverStation.reportError("Trajectory file cannot be found", ex.getStackTrace());
             return null;
         }
 
