@@ -32,16 +32,16 @@ public final class Constants {
         public static final double distancePerCount = (wheelDiameterMeters * Math.PI) / (countPerRotation * gearing);
 
         // Distance between wheels of opposite sides
-        public static final double trackWidthMeters = Units.inchesToMeters(26);
+        public static final double trackWidthMeters = Units.inchesToMeters(27);
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidthMeters);
     }
 
     public static class TrajectoryConstants {
-        public static final double sVolts = 0;
-        public static final double vVoltSecondsPerMeter = 0;
-        public static final double aVoltSecondsSquaredPerMeter = 0;
+        public static final double sVolts = 0.52827;
+        public static final double vVoltSecondsPerMeter = 2.3931;
+        public static final double aVoltSecondsSquaredPerMeter = 0.15832;
 
-        public static final double pDriveVel = 0;
+        public static final double pDriveVel = 2.5761;
 
         public static final double maxSpeedMetersPerSecond = 3;
         public static final double maxAccelerationMetersPerSecondSquared = 3;
