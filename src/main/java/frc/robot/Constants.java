@@ -32,22 +32,39 @@ public final class Constants {
         public static final double distancePerCount = (wheelDiameterMeters * Math.PI) / (countPerRotation * gearing);
 
         // Distance between wheels of opposite sides
-        public static final double trackWidthMeters = Units.inchesToMeters(27);
+        public static final double trackWidthMeters = Units.inchesToMeters(26);
         public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidthMeters);
     }
 
     public static class TrajectoryConstants {
-        public static final double sVolts = 0.52827;
-        public static final double vVoltSecondsPerMeter = 2.3931;
-        public static final double aVoltSecondsSquaredPerMeter = 0.15832;
+        public static final double sVolts = 0.55345;
+        public static final double vVoltSecondsPerMeter = 2.384;
+        public static final double aVoltSecondsSquaredPerMeter = 0.15702;
 
-        public static final double pDriveVel = 2.5761;
+        public static final double pDriveVel = 2.5832;
 
         public static final double maxSpeedMetersPerSecond = 3;
         public static final double maxAccelerationMetersPerSecondSquared = 3;
 
         public static final double ramseteB = 2;
         public static final double ramseteZeta = 0.7;
+    }
+
+    public static class IntakeConstants {
+        public static final int intakePort = -1;
+
+        public static final double intakeRunSpeed = 0.7;
+    }
+
+    public static class ShooterConstants {
+        public static final int shooterPort = -1;
+
+        public static final double VELOCITY_P = 0;
+        public static final double VELOCITY_I = 0;
+        public static final double VELOCITY_D = 0;
+
+        public static final double MAX_ROTATIONS_PER_MINUTE = 0;
+        public static final double MAX_ROTATION_PER_MINUTE_ACCELERATION_PER_SECOND_SQUARED = 0;
     }
 
     public static class LimeLightConstants {

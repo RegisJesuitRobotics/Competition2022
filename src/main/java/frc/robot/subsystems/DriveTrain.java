@@ -2,12 +2,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,11 +16,11 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.ShuffleboardTabs;
 
 public class DriveTrain extends SubsystemBase {
-    private final WPI_TalonSRX leftLeader = new WPI_TalonSRX(DriveConstants.leftLeaderPort);
-    private final WPI_TalonSRX leftFollower = new WPI_TalonSRX(DriveConstants.leftFollowerPort);
+    private final WPI_TalonFX leftLeader = new WPI_TalonFX(DriveConstants.leftLeaderPort);
+    private final WPI_TalonFX leftFollower = new WPI_TalonFX(DriveConstants.leftFollowerPort);
 
-    private final WPI_TalonSRX rightLeader = new WPI_TalonSRX(DriveConstants.rightLeaderPort);
-    private final WPI_TalonSRX rightFollower = new WPI_TalonSRX(DriveConstants.rightFollowerPort);
+    private final WPI_TalonFX rightLeader = new WPI_TalonFX(DriveConstants.rightLeaderPort);
+    private final WPI_TalonFX rightFollower = new WPI_TalonFX(DriveConstants.rightFollowerPort);
 
     private final AHRS gyro = new AHRS();
 
@@ -61,10 +62,6 @@ public class DriveTrain extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         resetEncoders();
         odometry.resetPosition(pose, gyro.getRotation2d());
-    }
-
-    public void resetOdometry() {
-        resetOdometry(new Pose2d());
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
@@ -133,5 +130,9 @@ public class DriveTrain extends SubsystemBase {
             rightLeader.setNeutralMode(NeutralMode.Coast);
             rightFollower.setNeutralMode(NeutralMode.Coast);
         }
+    }
+
+    public void setField2dTrajectory(Trajectory trajectory) {
+        field2d.getObject("traj").setTrajectory(trajectory);
     }
 }

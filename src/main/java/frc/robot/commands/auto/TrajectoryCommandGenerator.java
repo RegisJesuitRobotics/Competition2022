@@ -19,16 +19,19 @@ import java.nio.file.Path;
 import static frc.robot.Constants.TrajectoryConstants.*;
 
 public class TrajectoryCommandGenerator {
+    private static final String DIRECTORY = "paths/";
+    private static final String FILE_EXTENSION = ".wpilib.json";
+
     public static Command getCommandFromFile(String pathName, DriveTrain driveTrain) {
+        String fullFileName = DIRECTORY + pathName + FILE_EXTENSION;
         Trajectory trajectory;
         try {
-            Path twoBall = Filesystem.getDeployDirectory().toPath().resolve("output/" + pathName + ".wpilib.json");
-            trajectory = TrajectoryUtil.fromPathweaverJson(twoBall);
+            Path filePath = Filesystem.getDeployDirectory().toPath().resolve(fullFileName);
+            trajectory = TrajectoryUtil.fromPathweaverJson(filePath);
         } catch (IOException ex) {
-            DriverStation.reportError("Trajectory file cannot be found", ex.getStackTrace());
+            DriverStation.reportError("Trajectory file '" + fullFileName + "' cannot be found", ex.getStackTrace());
             return null;
         }
-
 
         RamseteCommand ramseteCommand = new RamseteCommand(trajectory, driveTrain::getPosition,
                 new RamseteController(ramseteB, ramseteZeta),
@@ -40,6 +43,8 @@ public class TrajectoryCommandGenerator {
                 () -> driveTrain.resetOdometry(trajectory.getInitialPose()));
 
         InstantCommand stopCommand = new InstantCommand(() -> driveTrain.voltageDrive(0, 0));
+
+        driveTrain.setField2dTrajectory(trajectory);
 
         return resetOdometryCommand.andThen(ramseteCommand).andThen(stopCommand);
     }
