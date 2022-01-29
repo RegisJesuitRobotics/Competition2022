@@ -16,11 +16,11 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.ShuffleboardTabs;
 
 public class DriveTrain extends SubsystemBase {
-    private final WPI_TalonFX leftLeader = new WPI_TalonFX(DriveConstants.leftLeaderPort);
-    private final WPI_TalonFX leftFollower = new WPI_TalonFX(DriveConstants.leftFollowerPort);
+    private final WPI_TalonFX leftLeader = new WPI_TalonFX(DriveConstants.LEFT_LEADER_PORT);
+    private final WPI_TalonFX leftFollower = new WPI_TalonFX(DriveConstants.LEFT_FOLLOWER_PORT);
 
-    private final WPI_TalonFX rightLeader = new WPI_TalonFX(DriveConstants.rightLeaderPort);
-    private final WPI_TalonFX rightFollower = new WPI_TalonFX(DriveConstants.rightFollowerPort);
+    private final WPI_TalonFX rightLeader = new WPI_TalonFX(DriveConstants.RIGHT_LEADER_PORT);
+    private final WPI_TalonFX rightFollower = new WPI_TalonFX(DriveConstants.RIGHT_FOLLOWER_PORT);
 
     private final AHRS gyro = new AHRS();
 
@@ -65,7 +65,6 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        System.out.println(xSpeed);
         differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
@@ -81,11 +80,11 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public double getLeftEncoderDistance() {
-        return leftLeader.getSelectedSensorPosition() * DriveConstants.distancePerCount;
+        return leftLeader.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_COUNT;
     }
 
     public double getRightEncoderDistance() {
-        return rightLeader.getSelectedSensorPosition() * DriveConstants.distancePerCount;
+        return rightLeader.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_COUNT;
     }
 
     public double getAverageEncodersDistance() {
@@ -96,14 +95,14 @@ public class DriveTrain extends SubsystemBase {
      * @return the rate of change of the left encoder (meters/second)
      */
     public double getLeftEncoderRate() {
-        return leftLeader.getSelectedSensorVelocity() * DriveConstants.distancePerCount * 10;
+        return leftLeader.getSelectedSensorVelocity() * DriveConstants.DISTANCE_PER_COUNT * 10;
     }
 
     /**
      * @return the rate of change of the right encoder (meters/second)
      */
     public double getRightEncoderRate() {
-        return rightLeader.getSelectedSensorVelocity() * DriveConstants.distancePerCount * 10;
+        return rightLeader.getSelectedSensorVelocity() * DriveConstants.DISTANCE_PER_COUNT * 10;
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {

@@ -20,6 +20,7 @@ import static frc.robot.Constants.TrajectoryConstants.*;
 
 public class TrajectoryCommandGenerator {
     private static final String DIRECTORY = "paths/";
+//    private static final String DIRECTORY = "pathplanner/generatedJSON/";
     private static final String FILE_EXTENSION = ".wpilib.json";
 
     public static Command getCommandFromFile(String pathName, DriveTrain driveTrain) {
@@ -34,10 +35,11 @@ public class TrajectoryCommandGenerator {
         }
 
         RamseteCommand ramseteCommand = new RamseteCommand(trajectory, driveTrain::getPosition,
-                new RamseteController(ramseteB, ramseteZeta),
-                new SimpleMotorFeedforward(sVolts, vVoltSecondsPerMeter, aVoltSecondsSquaredPerMeter),
-                Constants.DriveConstants.kinematics, driveTrain::getWheelSpeeds, new PIDController(pDriveVel, 0, 0),
-                new PIDController(pDriveVel, 0, 0), driveTrain::voltageDrive, driveTrain);
+                new RamseteController(RAMSETE_B, RAMSETE_ZETA),
+                new SimpleMotorFeedforward(S_VOLTS, V_VOLT_SECONDS_PER_METER, A_VOLT_SECONDS_SQUARED_PER_METER),
+                Constants.DriveConstants.DRIVE_KINEMATICS, driveTrain::getWheelSpeeds,
+                new PIDController(P_DRIVE_VEL, 0, 0), new PIDController(P_DRIVE_VEL, 0, 0), driveTrain::voltageDrive,
+                driveTrain);
 
         InstantCommand resetOdometryCommand = new InstantCommand(
                 () -> driveTrain.resetOdometry(trajectory.getInitialPose()));
