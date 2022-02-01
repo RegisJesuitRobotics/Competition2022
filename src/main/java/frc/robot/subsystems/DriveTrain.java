@@ -2,11 +2,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,11 +16,11 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.ShuffleboardTabs;
 
 public class DriveTrain extends SubsystemBase {
-    private final WPI_TalonSRX leftLeader = new WPI_TalonSRX(DriveConstants.leftLeaderPort);
-    private final WPI_TalonSRX leftFollower = new WPI_TalonSRX(DriveConstants.leftFollowerPort);
+    private final WPI_TalonFX leftLeader = new WPI_TalonFX(DriveConstants.LEFT_LEADER_PORT);
+    private final WPI_TalonFX leftFollower = new WPI_TalonFX(DriveConstants.LEFT_FOLLOWER_PORT);
 
-    private final WPI_TalonSRX rightLeader = new WPI_TalonSRX(DriveConstants.rightLeaderPort);
-    private final WPI_TalonSRX rightFollower = new WPI_TalonSRX(DriveConstants.rightFollowerPort);
+    private final WPI_TalonFX rightLeader = new WPI_TalonFX(DriveConstants.RIGHT_LEADER_PORT);
+    private final WPI_TalonFX rightFollower = new WPI_TalonFX(DriveConstants.RIGHT_FOLLOWER_PORT);
 
     private final AHRS gyro = new AHRS();
 
@@ -59,15 +61,10 @@ public class DriveTrain extends SubsystemBase {
 
     public void resetOdometry(Pose2d pose) {
         resetEncoders();
-        odometry.resetPosition(new Pose2d(), gyro.getRotation2d());
-    }
-
-    public void resetOdometry() {
-        resetOdometry(new Pose2d());
+        odometry.resetPosition(pose, gyro.getRotation2d());
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        System.out.println(xSpeed);
         differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
@@ -83,11 +80,11 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public double getLeftEncoderDistance() {
-        return leftLeader.getSelectedSensorPosition() * DriveConstants.distancePerCount;
+        return leftLeader.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_COUNT;
     }
 
     public double getRightEncoderDistance() {
-        return rightLeader.getSelectedSensorPosition() * DriveConstants.distancePerCount;
+        return rightLeader.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_COUNT;
     }
 
     public double getAverageEncodersDistance() {
@@ -98,14 +95,18 @@ public class DriveTrain extends SubsystemBase {
      * @return the rate of change of the left encoder (meters/second)
      */
     public double getLeftEncoderRate() {
-        return leftLeader.getSelectedSensorVelocity() * DriveConstants.distancePerCount * 10;
+        return leftLeader.getSelectedSensorVelocity() * DriveConstants.DISTANCE_PER_COUNT * 10;
     }
 
     /**
      * @return the rate of change of the right encoder (meters/second)
      */
     public double getRightEncoderRate() {
-        return rightLeader.getSelectedSensorVelocity() * DriveConstants.distancePerCount * 10;
+        return rightLeader.getSelectedSensorVelocity() * DriveConstants.DISTANCE_PER_COUNT * 10;
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(getLeftEncoderRate(), getRightEncoderRate());
     }
 
     public double getHeading() {
@@ -128,5 +129,9 @@ public class DriveTrain extends SubsystemBase {
             rightLeader.setNeutralMode(NeutralMode.Coast);
             rightFollower.setNeutralMode(NeutralMode.Coast);
         }
+    }
+
+    public void setField2dTrajectory(Trajectory trajectory) {
+        field2d.getObject("traj").setTrajectory(trajectory);
     }
 }

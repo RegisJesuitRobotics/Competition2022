@@ -24,7 +24,7 @@ public class LimeLight extends SubsystemBase {
     }
 
     private final NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault()
-            .getTable(LimeLightConstants.networkTablesId);
+            .getTable(LimeLightConstants.NETWORK_TABLES_ID);
     private final NetworkTableEntry validTarget = limelightNetworkTable.getEntry("tv");
     private final NetworkTableEntry horizontalOffset = limelightNetworkTable.getEntry("tx");
     private final NetworkTableEntry verticalOffset = limelightNetworkTable.getEntry("ty");
@@ -40,7 +40,7 @@ public class LimeLight extends SubsystemBase {
         limelightTab.addNumber("Horizontal Offset", () -> horizontalOffset.getDouble(0));
         limelightTab.addNumber("Vertical Offset", () -> verticalOffset.getDouble(0));
 
-        limelightTab.addCamera("Limelight", "Limelight", LimeLightConstants.streamURL);
+        limelightTab.addCamera("Limelight", "Limelight", LimeLightConstants.STREAM_URL);
     }
 
     public boolean hasValidTarget() {

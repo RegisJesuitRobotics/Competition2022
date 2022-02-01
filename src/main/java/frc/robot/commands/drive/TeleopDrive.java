@@ -36,7 +36,7 @@ public class TeleopDrive extends CommandBase {
         } else if (turn < 0) {
             leftSpeed += turn * speed;
         }
-        driveTrain.tankDrive(leftSpeed * 0.6, rightSpeed * 0.6);
+        driveTrain.tankDrive(leftSpeed * 0.8, rightSpeed * 0.8);
     }
 
     @Override
