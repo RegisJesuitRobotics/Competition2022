@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
 import frc.robot.commands.drive.TeleopDrive;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.utils.ShuffleboardTabs;
 
 /**
@@ -23,15 +25,15 @@ import frc.robot.utils.ShuffleboardTabs;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final DriveTrain driveTrain = new DriveTrain();
+    // private final DriveTrain driveTrain = new DriveTrain();
 //    private final Climber climber = new Climber();
 //    private final LimeLight limeLight = new LimeLight();
-//    private final Shooter shooter = new Shooter();
+   private final Shooter shooter = new Shooter();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
 
-    private final TeleopDrive driveCommand = new TeleopDrive(driveTrain, driverController);
+    // private final TeleopDrive driveCommand = new TeleopDrive(driveTrain, driverController);
     private final SendableChooser<Command> autoCommandChooser = new SendableChooser<>();
 
     /**
@@ -53,7 +55,9 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        driveTrain.setDefaultCommand(driveCommand);
+        // driveTrain.setDefaultCommand(driveCommand);
+
+        driverController.circle.whileHeld(new StartEndCommand(() -> shooter.setFeederRPM(60), () -> shooter.setFeederRPM(0), shooter));
     }
 
     /**
@@ -62,6 +66,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return TrajectoryCommandGenerator.getCommandFromFile("2BallLeft", driveTrain);
+        // return TrajectoryCommandGenerator.getCommandFromFile("2BallLeft", driveTrain);
+        return null;
     }
 }

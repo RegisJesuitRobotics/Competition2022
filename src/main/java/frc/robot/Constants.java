@@ -45,7 +45,7 @@ public final class Constants {
 
         public static final double P_DRIVE_VEL = 2.5832;
 
-        public static final double RAMSETE_B = 2;
+        public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
     }
 
@@ -54,12 +54,19 @@ public final class Constants {
     }
 
     public static class ShooterConstants {
-        public static final int SHOOTER_PORT = -1;
+        public static final int SHOOTER_PORT = 2;
+        public static final int FEEDER_PORT = 1;
 
-        public static final double VELOCITY_P = 0;
-        public static final double VELOCITY_I = 0;
-        public static final double VELOCITY_D = 0;
-        public static final double VELOCITY_FF = 0;
+        public static final double SHOOTER_VELOCITY_P = 0;
+        public static final double SHOOTER_VELOCITY_S_VOLTS = 0;
+        public static final double SHOOTER_VELOCITY_V_VOLTS = 0;
+
+        public static final double FEEDER_VELOCITY_P = 0.13832;
+        public static final double FEEDER_VELOCITY_S_VOLTS = 0.28575;
+        public static final double FEEDER_VELOCITY_V_VOLTS = 0.2089;
+
+        public static final double SHOOTER_GEARING = 3.0 / 1.0;
+        public static final double FEEDER_GEARING = 3.0 / 1.0; // Could be 10? not sure
     }
 
     public static class LimeLightConstants {
