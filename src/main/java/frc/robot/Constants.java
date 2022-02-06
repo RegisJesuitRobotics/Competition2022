@@ -61,12 +61,17 @@ public final class Constants {
         public static final double SHOOTER_VELOCITY_S_VOLTS = 0;
         public static final double SHOOTER_VELOCITY_V_VOLTS = 0;
 
+        public static final double SHOOTER_GEARING = 3.0;
+    }
+
+    public static class FeederConstants {
+        public static final int FEEDER_PORT = 1;
+
         public static final double FEEDER_VELOCITY_P = 0.13832;
         public static final double FEEDER_VELOCITY_S_VOLTS = 0.28575;
         public static final double FEEDER_VELOCITY_V_VOLTS = 0.2089;
 
-        public static final double SHOOTER_GEARING = 3.0 / 1.0;
-        public static final double FEEDER_GEARING = 3.0 / 1.0; // Could be 10? not sure
+        public static final double FEEDER_GEARING = 3.0;
     }
 
     public static class LimeLightConstants {

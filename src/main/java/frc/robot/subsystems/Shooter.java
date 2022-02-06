@@ -16,49 +16,38 @@ import static frc.robot.Constants.ShooterConstants.*;
 public class Shooter extends SubsystemBase {
     private final CANSparkMax shooterMotor = new CANSparkMax(SHOOTER_PORT, MotorType.kBrushless);
     private final RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
-    private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(SHOOTER_VELOCITY_S_VOLTS, SHOOTER_VELOCITY_V_VOLTS);
+    private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(SHOOTER_VELOCITY_S_VOLTS,
+            SHOOTER_VELOCITY_V_VOLTS);
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
-    private double shooterTargetRPM = 0.0;
-
-    private final CANSparkMax feederMotor = new CANSparkMax(FEEDER_PORT, MotorType.kBrushless);
-    private final RelativeEncoder feederEncoder = feederMotor.getEncoder();
-    private final SimpleMotorFeedforward feederFeedForward = new SimpleMotorFeedforward(FEEDER_VELOCITY_S_VOLTS, FEEDER_VELOCITY_V_VOLTS);
-    private final PIDController feederPidController = new PIDController(FEEDER_VELOCITY_P, 0.0, 0.0);
-    private double feederTargetRPM = 0.0;
+    private double shooterTargetRPS = 0.0;
 
     private final ShuffleboardTab shooterTab = Shuffleboard.getTab("Shooter");
 
-
     public Shooter() {
+        // We have to use rotations per second instead of the native unit of rotations
+        // per second
+        // because sys-id uses rotation/s and translating the gains seems overkill when
+        // we can just do it this way
         shooterMotor.setInverted(true);
         shooterMotor.setIdleMode(IdleMode.kCoast);
-        shooterEncoder.setVelocityConversionFactor(1 / SHOOTER_GEARING);
-        shooterMotor.burnFlash();
+        shooterEncoder.setVelocityConversionFactor(1 / (SHOOTER_GEARING * 60));
+        // Not using burn flash yet because this code is ran on the test bench, and we
+        // don't want to invert those
+//        shooterMotor.burnFlash();
 
-        feederMotor.setInverted(true);
-        feederMotor.setIdleMode(IdleMode.kCoast);
-        feederEncoder.setVelocityConversionFactor(1 / FEEDER_GEARING); // Rotations per minute
-        feederMotor.burnFlash();
-
-        shooterTab.addNumber("Target Feeder RPM", () -> feederTargetRPM);
-        shooterTab.addNumber("Actual Feeder RPM", feederEncoder::getVelocity);
-
-        shooterTab.addNumber("Target Shooter RPM", () -> shooterTargetRPM);
-        shooterTab.addNumber("Actual Shooter RPM", shooterEncoder::getVelocity);
+        shooterTab.addNumber("Target Shooter RPM", () -> shooterTargetRPS * 60);
+        shooterTab.addNumber("Actual Shooter RPM", () -> shooterEncoder.getVelocity() * 60);
     }
 
 
     public void setShooterRPM(double rpm) {
-        shooterTargetRPM = rpm;
-    }
-
-    public void setFeederRPM(double rpm) {
-        feederTargetRPM = rpm;
+        shooterTargetRPS = rpm / 60;
     }
 
     @Override
     public void periodic() {
-        feederMotor.setVoltage(feederPidController.calculate(feederEncoder.getVelocity(), feederTargetRPM) + feederFeedForward.calculate(feederTargetRPM));
-        shooterMotor.setVoltage(shooterPidController.calculate(shooterEncoder.getVelocity(), shooterTargetRPM) + shooterFeedForward.calculate(shooterTargetRPM));
+        double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), shooterTargetRPS);
+        double shooterFeedforward = shooterFeedForward.calculate(shooterTargetRPS);
+        shooterMotor.setVoltage(shooterFeedback + shooterFeedforward);
     }
 }

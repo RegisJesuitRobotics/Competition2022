@@ -9,10 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import frc.robot.commands.auto.TrajectoryCommandGenerator;
-import frc.robot.commands.drive.TeleopDrive;
 import frc.robot.joysticks.PlaystationController;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.utils.ShuffleboardTabs;
 
@@ -28,12 +26,14 @@ public class RobotContainer {
     // private final DriveTrain driveTrain = new DriveTrain();
 //    private final Climber climber = new Climber();
 //    private final LimeLight limeLight = new LimeLight();
-   private final Shooter shooter = new Shooter();
+    private final Shooter shooter = new Shooter();
+    private final Feeder feeder = new Feeder();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
 
-    // private final TeleopDrive driveCommand = new TeleopDrive(driveTrain, driverController);
+    // private final TeleopDrive driveCommand = new TeleopDrive(driveTrain,
+    // driverController);
     private final SendableChooser<Command> autoCommandChooser = new SendableChooser<>();
 
     /**
@@ -56,8 +56,10 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // driveTrain.setDefaultCommand(driveCommand);
-
-        driverController.circle.whileHeld(new StartEndCommand(() -> shooter.setFeederRPM(60), () -> shooter.setFeederRPM(0), shooter));
+        driverController.square.whileHeld(
+                new StartEndCommand(() -> shooter.setShooterRPM(2000), () -> shooter.setShooterRPM(0), shooter));
+        driverController.circle
+                .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(600), () -> feeder.setFeederRPM(0), feeder));
     }
 
     /**
@@ -66,7 +68,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // return TrajectoryCommandGenerator.getCommandFromFile("2BallLeft", driveTrain);
+        // return TrajectoryCommandGenerator.getCommandFromFile("2BallLeft",
+        // driveTrain);
         return null;
     }
 }
