@@ -44,10 +44,8 @@ public class RobotContainer {
         teleopDriveStyle.addOption("Tank Drive (Aidan)", new TeleopDrive(driveTrain, driverController));
         teleopDriveStyle.setDefaultOption("Arcade Drive (Everyone else)",
                 new ArcadeDrive(driveTrain, driverController));
-        // Configure the button bindings
 
         // TODO: add auto commands to chooser
-
         ShuffleboardTabs.getAutoTab().add("Chooser", autoCommandChooser);
         ShuffleboardTabs.getTeleopTab().add("Drive Style", teleopDriveStyle);
         configureButtonBindings();
