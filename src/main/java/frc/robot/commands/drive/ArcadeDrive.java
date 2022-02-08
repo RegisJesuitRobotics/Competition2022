@@ -27,7 +27,7 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        driveTrain.tankDrive(0, 0);
+        driveTrain.arcadeDrive(0, 0);
     }
 
     @Override
