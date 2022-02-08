@@ -45,11 +45,12 @@ public class RobotContainer {
         teleopDriveStyle.setDefaultOption("Arcade Drive (Everyone else)",
                 new ArcadeDrive(driveTrain, driverController));
         // Configure the button bindings
-        configureButtonBindings();
 
         // TODO: add auto commands to chooser
 
         ShuffleboardTabs.getAutoTab().add("Chooser", autoCommandChooser);
+        ShuffleboardTabs.getTeleopTab().add("Drive Style", teleopDriveStyle);
+        configureButtonBindings();
     }
 
     /**
