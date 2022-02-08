@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
+import frc.robot.commands.drive.ArcadeDrive;
 import frc.robot.commands.drive.TeleopDrive;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
@@ -34,10 +35,15 @@ public class RobotContainer {
     private final TeleopDrive driveCommand = new TeleopDrive(driveTrain, driverController);
     private final SendableChooser<Command> autoCommandChooser = new SendableChooser<>();
 
+    private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        teleopDriveStyle.addOption("Tank Drive (Aidan)", new TeleopDrive(driveTrain, driverController));
+        teleopDriveStyle.setDefaultOption("Arcade Drive (Everyone else)",
+                new ArcadeDrive(driveTrain, driverController));
         // Configure the button bindings
         configureButtonBindings();
 
@@ -53,7 +59,12 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        driveTrain.setDefaultCommand(driveCommand);
+        evaluateDriveStyle();
+    }
+
+
+    public void evaluateDriveStyle() {
+        driveTrain.setDefaultCommand(teleopDriveStyle.getSelected());
     }
 
     /**
