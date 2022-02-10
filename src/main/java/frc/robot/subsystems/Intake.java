@@ -20,15 +20,6 @@ public class Intake extends SubsystemBase {
 
   private final Solenoid intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.SOLENOID_PORT);
 
-  /** Creates a new Intake. */
-  public Intake() {}
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-
-  }
-
   public void setPercentage(double percentage){
     intakeMotor.set(percentage);   
   }
