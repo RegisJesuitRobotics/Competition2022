@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase {
 
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-  private final Solenoid exampleSolenoidPCM = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.SOLENOID_PORT);
+  private final Solenoid intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.SOLENOID_PORT);
 
   /** Creates a new Intake. */
   public Intake() {}
@@ -34,6 +34,6 @@ public class Intake extends SubsystemBase {
   }
 
   public void setSolinoid(boolean deployed){
-    exampleSolenoidPCM.set(deployed);
+    intakeSolenoid.set(deployed);
   }
 }
