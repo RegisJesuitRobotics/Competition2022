@@ -51,7 +51,9 @@ public final class Constants {
 
     public static class IntakeConstants {
         public static final int INTAKE_PORT = -1;
+        public static final int SOLENOID_PORT = -1;
     }
+
 
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = -1;
