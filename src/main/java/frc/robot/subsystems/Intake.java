@@ -33,7 +33,7 @@ public class Intake extends SubsystemBase {
     intakeMotor.set(percentage);   
   }
 
-  public void setSolinoid(boolean deployed){
+  public void setSolenoid(boolean deployed){
     intakeSolenoid.set(deployed);
   }
 }
