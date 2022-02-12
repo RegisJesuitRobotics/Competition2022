@@ -31,8 +31,7 @@ public final class Constants {
 
         public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(6);
         public static final double GEARING = 85.0 / 12;
-        public static final double DISTANCE_PER_ROTATION = (WHEEL_DIAMETER_METERS * Math.PI)
-                / (GEARING);
+        public static final double DISTANCE_PER_ROTATION = (WHEEL_DIAMETER_METERS * Math.PI) / (GEARING);
 
         // Distance between wheels of opposite sides
         public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(26);

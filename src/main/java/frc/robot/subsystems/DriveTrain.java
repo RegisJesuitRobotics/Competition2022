@@ -1,14 +1,10 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -36,7 +32,7 @@ public class DriveTrain extends SubsystemBase {
 
     private final DifferentialDrive differentialDrive = new DifferentialDrive(leftTop, rightTop);
 
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getRotation2d());
     private final Field2d field2d = new Field2d();
 
     public DriveTrain() {
@@ -47,7 +43,7 @@ public class DriveTrain extends SubsystemBase {
         rightFront.follow(rightTop);
 
         leftEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
-        leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
+        leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to rps
 
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
@@ -65,7 +61,7 @@ public class DriveTrain extends SubsystemBase {
 
     @Override
     public void periodic() {
-        odometry.update(gyro.getRotation2d(), getLeftEncoderDistance(), getRightEncoderDistance());
+        odometry.update(getRotation2d(), getLeftEncoderDistance(), getRightEncoderDistance());
         field2d.setRobotPose(odometry.getPoseMeters());
     }
 
@@ -75,7 +71,7 @@ public class DriveTrain extends SubsystemBase {
 
     public void resetOdometry(Pose2d pose) {
         resetEncoders();
-        odometry.resetPosition(pose, gyro.getRotation2d());
+        odometry.resetPosition(pose, getRotation2d());
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
