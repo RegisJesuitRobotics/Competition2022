@@ -32,7 +32,6 @@ public class RobotContainer {
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
 
-    private final TeleopDrive driveCommand = new TeleopDrive(driveTrain, driverController);
     private final SendableChooser<Command> autoCommandChooser = new SendableChooser<>();
 
     private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
