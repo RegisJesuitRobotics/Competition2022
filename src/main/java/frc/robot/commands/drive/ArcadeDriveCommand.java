@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
 
-public class ArcadeDrive extends CommandBase {
+public class ArcadeDriveCommand extends CommandBase {
     private final DriveTrain driveTrain;
     private final PlaystationController driverController;
 
-    public ArcadeDrive(DriveTrain driveTrain, PlaystationController driverController) {
+    public ArcadeDriveCommand(DriveTrain driveTrain, PlaystationController driverController) {
         this.driveTrain = driveTrain;
         this.driverController = driverController;
 

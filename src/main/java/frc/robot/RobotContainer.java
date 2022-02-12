@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
-import frc.robot.commands.drive.ArcadeDrive;
-import frc.robot.commands.drive.TeleopDrive;
+import frc.robot.commands.drive.ArcadeDriveCommand;
+import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.ShuffleboardTabs;
@@ -40,9 +40,9 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        teleopDriveStyle.addOption("Tank Drive (Aidan)", new TeleopDrive(driveTrain, driverController));
+        teleopDriveStyle.addOption("Tankish Drive (Aidan)", new TankishDriveCommand(driveTrain, driverController));
         teleopDriveStyle.setDefaultOption("Arcade Drive (Everyone else)",
-                new ArcadeDrive(driveTrain, driverController));
+                new ArcadeDriveCommand(driveTrain, driverController));
 
         // TODO: add auto commands to chooser
         ShuffleboardTabs.getAutoTab().add("Chooser", autoCommandChooser);
