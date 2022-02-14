@@ -29,8 +29,8 @@ public class Feeder extends SubsystemBase {
         feederEncoder.setVelocityConversionFactor(1 / (FEEDER_GEARING * 60));
 //        feederMotor.burnFlash();
 
-        shooterTab.addNumber("Target Shooter RPM", () -> feederTargetRPS * 60);
-        shooterTab.addNumber("Actual Shooter RPM", () -> feederEncoder.getVelocity() * 60);
+        shooterTab.addNumber("Target Feeder RPM", () -> feederTargetRPS * 60);
+        shooterTab.addNumber("Actual Feeder RPM", () -> feederEncoder.getVelocity() * 60);
     }
 
     public void setFeederRPM(double rpm) {
