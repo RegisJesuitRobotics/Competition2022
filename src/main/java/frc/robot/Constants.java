@@ -53,6 +53,10 @@ public final class Constants {
         public static final int INTAKE_PORT = -1;
     }
 
+    public static class ClimberConstants {
+        public static final int CLIMBER_PORT = -1;
+    }
+
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = -1;
 
