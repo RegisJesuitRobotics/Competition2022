@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
         if (Constants.autoSwitchShuffleboardTab) {
             ShuffleboardTabs.selectTeleopTab();
         }
+        robotContainer.evaluateDriveStyle();
     }
 
     /** This function is called periodically during operator control. */
