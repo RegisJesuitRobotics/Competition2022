@@ -21,16 +21,17 @@ public final class Constants {
     public static final boolean autoSwitchShuffleboardTab = false;
 
     public static class DriveConstants {
-        public static final int LEFT_LEADER_PORT = 2;
-        public static final int LEFT_FOLLOWER_PORT = 15;
-        public static final int RIGHT_LEADER_PORT = 1;
-        public static final int RIGHT_FOLLOWER_PORT = 13;
+        public static final int LEFT_TOP_PORT = 2;
+        public static final int LEFT_FRONT_PORT = 3;
+        public static final int LEFT_BACK_PORT = 4;
 
-        public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(4);
-        public static final double COUNT_PER_ROTATION = 2048;
+        public static final int RIGHT_TOP_PORT = 5;
+        public static final int RIGHT_FRONT_PORT = 6;
+        public static final int RIGHT_BACK_PORT = 7;
+
+        public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(6);
         public static final double GEARING = 85.0 / 12;
-        public static final double DISTANCE_PER_COUNT = (WHEEL_DIAMETER_METERS * Math.PI)
-                / (COUNT_PER_ROTATION * GEARING);
+        public static final double DISTANCE_PER_ROTATION = (WHEEL_DIAMETER_METERS * Math.PI) / (GEARING);
 
         // Distance between wheels of opposite sides
         public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(26);
