@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import frc.robot.commands.auto.TrajectoryCommandGenerator;
+import frc.robot.commands.drive.ArcadeDriveCommand;
+import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
@@ -31,21 +34,23 @@ public class RobotContainer {
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
-
-    // private final TeleopDrive driveCommand = new TeleopDrive(driveTrain,
-    // driverController);
+  
     private final SendableChooser<Command> autoCommandChooser = new SendableChooser<>();
+
+    private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
+        teleopDriveStyle.addOption("Tankish Drive (Aidan)", new TankishDriveCommand(driveTrain, driverController));
+        teleopDriveStyle.setDefaultOption("Arcade Drive (Everyone else)",
+                new ArcadeDriveCommand(driveTrain, driverController));
 
         // TODO: add auto commands to chooser
-
         ShuffleboardTabs.getAutoTab().add("Chooser", autoCommandChooser);
+        ShuffleboardTabs.getTeleopTab().add("Drive Style", teleopDriveStyle);
+        configureButtonBindings();
     }
 
     /**
@@ -55,11 +60,16 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        // driveTrain.setDefaultCommand(driveCommand);
         driverController.square.whileHeld(
                 new StartEndCommand(() -> shooter.setShooterRPM(2000), () -> shooter.setShooterRPM(0), shooter));
         driverController.circle
                 .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(600), () -> feeder.setFeederRPM(0), feeder));
+        evaluateDriveStyle();
+    }
+
+
+    public void evaluateDriveStyle() {
+        driveTrain.setDefaultCommand(teleopDriveStyle.getSelected());
     }
 
     /**
