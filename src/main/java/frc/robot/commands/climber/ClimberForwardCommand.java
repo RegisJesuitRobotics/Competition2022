@@ -8,35 +8,35 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 public class ClimberForwardCommand extends CommandBase {
-  /** Creates a new ClimberForwardCommand. */
-  private final double PERCENT = 0.5;
-  private Climber climber = new Climber();
+    /** Creates a new ClimberForwardCommand. */
+    private final double PERCENT = 0.5;
+    private Climber climber = new Climber();
 
-  public ClimberForwardCommand(Climber climber) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.climber = climber;
-    addRequirements(climber);
-  }
+    public ClimberForwardCommand(Climber climber) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.climber = climber;
+        addRequirements(climber);
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    climber.ClimberRotation(PERCENT);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        climber.ClimberRotation(PERCENT);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {}
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    climber.ClimberLength(0.0);
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        climber.ClimberLength(0.0);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
