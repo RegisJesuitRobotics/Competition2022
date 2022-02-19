@@ -15,6 +15,7 @@ public class ClimberForwardCommand extends CommandBase {
   public ClimberForwardCommand(Climber climber) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = climber;
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
