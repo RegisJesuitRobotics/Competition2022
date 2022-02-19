@@ -14,7 +14,7 @@ public class ClimberBackwardCommand extends CommandBase {
 
     public ClimberBackwardCommand(Climber climber) {
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(climber);
+        // addRequirements(climber);
         this.climber = climber;
     }
 

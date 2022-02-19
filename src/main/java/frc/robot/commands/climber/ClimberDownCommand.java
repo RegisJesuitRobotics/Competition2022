@@ -14,7 +14,7 @@ public class ClimberDownCommand extends CommandBase {
     /** Creates a new ClimberDownCommand. */
     public ClimberDownCommand(Climber climber) {
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(climber);
+        // addRequirements(climber);
         this.climber = climber;
     }
 
