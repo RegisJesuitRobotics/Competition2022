@@ -55,6 +55,12 @@ public final class Constants {
         public static final int SOLENOID_PORT = -1;
     }
 
+    public static class ClimberConstants {
+        public static final int LEFT_CLIMBER_LENGTH_PORT = -1;
+        public static final int LEFT_CLIMBER_ROTATION_PORT = -1;
+        public static final int RIGHT_CLIMBER_LENGTH_PORT = -1;
+        public static final int RIGHT_CLIMBER_ROTATION_PORT = -1;
+    }
 
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = -1;
