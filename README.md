@@ -2,5 +2,9 @@
 
 ## Getting started
 Clone the repository with the command `git clone https://github.com/RegisJesuitRobotics/Competition2022.git`. Recurse submodules makes it so it also clones the Pure Pursuit library
-
-Configured controls for climbing - Up: dPad up, Down: dPad down, Rotate Forward: dPad right, Rotate Backward: dpad left
+## Controls
+### Climbing
+Up: dPad up
+Down: dPad down
+Rotate Forward: dPad right
+Rotate Backward: dPad left
