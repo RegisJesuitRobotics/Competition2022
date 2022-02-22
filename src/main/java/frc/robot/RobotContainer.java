@@ -63,13 +63,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         evaluateDriveStyle();
-        driverController.climberUpButton.whenHeld(new ClimberUpCommand(climber));
-        driverController.climberDownButton.whenHeld(new ClimberDownCommand(climber));
-        driverController.climberForwardRotationButton.whenHeld(new ClimberForwardCommand(climber));
-        driverController.climberBackwardRotationButton.whenHeld(new ClimberBackwardCommand(climber));
+        driverController.dPad.up.whenHeld(new ClimberUpCommand(climber));
+        driverController.dPad.down.whenHeld(new ClimberDownCommand(climber));
+        driverController.dPad.right.whenHeld(new ClimberForwardCommand(climber));
+        driverController.dPad.left.whenHeld(new ClimberBackwardCommand(climber));
 
     }
-
 
     public void evaluateDriveStyle() {
         driveTrain.setDefaultCommand(teleopDriveStyle.getSelected());
