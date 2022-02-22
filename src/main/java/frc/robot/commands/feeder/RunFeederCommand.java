@@ -9,6 +9,8 @@ public class RunFeederCommand extends CommandBase {
 
     public RunFeederCommand(Feeder feeder) {
         this.feeder = feeder;
+
+        addRequirements(feeder);
     }
 
     @Override

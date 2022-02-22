@@ -10,6 +10,8 @@ public class RunShooterCommand extends CommandBase {
     public RunShooterCommand(double rpm, Shooter shooter) {
         this.rpm = rpm;
         this.shooter = shooter;
+
+        addRequirements(shooter);
     }
 
     @Override
