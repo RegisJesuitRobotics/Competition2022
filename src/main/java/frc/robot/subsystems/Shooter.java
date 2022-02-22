@@ -3,11 +3,14 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.joysticks.PlaystationController;
+import frc.robot.subsystems.DriveTrain;
 
 import static frc.robot.Constants.ShooterConstants.*;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends CommandBase {
     private final CANSparkMax shooterMotor = new CANSparkMax(SHOOTER_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
     private final SparkMaxPIDController pidController = shooterMotor.getPIDController();
 
@@ -23,4 +26,5 @@ public class Shooter extends SubsystemBase {
     public void setRPM(double rpm) {
         pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
     }
+    
 }
