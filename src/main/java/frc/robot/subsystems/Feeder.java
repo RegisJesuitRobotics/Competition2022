@@ -27,7 +27,7 @@ public class Feeder extends SubsystemBase {
         feederMotor.setInverted(true);
         feederMotor.setIdleMode(IdleMode.kCoast);
         feederEncoder.setVelocityConversionFactor(1 / (FEEDER_GEARING * 60));
-//        feederMotor.burnFlash();
+        feederMotor.burnFlash();
 
         shooterTab.addNumber("Target Feeder RPM", () -> feederTargetRPS * 60);
         shooterTab.addNumber("Actual Feeder RPM", () -> feederEncoder.getVelocity() * 60);

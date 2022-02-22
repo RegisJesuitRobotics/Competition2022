@@ -31,9 +31,7 @@ public class Shooter extends SubsystemBase {
         shooterMotor.setInverted(true);
         shooterMotor.setIdleMode(IdleMode.kCoast);
         shooterEncoder.setVelocityConversionFactor(1 / (SHOOTER_GEARING * 60));
-        // Not using burn flash yet because this code is ran on the test bench, and we
-        // don't want to invert those
-//        shooterMotor.burnFlash();
+        shooterMotor.burnFlash();
 
         shooterTab.addNumber("Target Shooter RPM", () -> shooterTargetRPS * 60);
         shooterTab.addNumber("Actual Shooter RPM", () -> shooterEncoder.getVelocity() * 60);
