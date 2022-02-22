@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
 
-public class TeleopDrive extends CommandBase {
+public class TankishDriveCommand extends CommandBase {
     private final DriveTrain driveTrain;
     private final PlaystationController driverController;
 
-    public TeleopDrive(DriveTrain driveTrain, PlaystationController driverController) {
+    public TankishDriveCommand(DriveTrain driveTrain, PlaystationController driverController) {
         this.driveTrain = driveTrain;
         this.driverController = driverController;
 

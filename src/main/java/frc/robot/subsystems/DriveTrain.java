@@ -1,9 +1,10 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -16,27 +17,37 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.ShuffleboardTabs;
 
 public class DriveTrain extends SubsystemBase {
-    private final WPI_TalonFX leftLeader = new WPI_TalonFX(DriveConstants.LEFT_LEADER_PORT);
-    private final WPI_TalonFX leftFollower = new WPI_TalonFX(DriveConstants.LEFT_FOLLOWER_PORT);
+    private final CANSparkMax leftTop = new CANSparkMax(DriveConstants.LEFT_TOP_PORT, MotorType.kBrushless);
+    private final CANSparkMax leftBack = new CANSparkMax(DriveConstants.LEFT_BACK_PORT, MotorType.kBrushless);
+    private final CANSparkMax leftFront = new CANSparkMax(DriveConstants.LEFT_FRONT_PORT, MotorType.kBrushless);
 
-    private final WPI_TalonFX rightLeader = new WPI_TalonFX(DriveConstants.RIGHT_LEADER_PORT);
-    private final WPI_TalonFX rightFollower = new WPI_TalonFX(DriveConstants.RIGHT_FOLLOWER_PORT);
+    private final CANSparkMax rightTop = new CANSparkMax(DriveConstants.RIGHT_TOP_PORT, MotorType.kBrushless);
+    private final CANSparkMax rightBack = new CANSparkMax(DriveConstants.RIGHT_BACK_PORT, MotorType.kBrushless);
+    private final CANSparkMax rightFront = new CANSparkMax(DriveConstants.RIGHT_FRONT_PORT, MotorType.kBrushless);
+
+    private final RelativeEncoder leftEncoder = leftTop.getEncoder();
+    private final RelativeEncoder rightEncoder = rightTop.getEncoder();
 
     private final AHRS gyro = new AHRS();
 
-    private final DifferentialDrive differentialDrive = new DifferentialDrive(leftLeader, rightLeader);
+    private final DifferentialDrive differentialDrive = new DifferentialDrive(leftTop, rightTop);
 
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
+    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getRotation2d());
     private final Field2d field2d = new Field2d();
 
     public DriveTrain() {
-        leftFollower.follow(leftLeader);
-        rightFollower.follow(rightLeader);
+        leftBack.follow(leftTop);
+        leftFront.follow(leftTop);
 
-        rightLeader.setInverted(true);
+        rightBack.follow(rightTop);
+        rightFront.follow(rightTop);
 
-        leftFollower.setInverted(InvertType.FollowMaster);
-        rightFollower.setInverted(InvertType.FollowMaster);
+        leftEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
+        leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to
+                                                                                            // meters/second
+
+        rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
+        rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
 
         ShuffleboardTabs.getAutoTab().addNumber("Left Encoder", this::getLeftEncoderDistance);
         ShuffleboardTabs.getAutoTab().addNumber("Right Encoder", this::getRightEncoderDistance);
@@ -45,13 +56,13 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void resetEncoders() {
-        leftLeader.setSelectedSensorPosition(0);
-        rightLeader.setSelectedSensorPosition(0);
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
     }
 
     @Override
     public void periodic() {
-        odometry.update(gyro.getRotation2d(), getLeftEncoderDistance(), getRightEncoderDistance());
+        odometry.update(getRotation2d(), getLeftEncoderDistance(), getRightEncoderDistance());
         field2d.setRobotPose(odometry.getPoseMeters());
     }
 
@@ -61,7 +72,7 @@ public class DriveTrain extends SubsystemBase {
 
     public void resetOdometry(Pose2d pose) {
         resetEncoders();
-        odometry.resetPosition(pose, gyro.getRotation2d());
+        odometry.resetPosition(pose, getRotation2d());
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
@@ -73,18 +84,18 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void voltageDrive(double leftVoltage, double rightVoltage) {
-        leftLeader.setVoltage(leftVoltage);
-        rightLeader.setVoltage(rightVoltage);
+        leftTop.setVoltage(leftVoltage);
+        rightTop.setVoltage(rightVoltage);
 
         differentialDrive.feed();
     }
 
     public double getLeftEncoderDistance() {
-        return leftLeader.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_COUNT;
+        return leftEncoder.getPosition();
     }
 
     public double getRightEncoderDistance() {
-        return rightLeader.getSelectedSensorPosition() * DriveConstants.DISTANCE_PER_COUNT;
+        return rightEncoder.getPosition();
     }
 
     public double getAverageEncodersDistance() {
@@ -95,14 +106,14 @@ public class DriveTrain extends SubsystemBase {
      * @return the rate of change of the left encoder (meters/second)
      */
     public double getLeftEncoderRate() {
-        return leftLeader.getSelectedSensorVelocity() * DriveConstants.DISTANCE_PER_COUNT * 10;
+        return leftEncoder.getVelocity();
     }
 
     /**
      * @return the rate of change of the right encoder (meters/second)
      */
     public double getRightEncoderRate() {
-        return rightLeader.getSelectedSensorVelocity() * DriveConstants.DISTANCE_PER_COUNT * 10;
+        return rightEncoder.getVelocity();
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -119,15 +130,19 @@ public class DriveTrain extends SubsystemBase {
 
     public void setBrakeMode(boolean brakeOn) {
         if (brakeOn) {
-            leftLeader.setNeutralMode(NeutralMode.Brake);
-            leftFollower.setNeutralMode(NeutralMode.Brake);
-            rightLeader.setNeutralMode(NeutralMode.Brake);
-            rightFollower.setNeutralMode(NeutralMode.Brake);
+            leftTop.setIdleMode(IdleMode.kBrake);
+            leftBack.setIdleMode(IdleMode.kBrake);
+            leftFront.setIdleMode(IdleMode.kBrake);
+            rightTop.setIdleMode(IdleMode.kBrake);
+            rightBack.setIdleMode(IdleMode.kBrake);
+            rightFront.setIdleMode(IdleMode.kBrake);
         } else {
-            leftLeader.setNeutralMode(NeutralMode.Coast);
-            leftFollower.setNeutralMode(NeutralMode.Coast);
-            rightLeader.setNeutralMode(NeutralMode.Coast);
-            rightFollower.setNeutralMode(NeutralMode.Coast);
+            leftTop.setIdleMode(IdleMode.kCoast);
+            leftBack.setIdleMode(IdleMode.kCoast);
+            leftFront.setIdleMode(IdleMode.kCoast);
+            rightTop.setIdleMode(IdleMode.kCoast);
+            rightBack.setIdleMode(IdleMode.kCoast);
+            rightFront.setIdleMode(IdleMode.kCoast);
         }
     }
 
