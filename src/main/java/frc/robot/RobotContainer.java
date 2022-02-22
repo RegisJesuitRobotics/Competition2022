@@ -8,10 +8,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.climber.ClimberBackwardCommand;
+import frc.robot.commands.climber.ClimberDownCommand;
+import frc.robot.commands.climber.ClimberForwardCommand;
+import frc.robot.commands.climber.ClimberUpCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.joysticks.PlaystationController;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
@@ -27,7 +32,7 @@ import frc.robot.utils.ShuffleboardTabs;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
-//    private final Climber climber = new Climber();
+    private final Climber climber = new Climber();
 //    private final LimeLight limeLight = new LimeLight();
     private final Shooter shooter = new Shooter();
     private final Feeder feeder = new Feeder();
@@ -65,6 +70,11 @@ public class RobotContainer {
         driverController.circle
                 .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(600), () -> feeder.setFeederRPM(0), feeder));
         evaluateDriveStyle();
+        driverController.climberUpButton.whenHeld(new ClimberUpCommand(climber));
+        driverController.climberDownButton.whenHeld(new ClimberDownCommand(climber));
+        driverController.climberForwardRotationButton.whenHeld(new ClimberForwardCommand(climber));
+        driverController.climberBackwardRotationButton.whenHeld(new ClimberBackwardCommand(climber));
+
     }
 
 
