@@ -1,12 +1,14 @@
 package frc.robot.commands.limelight;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.LimeLightConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.LimeLight;
 
-public class LimeLightAllAlignCommand extends LimeLightCommand {
-    private final double targetDistance;
+public class LimeLightAllAlignCommand extends CommandBase {
+    private final LimeLight limeLight;
     private final DriveTrain driveTrain;
+    private final double targetDistance;
     private double distanceError = 0.0;
 
     /**
@@ -15,11 +17,16 @@ public class LimeLightAllAlignCommand extends LimeLightCommand {
      * @param driveTrain               driveTrain subsystem
      */
     public LimeLightAllAlignCommand(double targetDistanceFromTarget, LimeLight limeLight, DriveTrain driveTrain) {
-        super(limeLight);
         this.driveTrain = driveTrain;
+        this.limeLight = limeLight;
         this.targetDistance = targetDistanceFromTarget;
 
         addRequirements(driveTrain);
+    }
+
+    @Override
+    public void initialize() {
+        limeLight.setLightMode(LimeLight.LightMode.ON);
     }
 
     @Override
