@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+// import frc.robot.commands.shooter.ShootWheel;
 import frc.robot.utils.MathUtils;
 
 @SuppressWarnings("unused")
@@ -23,7 +24,7 @@ public class PlaystationController extends Joystick {
 
     public final JoystickButton share = new JoystickButton(this, Button.kShare.value);
     public final JoystickButton options = new JoystickButton(this, Button.kOptions.value);
-
+ 
     public final ThumbStick leftThumb = new ThumbStick(this, Button.kL3.value, Axis.kLeftX.value, Axis.kLeftY.value);
     public final ThumbStick rightThumb = new ThumbStick(this, Button.kR3.value, Axis.kRightX.value, Axis.kRightY.value);
 
@@ -41,8 +42,8 @@ public class PlaystationController extends Joystick {
         private final int axisPort;
         private final GenericHID parent;
 
-        public Trigger(GenericHID parent, int axisPort) {
-            this.parent = parent;
+        public Trigger(PlaystationController playstationController, int axisPort) {
+            this.parent = playstationController;
             this.axisPort = axisPort;
         }
 

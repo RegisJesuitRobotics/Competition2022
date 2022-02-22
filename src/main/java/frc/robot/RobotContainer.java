@@ -15,9 +15,11 @@ import frc.robot.commands.climber.ClimberForwardCommand;
 import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
+import frc.robot.commands.shooter.ShootWheel;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.utils.ShuffleboardTabs;
 
 /**
@@ -32,7 +34,7 @@ public class RobotContainer {
     private final DriveTrain driveTrain = new DriveTrain();
     private final Climber climber = new Climber();
 //    private final LimeLight limeLight = new LimeLight();
-//    private final Shooter shooter = new Shooter();
+   private final Shooter shooter = new Shooter();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
@@ -68,6 +70,8 @@ public class RobotContainer {
         driverController.climberForwardRotationButton.whenHeld(new ClimberForwardCommand(climber));
         driverController.climberBackwardRotationButton.whenHeld(new ClimberBackwardCommand(climber));
 
+        driverController.rightButton.whenHeld(new ShootWheel(shooter));
+       // driverController.rightButton.whenActive(new
     }
 
 
