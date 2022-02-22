@@ -22,11 +22,11 @@ public final class Constants {
 
     public static class DriveConstants {
         public static final int LEFT_TOP_PORT = 2;
-        public static final int LEFT_FRONT_PORT = 3;
-        public static final int LEFT_BACK_PORT = 4;
+        public static final int LEFT_FRONT_PORT = 1;
+        public static final int LEFT_BACK_PORT = 3;
 
-        public static final int RIGHT_TOP_PORT = 5;
-        public static final int RIGHT_FRONT_PORT = 6;
+        public static final int RIGHT_TOP_PORT = 8;
+        public static final int RIGHT_FRONT_PORT = 9;
         public static final int RIGHT_BACK_PORT = 7;
 
         public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(6);
@@ -51,19 +51,19 @@ public final class Constants {
     }
 
     public static class IntakeConstants {
-        public static final int INTAKE_PORT = -1;
+        public static final int INTAKE_PORT = 14;
         public static final int SOLENOID_PORT = -1;
     }
 
     public static class ClimberConstants {
-        public static final int LEFT_CLIMBER_LENGTH_PORT = -1;
-        public static final int LEFT_CLIMBER_ROTATION_PORT = -1;
-        public static final int RIGHT_CLIMBER_LENGTH_PORT = -1;
-        public static final int RIGHT_CLIMBER_ROTATION_PORT = -1;
+        public static final int LEFT_CLIMBER_LENGTH_PORT = 5;
+        public static final int LEFT_CLIMBER_ROTATION_PORT = 4;
+        public static final int RIGHT_CLIMBER_LENGTH_PORT = 11;
+        public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
     }
 
     public static class ShooterConstants {
-        public static final int SHOOTER_PORT = -1;
+        public static final int SHOOTER_PORT = 13;
 
         public static final double VELOCITY_P = 0;
         public static final double VELOCITY_I = 0;
