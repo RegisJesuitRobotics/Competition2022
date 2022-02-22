@@ -43,7 +43,8 @@ public class DriveTrain extends SubsystemBase {
         rightFront.follow(rightTop);
 
         leftEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
-        leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to meters/second
+        leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to
+                                                                                            // meters/second
 
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
