@@ -34,13 +34,14 @@ public class Shooter extends SubsystemBase {
         shooterMotor.burnFlash();
 
         shooterTab.addNumber("Target Shooter RPM", () -> shooterTargetRPS * 60);
-        shooterTab.addNumber("Actual Shooter RPM", () -> shooterEncoder.getVelocity() * 60);
+        shooterTab.addNumber("Actual Shooter RPM", this::getShooterRPM);
     }
 
 
     public void setShooterRPM(double rpm) {
         shooterTargetRPS = rpm / 60;
     }
+
 
     public double getShooterRPM() {
         return shooterEncoder.getVelocity() * 60;

@@ -64,7 +64,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         driverController.square.whileHeld(
-                new StartEndCommand(() -> shooter.setShooterRPM(2000), () -> shooter.setShooterRPM(0), shooter));
+                new StartEndCommand(() -> shooter.setShooterRPM(600), () -> shooter.setShooterRPM(0), shooter));
         driverController.circle
                 .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(600), () -> feeder.setFeederRPM(0), feeder));
         evaluateDriveStyle();
