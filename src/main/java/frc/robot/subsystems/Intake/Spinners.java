@@ -6,12 +6,13 @@ package frc.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import static frc.robot.Constants.IntakeConstants;
 
 public class Spinners extends SubsystemBase {
-  private final WPI_TalonFX leftSpinner = new WPI_TalonFX(IntakeConstants.SPINNER_LEFT);
-  private final WPI_TalonFX rightSpinner = new WPI_TalonFX(IntakeConstants.SPINNER_RIGHT);
+  private final WPI_VictorSPX leftSpinner = new WPI_VictorSPX(IntakeConstants.SPINNER_LEFT);
+  private final WPI_VictorSPX rightSpinner = new WPI_VictorSPX(IntakeConstants.SPINNER_RIGHT);
   
   /** Creates a new Spinners. */
   public Spinners() {
