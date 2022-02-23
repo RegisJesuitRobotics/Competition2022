@@ -17,10 +17,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.joysticks.PlaystationController;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.LimeLight;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.*;
 import frc.robot.utils.ShuffleboardTabs;
 
 /**
@@ -71,13 +68,12 @@ public class RobotContainer {
         driverController.circle
                 .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(600), () -> feeder.setFeederRPM(0), feeder));
         evaluateDriveStyle();
-        driverController.climberUpButton.whenHeld(new ClimberUpCommand(climber));
-        driverController.climberDownButton.whenHeld(new ClimberDownCommand(climber));
-        driverController.climberForwardRotationButton.whenHeld(new ClimberForwardCommand(climber));
-        driverController.climberBackwardRotationButton.whenHeld(new ClimberBackwardCommand(climber));
+        driverController.dPad.up.whenHeld(new ClimberUpCommand(climber));
+        driverController.dPad.down.whenHeld(new ClimberDownCommand(climber));
+        driverController.dPad.right.whenHeld(new ClimberForwardCommand(climber));
+        driverController.dPad.left.whenHeld(new ClimberBackwardCommand(climber));
 
     }
-
 
     public void evaluateDriveStyle() {
         driveTrain.setDefaultCommand(teleopDriveStyle.getSelected());
