@@ -14,8 +14,9 @@ import static frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
 
-  private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
-  private final Solenoid intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.SOLENOID_PORT);
+    private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_PORT,
+            CANSparkMaxLowLevel.MotorType.kBrushless);
+    private final Solenoid intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.SOLENOID_PORT);
 
     public void setPercentage(double percentage) {
         intakeMotor.set(percentage);

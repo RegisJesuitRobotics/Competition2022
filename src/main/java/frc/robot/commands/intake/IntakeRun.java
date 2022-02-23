@@ -8,35 +8,35 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake.Intake;
 
 public class IntakeRun extends CommandBase {
-  private final double speed;
-  private final Intake intake;
-  
-  public IntakeRun(double speed, Intake intake) {
-    this.speed = speed;
-    this.intake = intake;
-    
-    addRequirements(intake);
-  }
+    private final double speed;
+    private final Intake intake;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    public IntakeRun(double speed, Intake intake) {
+        this.speed = speed;
+        this.intake = intake;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    intake.setPercentage(speed);
-  }
+        addRequirements(intake);
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    intake.setPercentage(0.0);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        intake.setPercentage(speed);
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        intake.setPercentage(0.0);
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

@@ -11,18 +11,18 @@ import frc.robot.subsystems.Intake.Intake;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeDeploy extends InstantCommand {
-  private final Intake intake;
+    private final Intake intake;
 
-  public IntakeDeploy(Intake intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.intake = intake;
-    
-    addRequirements(intake);
-  }
+    public IntakeDeploy(Intake intake) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.intake = intake;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    intake.setSolenoid(true);
-  }
+        addRequirements(intake);
+    }
+
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        intake.setSolenoid(true);
+    }
 }
