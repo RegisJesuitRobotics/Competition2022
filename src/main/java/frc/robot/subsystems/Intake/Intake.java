@@ -6,7 +6,6 @@ package frc.robot.subsystems.Intake;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -18,11 +17,11 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
   private final Solenoid intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.SOLENOID_PORT);
 
-  public void setPercentage(double percentage){
-    intakeMotor.set(percentage);   
-  }
+    public void setPercentage(double percentage) {
+        intakeMotor.set(percentage);
+    }
 
-  public void setSolenoid(boolean deployed){
-    intakeSolenoid.set(deployed);
-  }
+    public void setSolenoid(boolean deployed) {
+        intakeSolenoid.set(deployed);
+    }
 }
