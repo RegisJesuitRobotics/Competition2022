@@ -5,7 +5,7 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake.Spinners;
+import frc.robot.subsystems.intake.Spinners;
 
 public class SpinnersRun extends CommandBase {
     private final double speed;
