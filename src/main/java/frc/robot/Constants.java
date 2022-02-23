@@ -71,7 +71,8 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 3.0;
 
-        public static final double LONG_DISTANCE_RPM = 2000.0;
+        public static final double FAR_DISTANCE_RPM = 2000.0;
+        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
     }
 
     public static class FeederConstants {
@@ -89,5 +90,24 @@ public final class Constants {
     public static class LimeLightConstants {
         public static final String NETWORK_TABLES_ID = "limelight";
         public static final String STREAM_URL = "http://10.37.29.11:5800";
+
+        public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(-1);
+        public static final double MOUNT_ANGLE_DEGREES = 45.0;
+
+        public static final double P_LIMELIGHT_DISTANCE = 0.0;
+        public static final double LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS = 0.2;
+
+        public static final double P_LIMELIGHT_ANGLE = 0.0;
+        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.0;
+    }
+
+    public static class FieldConstants {
+        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
+
+        public static final double VISION_TARGET_LENGTH_METERS = Units.inchesToMeters(5);
+        public static final double VISION_TARGET_HEIGHT_METERS = Units.inchesToMeters(2);
+
+        public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
+                - (VISION_TARGET_HEIGHT_METERS / 2);
     }
 }
