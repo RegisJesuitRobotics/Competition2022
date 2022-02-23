@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.utils.MathUtils;
 
 @SuppressWarnings("unused")
@@ -31,11 +30,6 @@ public class PlaystationController extends Joystick {
     public final JoystickButton touchpad = new JoystickButton(this, Button.kTouchpad.value);
 
     public final DPad dPad = new DPad(this);
-
-    public final POVButton climberUpButton = new POVButton(this, 0);
-    public final POVButton climberDownButton = new POVButton(this, 180);
-    public final POVButton climberForwardRotationButton = new POVButton(this, 90);
-    public final POVButton climberBackwardRotationButton = new POVButton(this, 270);
 
     public static class Trigger extends edu.wpi.first.wpilibj2.command.button.Button {
         private final int axisPort;
