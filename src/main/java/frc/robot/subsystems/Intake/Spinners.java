@@ -11,19 +11,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import static frc.robot.Constants.IntakeConstants;
 
 public class Spinners extends SubsystemBase {
-  private final WPI_VictorSPX leftSpinner = new WPI_VictorSPX(IntakeConstants.SPINNER_LEFT);
-  private final WPI_VictorSPX rightSpinner = new WPI_VictorSPX(IntakeConstants.SPINNER_RIGHT);
+  private final WPI_VictorSPX spinner = new WPI_VictorSPX(IntakeConstants.SPINNER);
   
   /** Creates a new Spinners. */
   public Spinners() {
-    rightSpinner.follow(leftSpinner);
-
-    leftSpinner.setInverted(false);
-
-    rightSpinner.setInverted(InvertType.OpposeMaster);
+    spinner.setInverted(false);
   }
   
   public void setSpinners(double speed){
-    leftSpinner.set(speed);
+    spinner.set(speed);
   }
 }

@@ -53,8 +53,7 @@ public final class Constants {
     public static class IntakeConstants {
         public static final int INTAKE_PORT = -1;
         public static final int SOLENOID_PORT = -1;
-        public static final int SPINNER_LEFT = -1;
-        public static final int SPINNER_RIGHT = -1;
+        public static final int SPINNER = 6;
     }
 
 
