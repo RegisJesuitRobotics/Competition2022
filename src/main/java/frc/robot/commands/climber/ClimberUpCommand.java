@@ -22,7 +22,7 @@ public class ClimberUpCommand extends CommandBase {
     @Override
     public void initialize() {
 
-        climber.ClimberLength(PERCENT);
+        climber.setClimberLengthPercent(PERCENT);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +33,7 @@ public class ClimberUpCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
 
-        climber.ClimberLength(0.0);
+        climber.setClimberLengthPercent(0.0);
     }
 
     // Returns true when the command should end.

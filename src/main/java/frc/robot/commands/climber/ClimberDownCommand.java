@@ -21,7 +21,7 @@ public class ClimberDownCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        climber.ClimberLength(PERCENT);
+        climber.setClimberLengthPercent(PERCENT);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -31,7 +31,7 @@ public class ClimberDownCommand extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        climber.ClimberRotation(0.0);
+        climber.setClimberRotationPercent(0.0);
     }
 
     // Returns true when the command should end.
