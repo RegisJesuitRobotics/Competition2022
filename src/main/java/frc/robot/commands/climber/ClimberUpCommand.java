@@ -10,7 +10,7 @@ import frc.robot.subsystems.Climber;
 public class ClimberUpCommand extends CommandBase {
     /** Creates a new ClimberUpCommand. */
     private final double PERCENT = 0.50;
-    private Climber climber = new Climber();
+    private final Climber climber;
 
     public ClimberUpCommand(Climber climber) {
         // Use addRequirements() here to declare subsystem dependencies.
@@ -22,7 +22,7 @@ public class ClimberUpCommand extends CommandBase {
     @Override
     public void initialize() {
 
-        climber.ClimberLength(PERCENT);
+        climber.setClimberLengthPercent(PERCENT);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +33,7 @@ public class ClimberUpCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
 
-        climber.ClimberLength(0.0);
+        climber.setClimberLengthPercent(0.0);
     }
 
     // Returns true when the command should end.
