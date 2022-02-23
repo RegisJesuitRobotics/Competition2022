@@ -62,15 +62,26 @@ public final class Constants {
         public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
     }
 
-    public static class ShooterConstants {
+    // public static class ShooterConstants {
+    //     public static final int SHOOTER_PORT = 13;
+
+    //     public static final double VELOCITY_P = 0;
+    //     public static final double VELOCITY_I = 0;
+    //     public static final double VELOCITY_D = 0;
+    //     public static final double VELOCITY_FF = 0;
+
+    // }
+public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
+        // public static final int FEEDER_PORT = 1;
 
-        public static final double VELOCITY_P = 0;
-        public static final double VELOCITY_I = 0;
-        public static final double VELOCITY_D = 0;
-        public static final double VELOCITY_FF = 0;
+        public static final double SHOOTER_VELOCITY_P = 0;
+        public static final double SHOOTER_VELOCITY_S_VOLTS = 0;
+        public static final double SHOOTER_VELOCITY_V_VOLTS = 0;
+
+        public static final double SHOOTER_GEARING = 3.0;
     }
-
+    
     public static class LimeLightConstants {
         public static final String NETWORK_TABLES_ID = "limelight";
         public static final String STREAM_URL = "http://10.37.29.11:5800";

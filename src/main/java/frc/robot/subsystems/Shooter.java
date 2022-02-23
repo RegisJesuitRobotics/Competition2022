@@ -1,30 +1,51 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.joysticks.PlaystationController;
-import frc.robot.subsystems.DriveTrain;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.ShooterConstants.*;
 
-public class Shooter extends CommandBase {
-    private final CANSparkMax shooterMotor = new CANSparkMax(SHOOTER_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
-    private final SparkMaxPIDController pidController = shooterMotor.getPIDController();
+public class Shooter extends SubsystemBase {
+    private final CANSparkMax shooterMotor = new CANSparkMax(SHOOTER_PORT, MotorType.kBrushless);
+    private final RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
+    private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(SHOOTER_VELOCITY_S_VOLTS,
+            SHOOTER_VELOCITY_V_VOLTS);
+    private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
+    private double shooterTargetRPS = 0.0;
+
+    private final ShuffleboardTab shooterTab = Shuffleboard.getTab("Shooter");
 
     public Shooter() {
-        pidController.setP(VELOCITY_P);
-        pidController.setI(VELOCITY_I);
-        pidController.setD(VELOCITY_D);
-        pidController.setFF(VELOCITY_FF);
-        pidController.setOutputRange(-1, 1);
+        // We have to use rotations per second instead of the native unit of rotations
+        // per second
+        // because sys-id uses rotation/s and translating the gains seems overkill when
+        // we can just do it this way
+        shooterMotor.setInverted(true);
+        shooterMotor.setIdleMode(IdleMode.kCoast);
+        shooterEncoder.setVelocityConversionFactor(1 / (SHOOTER_GEARING * 60));
+        shooterMotor.burnFlash();
+
+        shooterTab.addNumber("Target Shooter RPM", () -> shooterTargetRPS * 60);
+        shooterTab.addNumber("Actual Shooter RPM", () -> shooterEncoder.getVelocity() * 60);
     }
 
 
-    public void setRPM(double rpm) {
-        pidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
+    public void setShooterRPM(double rpm) {
+        shooterTargetRPS = rpm / 60;
     }
-    
+
+    @Override
+    public void periodic() {
+        double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), shooterTargetRPS);
+        double shooterFeedforward = shooterFeedForward.calculate(shooterTargetRPS);
+        shooterMotor.setVoltage(shooterFeedback + shooterFeedforward);
+    }
 }
