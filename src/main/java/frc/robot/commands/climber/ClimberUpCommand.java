@@ -10,7 +10,7 @@ import frc.robot.subsystems.Climber;
 public class ClimberUpCommand extends CommandBase {
     /** Creates a new ClimberUpCommand. */
     private final double PERCENT = 0.50;
-    private Climber climber = new Climber();
+    private final Climber climber;
 
     public ClimberUpCommand(Climber climber) {
         // Use addRequirements() here to declare subsystem dependencies.

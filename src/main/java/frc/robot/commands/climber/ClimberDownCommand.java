@@ -9,7 +9,7 @@ import frc.robot.subsystems.Climber;
 
 public class ClimberDownCommand extends CommandBase {
     private final double PERCENT = -0.5;
-    private Climber climber = new Climber();
+    private final Climber climber;
 
     /** Creates a new ClimberDownCommand. */
     public ClimberDownCommand(Climber climber) {
