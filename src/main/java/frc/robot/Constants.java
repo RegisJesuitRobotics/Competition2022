@@ -93,7 +93,7 @@ public final class Constants {
         public static final String NETWORK_TABLES_ID = "limelight";
         public static final String STREAM_URL = "http://10.37.29.11:5800";
 
-        public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(-1);
+        public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(19);
         public static final double MOUNT_ANGLE_DEGREES = 45.0;
 
         public static final double P_LIMELIGHT_DISTANCE = 0.0;
