@@ -16,8 +16,9 @@ import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.joysticks.PlaystationController;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.LengthClimber;
+import frc.robot.subsystems.RotationClimber;
 import frc.robot.utils.ShuffleboardTabs;
 
 /**
@@ -30,7 +31,8 @@ import frc.robot.utils.ShuffleboardTabs;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
-    private final Climber climber = new Climber();
+    private final LengthClimber lengthClimber = new LengthClimber();
+    private final RotationClimber rotationClimber = new RotationClimber();
 //    private final LimeLight limeLight = new LimeLight();
 //    private final Shooter shooter = new Shooter();
 
@@ -63,11 +65,10 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         evaluateDriveStyle();
-        driverController.dPad.up.whenHeld(new ClimberUpCommand(climber));
-        driverController.dPad.down.whenHeld(new ClimberDownCommand(climber));
-        driverController.dPad.right.whenHeld(new ClimberForwardCommand(climber));
-        driverController.dPad.left.whenHeld(new ClimberBackwardCommand(climber));
-
+        driverController.dPad.up.whenHeld(new ClimberUpCommand(lengthClimber));
+        driverController.dPad.down.whenHeld(new ClimberDownCommand(lengthClimber));
+        driverController.dPad.right.whenHeld(new ClimberForwardCommand(rotationClimber));
+        driverController.dPad.left.whenHeld(new ClimberBackwardCommand(rotationClimber));
     }
 
     public void evaluateDriveStyle() {
