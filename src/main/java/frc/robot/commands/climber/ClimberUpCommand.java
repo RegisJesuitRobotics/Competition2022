@@ -9,7 +9,7 @@ import frc.robot.subsystems.LengthClimber;
 
 public class ClimberUpCommand extends CommandBase {
     /** Creates a new ClimberUpCommand. */
-    private final double PERCENT = 0.20;
+    private final double PERCENT = 0.40;
     private final LengthClimber climber;
 
     public ClimberUpCommand(LengthClimber climber) {

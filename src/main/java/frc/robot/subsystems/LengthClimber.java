@@ -14,10 +14,16 @@ public class LengthClimber extends SubsystemBase {
             CANSparkMaxLowLevel.MotorType.kBrushless);
 
     public LengthClimber() {
-        leftClimberLength.follow(rightClimberLength);
+        rightClimberLength.follow(leftClimberLength);
+
+        rightClimberLength.setInverted(true);
+        leftClimberLength.setInverted(false);
+        
+        rightClimberLength.burnFlash();
+        leftClimberLength.burnFlash();
     }
 
     public void setLengthPercent(double percent) {
-        rightClimberLength.set(percent);
+        leftClimberLength.set(percent);
     }
 }
