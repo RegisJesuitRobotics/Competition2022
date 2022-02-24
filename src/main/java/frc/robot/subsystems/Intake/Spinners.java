@@ -5,20 +5,19 @@
 package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import static frc.robot.Constants.IntakeConstants;
 
 public class Spinners extends SubsystemBase {
-  private final WPI_VictorSPX spinner = new WPI_VictorSPX(IntakeConstants.SPINNER);
-  
-  /** Creates a new Spinners. */
-  public Spinners() {
-    spinner.setInverted(false);
-  }
-  
-  public void setSpinners(double speed){
-    spinner.set(speed);
-  }
+    private final WPI_VictorSPX spinner = new WPI_VictorSPX(IntakeConstants.SPINNER);
+
+    /** Creates a new Spinners. */
+    public Spinners() {
+        spinner.setInverted(false);
+    }
+
+    public void setSpinners(double speed) {
+        spinner.set(speed);
+    }
 }
