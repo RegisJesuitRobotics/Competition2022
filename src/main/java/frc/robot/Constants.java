@@ -70,10 +70,6 @@ public final class Constants {
         public static final double ROTATION_SPEED = 0.3;
     }
 
-    public static class PneumaticsConstants {
-        public static final int HUB_PORT = 15;
-    }
-
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
