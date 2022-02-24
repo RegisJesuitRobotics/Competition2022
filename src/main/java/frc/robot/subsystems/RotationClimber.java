@@ -14,6 +14,12 @@ public class RotationClimber extends SubsystemBase {
 
     public RotationClimber() {
         rightClimberRotation.follow(leftClimberRotation);
+
+        rightClimberRotation.setInverted(true);
+        leftClimberRotation.setInverted(false);
+
+        leftClimberRotation.burnFlash();
+        rightClimberRotation.burnFlash();
     }
 
     public void setRotationPercent(double percent) {

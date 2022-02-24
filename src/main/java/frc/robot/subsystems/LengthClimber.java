@@ -18,7 +18,7 @@ public class LengthClimber extends SubsystemBase {
 
         rightClimberLength.setInverted(true);
         leftClimberLength.setInverted(false);
-        
+
         rightClimberLength.burnFlash();
         leftClimberLength.burnFlash();
     }

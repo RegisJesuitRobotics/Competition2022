@@ -65,6 +65,13 @@ public final class Constants {
         public static final int LEFT_CLIMBER_ROTATION_PORT = 4;
         public static final int RIGHT_CLIMBER_LENGTH_PORT = 11;
         public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
+
+        public static final double LENGTH_SPEED = 0.3;
+        public static final double ROTATION_SPEED = 0.3;
+    }
+
+    public static class PneumaticsConstants {
+        public static final int HUB_PORT = 15;
     }
 
     public static class ShooterConstants {
