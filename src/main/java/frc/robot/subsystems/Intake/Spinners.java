@@ -10,7 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import static frc.robot.Constants.IntakeConstants;
 
 public class Spinners extends SubsystemBase {
-    private final WPI_VictorSPX spinner = new WPI_VictorSPX(IntakeConstants.SPINNER);
+    private final WPI_VictorSPX spinner = new WPI_VictorSPX(IntakeConstants.SPINNER_PORT);
 
     /** Creates a new Spinners. */
     public Spinners() {
