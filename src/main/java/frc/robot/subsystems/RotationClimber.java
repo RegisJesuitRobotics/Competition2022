@@ -13,6 +13,9 @@ public class RotationClimber extends SubsystemBase {
             CANSparkMaxLowLevel.MotorType.kBrushless);
 
     public RotationClimber() {
+        rightClimberRotation.restoreFactoryDefaults();
+        leftClimberRotation.restoreFactoryDefaults();
+
         rightClimberRotation.follow(leftClimberRotation);
 
         rightClimberRotation.setInverted(true);

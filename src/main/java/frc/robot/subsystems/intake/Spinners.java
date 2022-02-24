@@ -16,6 +16,9 @@ public class Spinners extends SubsystemBase {
 
     /** Creates a new Spinners. */
     public Spinners() {
+        leftSpinner.configFactoryDefault();
+        rightSpinner.configFactoryDefault();
+
         rightSpinner.follow(leftSpinner);
 
         leftSpinner.setInverted(false);

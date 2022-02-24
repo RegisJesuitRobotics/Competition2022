@@ -36,6 +36,13 @@ public class DriveTrain extends SubsystemBase {
     private final Field2d field2d = new Field2d();
 
     public DriveTrain() {
+        leftTop.restoreFactoryDefaults();
+        leftBack.restoreFactoryDefaults();
+        leftFront.restoreFactoryDefaults();
+        rightTop.restoreFactoryDefaults();
+        rightBack.restoreFactoryDefaults();
+        rightFront.restoreFactoryDefaults();
+
         leftBack.follow(leftTop);
         leftFront.follow(leftTop);
 
@@ -44,10 +51,16 @@ public class DriveTrain extends SubsystemBase {
 
         leftEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
         leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to
-                                                                                            // meters/second
 
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
+
+        leftTop.burnFlash();
+        leftBack.burnFlash();
+        leftFront.burnFlash();
+        rightTop.burnFlash();
+        rightBack.burnFlash();
+        rightFront.burnFlash();
 
         ShuffleboardTabs.getAutoTab().addNumber("Left Encoder", this::getLeftEncoderDistance);
         ShuffleboardTabs.getAutoTab().addNumber("Right Encoder", this::getRightEncoderDistance);

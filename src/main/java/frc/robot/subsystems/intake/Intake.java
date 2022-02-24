@@ -21,6 +21,12 @@ public class Intake extends SubsystemBase {
     private final DoubleSolenoid intakeSolenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH,
             IntakeConstants.SOLENOID_LEFT_OPEN_PORT, IntakeConstants.SOLENOID_LEFT_CLOSE_PORT);
 
+    public Intake() {
+        intakeMotor.restoreFactoryDefaults();
+
+        intakeMotor.burnFlash();
+    }
+
     public void setPercentage(double percentage) {
         intakeMotor.set(percentage);
     }

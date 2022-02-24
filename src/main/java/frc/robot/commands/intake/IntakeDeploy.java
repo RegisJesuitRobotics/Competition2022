@@ -14,7 +14,6 @@ public class IntakeDeploy extends InstantCommand {
     private final Intake intake;
 
     public IntakeDeploy(Intake intake) {
-        // Use addRequirements() here to declare subsystem dependencies.
         this.intake = intake;
 
         addRequirements(intake);
