@@ -49,6 +49,10 @@ public class DriveTrain extends SubsystemBase {
         rightBack.follow(rightTop);
         rightFront.follow(rightTop);
 
+        rightTop.setInverted(true);
+        rightFront.setInverted(true);
+        rightBack.setInverted(true);
+
         leftEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
         leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to
 

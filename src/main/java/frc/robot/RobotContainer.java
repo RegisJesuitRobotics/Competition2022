@@ -15,7 +15,6 @@ import frc.robot.commands.climber.ClimberForwardCommand;
 import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
-import frc.robot.commands.intake.IntakeDeploy;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.LengthClimber;
@@ -68,12 +67,11 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         evaluateDriveStyle();
-        driverController.dPad.up.whenHeld(new ClimberUpCommand(lengthClimber));
-        driverController.dPad.down.whenHeld(new ClimberDownCommand(lengthClimber));
-        driverController.dPad.right.whenHeld(new ClimberForwardCommand(rotationClimber));
-        driverController.dPad.left.whenHeld(new ClimberBackwardCommand(rotationClimber));
+        driverController.triangle.whenHeld(new ClimberUpCommand(lengthClimber));
+        driverController.x.whenHeld(new ClimberDownCommand(lengthClimber));
+        driverController.circle.whenHeld(new ClimberForwardCommand(rotationClimber));
+        driverController.square.whenHeld(new ClimberBackwardCommand(rotationClimber));
 
-        driverController.triangle.whenPressed(new IntakeDeploy(intake));
     }
 
     public void evaluateDriveStyle() {

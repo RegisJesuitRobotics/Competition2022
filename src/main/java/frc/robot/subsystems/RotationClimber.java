@@ -16,16 +16,13 @@ public class RotationClimber extends SubsystemBase {
         rightClimberRotation.restoreFactoryDefaults();
         leftClimberRotation.restoreFactoryDefaults();
 
-        rightClimberRotation.follow(leftClimberRotation);
-
-        rightClimberRotation.setInverted(true);
-        leftClimberRotation.setInverted(false);
+        rightClimberRotation.follow(leftClimberRotation, true);
 
         leftClimberRotation.burnFlash();
         rightClimberRotation.burnFlash();
     }
 
     public void setRotationPercent(double percent) {
-        leftClimberRotation.set(percent);
+        leftClimberRotation.set(-percent);
     }
 }

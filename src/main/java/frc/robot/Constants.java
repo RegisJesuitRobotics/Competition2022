@@ -52,10 +52,10 @@ public final class Constants {
 
     public static class IntakeConstants {
         public static final int INTAKE_PORT = 14;
-        public static final int SOLENOID_RIGHT_OPEN_PORT = 1;
-        public static final int SOLENOID_RIGHT_CLOSE_PORT = 0;
-        public static final int SOLENOID_LEFT_OPEN_PORT = 8;
-        public static final int SOLENOID_LEFT_CLOSE_PORT = 7;
+        public static final int SOLENOID_RIGHT_FORWARD_PORT = 0;
+        public static final int SOLENOID_RIGHT_REVERSE_PORT = 1;
+        public static final int SOLENOID_LEFT_FORWARD_PORT = 8;
+        public static final int SOLENOID_LEFT_REVERSE_PORT = 7;
         public static final int SPINNER_LEFT = -1;
         public static final int SPINNER_RIGHT = -1;
     }
@@ -66,8 +66,8 @@ public final class Constants {
         public static final int RIGHT_CLIMBER_LENGTH_PORT = 11;
         public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
 
-        public static final double LENGTH_SPEED = 0.3;
-        public static final double ROTATION_SPEED = 0.3;
+        public static final double LENGTH_SPEED = 0.5;
+        public static final double ROTATION_SPEED = 0.2;
     }
 
     public static class ShooterConstants {

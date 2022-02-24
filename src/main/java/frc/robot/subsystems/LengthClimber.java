@@ -17,16 +17,13 @@ public class LengthClimber extends SubsystemBase {
         rightClimberLength.restoreFactoryDefaults();
         leftClimberLength.restoreFactoryDefaults();
 
-        rightClimberLength.follow(leftClimberLength);
-
-        rightClimberLength.setInverted(true);
-        leftClimberLength.setInverted(false);
+        rightClimberLength.follow(leftClimberLength, true);
 
         rightClimberLength.burnFlash();
         leftClimberLength.burnFlash();
     }
 
     public void setLengthPercent(double percent) {
-        leftClimberLength.set(percent);
+        leftClimberLength.set(-percent);
     }
 }

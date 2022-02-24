@@ -17,9 +17,9 @@ public class Intake extends SubsystemBase {
     private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_PORT,
             CANSparkMaxLowLevel.MotorType.kBrushless);
     private final DoubleSolenoid intakeSolenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-            IntakeConstants.SOLENOID_RIGHT_OPEN_PORT, IntakeConstants.SOLENOID_RIGHT_CLOSE_PORT);
+            IntakeConstants.SOLENOID_RIGHT_FORWARD_PORT, IntakeConstants.SOLENOID_RIGHT_REVERSE_PORT);
     private final DoubleSolenoid intakeSolenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-            IntakeConstants.SOLENOID_LEFT_OPEN_PORT, IntakeConstants.SOLENOID_LEFT_CLOSE_PORT);
+            IntakeConstants.SOLENOID_LEFT_FORWARD_PORT, IntakeConstants.SOLENOID_LEFT_REVERSE_PORT);
 
     public Intake() {
         intakeMotor.restoreFactoryDefaults();
