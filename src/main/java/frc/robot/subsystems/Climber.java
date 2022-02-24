@@ -14,7 +14,7 @@ public class Climber extends SubsystemBase {
             CANSparkMaxLowLevel.MotorType.kBrushless);
     private final CANSparkMax rightClimberLength = new CANSparkMax(RIGHT_CLIMBER_LENGTH_PORT,
             CANSparkMaxLowLevel.MotorType.kBrushless);
-    private final CANSparkMax rightClimberRotation = new CANSparkMax(RIGHT_CLIMBER_LENGTH_PORT,
+    private final CANSparkMax rightClimberRotation = new CANSparkMax(RIGHT_CLIMBER_ROTATION_PORT,
             CANSparkMaxLowLevel.MotorType.kBrushless);
 
     public Climber() {

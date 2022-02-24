@@ -13,10 +13,13 @@ import frc.robot.commands.climber.ClimberBackwardCommand;
 import frc.robot.commands.climber.ClimberDownCommand;
 import frc.robot.commands.climber.ClimberForwardCommand;
 import frc.robot.commands.climber.ClimberUpCommand;
+import frc.robot.commands.intake.IntakeDeploy;
+import frc.robot.commands.intake.IntakeSpinnersRun;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.intake.*;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.ShuffleboardTabs;
 
@@ -31,6 +34,8 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
     private final Climber climber = new Climber();
+    private final Intake intake = new Intake();
+    private final Spinners spinners = new Spinners();
 //    private final LimeLight limeLight = new LimeLight();
 //    private final Shooter shooter = new Shooter();
 
@@ -68,6 +73,8 @@ public class RobotContainer {
         driverController.dPad.right.whenHeld(new ClimberForwardCommand(climber));
         driverController.dPad.left.whenHeld(new ClimberBackwardCommand(climber));
 
+        driverController.triangle.whenPressed(new IntakeDeploy(intake));
+        driverController.leftButton.whenHeld(new IntakeSpinnersRun(intake, spinners));
     }
 
     public void evaluateDriveStyle() {
