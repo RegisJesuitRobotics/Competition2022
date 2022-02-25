@@ -9,10 +9,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
-import frc.robot.commands.climber.ClimberBackwardCommand;
-import frc.robot.commands.climber.ClimberDownCommand;
-import frc.robot.commands.climber.ClimberForwardCommand;
-import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.intake.IntakeDeploy;
 import frc.robot.commands.intake.IntakeSpinnersRun;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -75,7 +71,7 @@ public class RobotContainer {
         driverController.leftButton.whenPressed(new SetAimCommand(true, shooter));
         driverController.rightButton.whenPressed(new SetAimCommand(false, shooter));
         evaluateDriveStyle();
-      
+
         driverController.triangle.whenPressed(new IntakeDeploy(intake));
         driverController.leftButton.whenHeld(new IntakeSpinnersRun(intake, spinners));
     }
