@@ -22,7 +22,7 @@ public class ArcadeDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        driveTrain.arcadeDrive(driverController.leftThumb.getXAxis(), driverController.leftThumb.getYAxis());
+        driveTrain.arcadeDrive(driverController.leftThumb.getYAxis(), driverController.leftThumb.getXAxis());
     }
 
     @Override

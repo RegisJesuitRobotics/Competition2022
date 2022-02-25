@@ -6,25 +6,20 @@ package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import static frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
-
     private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_PORT,
             CANSparkMaxLowLevel.MotorType.kBrushless);
     private final DoubleSolenoid intakeSolenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-            IntakeConstants.SOLENOID_RIGHT_OPEN_PORT, IntakeConstants.SOLENOID_RIGHT_CLOSE_PORT);
+            IntakeConstants.SOLENOID_RIGHT_FORWARD_PORT, IntakeConstants.SOLENOID_RIGHT_REVERSE_PORT);
     private final DoubleSolenoid intakeSolenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-            IntakeConstants.SOLENOID_LEFT_OPEN_PORT, IntakeConstants.SOLENOID_LEFT_CLOSE_PORT);
-
-    public Intake() {
-        intakeMotor.setInverted(true);
-    }
+            IntakeConstants.SOLENOID_LEFT_FORWARD_PORT, IntakeConstants.SOLENOID_LEFT_REVERSE_PORT);
 
     public Intake() {
         intakeMotor.restoreFactoryDefaults();

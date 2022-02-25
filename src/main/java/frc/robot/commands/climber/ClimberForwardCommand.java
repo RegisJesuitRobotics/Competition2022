@@ -5,34 +5,27 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.subsystems.RotationClimber;
 
 public class ClimberForwardCommand extends CommandBase {
-    /** Creates a new ClimberForwardCommand. */
-    private final double PERCENT = 0.5;
-    private final Climber climber;
+    private final RotationClimber climber;
 
-
-    public ClimberForwardCommand(Climber climber) {
-        // Use addRequirements() here to declare subsystem dependencies.
+    public ClimberForwardCommand(RotationClimber climber) {
         this.climber = climber;
-        // addRequirements(climber);
-    }
-
-    // Called when the command is initially scheduled.
-    @Override
-    public void initialize() {
-        climber.setClimberRotationPercent(PERCENT);
+        addRequirements(climber);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {}
+    public void execute() {
+        climber.setRotationPercent(ClimberConstants.ROTATION_SPEED);
+    }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        climber.setClimberLengthPercent(0.0);
+        climber.setRotationPercent(0.0);
     }
 
     // Returns true when the command should end.

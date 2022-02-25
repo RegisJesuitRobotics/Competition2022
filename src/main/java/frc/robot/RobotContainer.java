@@ -71,6 +71,10 @@ public class RobotContainer {
         driverController.leftButton.whenPressed(new SetAimCommand(true, shooter));
         driverController.rightButton.whenPressed(new SetAimCommand(false, shooter));
         evaluateDriveStyle();
+        driverController.triangle.whenHeld(new ClimberUpCommand(lengthClimber));
+        driverController.x.whenHeld(new ClimberDownCommand(lengthClimber));
+        driverController.circle.whenHeld(new ClimberForwardCommand(rotationClimber));
+        driverController.square.whenHeld(new ClimberBackwardCommand(rotationClimber));
 
         driverController.triangle.whenPressed(new IntakeDeploy(intake));
         driverController.leftButton.whenHeld(new IntakeSpinnersRun(intake, spinners));
