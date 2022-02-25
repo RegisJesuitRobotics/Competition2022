@@ -9,14 +9,20 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
-import frc.robot.commands.intake.IntakeDeploy;
-import frc.robot.commands.intake.IntakeSpinnersRun;
+import frc.robot.commands.climber.ClimberBackwardCommand;
+import frc.robot.commands.climber.ClimberDownCommand;
+import frc.robot.commands.climber.ClimberForwardCommand;
+import frc.robot.commands.climber.ClimberUpCommand;
+import frc.robot.commands.intake.IntakeDeployCommand;
+import frc.robot.commands.intake.IntakeSpinnersRunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.shooter.SetAimCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.Spinners;
 import frc.robot.utils.ShuffleboardTabs;
 
 /**
@@ -32,7 +38,8 @@ public class RobotContainer {
     private final LimeLight limeLight = new LimeLight();
     private final Feeder feeder = new Feeder();
     private final Shooter shooter = new Shooter();
-    private final Climber climber = new Climber();
+    private final LengthClimber lengthClimber = new LengthClimber();
+    private final RotationClimber rotationClimber = new RotationClimber();
     private final Intake intake = new Intake();
     private final Spinners spinners = new Spinners();
 
@@ -76,8 +83,8 @@ public class RobotContainer {
         driverController.circle.whenHeld(new ClimberForwardCommand(rotationClimber));
         driverController.square.whenHeld(new ClimberBackwardCommand(rotationClimber));
 
-        driverController.triangle.whenPressed(new IntakeDeploy(intake));
-        driverController.leftButton.whenHeld(new IntakeSpinnersRun(intake, spinners));
+        driverController.triangle.whenPressed(new IntakeDeployCommand(intake));
+        driverController.leftButton.whenHeld(new IntakeSpinnersRunCommand(intake, spinners));
     }
 
     public void evaluateDriveStyle() {
