@@ -10,10 +10,10 @@ import frc.robot.subsystems.intake.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeDeploy extends InstantCommand {
+public class IntakeDeployCommand extends InstantCommand {
     private final Intake intake;
 
-    public IntakeDeploy(Intake intake) {
+    public IntakeDeployCommand(Intake intake) {
         this.intake = intake;
 
         addRequirements(intake);

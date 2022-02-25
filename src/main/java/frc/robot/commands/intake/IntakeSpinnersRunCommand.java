@@ -11,14 +11,14 @@ import frc.robot.subsystems.intake.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeSpinnersRun extends ParallelCommandGroup {
+public class IntakeSpinnersRunCommand extends ParallelCommandGroup {
     private final double INTAKE_SPEED = 0.5;
     private final double SPINNERS_SPEED = 0.3;
 
     /** Creates a new IntakeSpinnersRun. */
-    public IntakeSpinnersRun(Intake intake, Spinners spinners) {
+    public IntakeSpinnersRunCommand(Intake intake, Spinners spinners) {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
-        addCommands(new IntakeRun(INTAKE_SPEED, intake), new SpinnersRun(SPINNERS_SPEED, spinners));
+        addCommands(new IntakeRunCommand(INTAKE_SPEED, intake), new SpinnersRunCommand(SPINNERS_SPEED, spinners));
     }
 }

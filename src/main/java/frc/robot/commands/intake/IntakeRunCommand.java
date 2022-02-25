@@ -5,19 +5,17 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.intake.Spinners;
+import frc.robot.subsystems.intake.Intake;
 
-public class SpinnersRun extends CommandBase {
+public class IntakeRunCommand extends CommandBase {
     private final double speed;
-    private final Spinners spinners;
+    private final Intake intake;
 
-    /** Creates a new IntakeSpinnersRun. */
-    public SpinnersRun(double speed, Spinners spinners) {
-        // Use addRequirements() here to declare subsystem dependencies.
+    public IntakeRunCommand(double speed, Intake intake) {
         this.speed = speed;
-        this.spinners = spinners;
+        this.intake = intake;
 
-        addRequirements(spinners);
+        addRequirements(intake);
     }
 
     // Called when the command is initially scheduled.
@@ -27,13 +25,13 @@ public class SpinnersRun extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        spinners.setSpinners(speed);
+        intake.setPercentage(speed);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        spinners.setSpinners(0.0);
+        intake.setPercentage(0.0);
     }
 
     // Returns true when the command should end.
