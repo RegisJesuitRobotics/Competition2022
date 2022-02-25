@@ -46,18 +46,17 @@ public final class Constants {
 
         public static final double P_DRIVE_VEL = 2.5832;
 
-        public static final double RAMSETE_B = 2;
+        public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
     }
 
     public static class IntakeConstants {
         public static final int INTAKE_PORT = 14;
+        public static final int SPINNER_PORT = 6;
         public static final int SOLENOID_RIGHT_FORWARD_PORT = 0;
         public static final int SOLENOID_RIGHT_REVERSE_PORT = 1;
         public static final int SOLENOID_LEFT_FORWARD_PORT = 8;
         public static final int SOLENOID_LEFT_REVERSE_PORT = 7;
-        public static final int SPINNER_LEFT = -1;
-        public static final int SPINNER_RIGHT = -1;
     }
 
     public static class ClimberConstants {
@@ -73,14 +72,52 @@ public final class Constants {
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
-        public static final double VELOCITY_P = 0;
-        public static final double VELOCITY_I = 0;
-        public static final double VELOCITY_D = 0;
-        public static final double VELOCITY_FF = 0;
+        public static final double SHOOTER_VELOCITY_P = 0.43187;
+        public static final double SHOOTER_VELOCITY_S_VOLTS = 0.096502;
+        public static final double SHOOTER_VELOCITY_V_VOLTS = 0.35741;
+
+        public static final int SHOOTER_AIM_OPEN_PORT = 15;
+        public static final int SHOOTER_AIM_CLOSE_PORT = 14;
+
+        public static final double SHOOTER_GEARING = 3.0;
+
+        public static final double FAR_DISTANCE_RPM = 2000.0;
+        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
+    }
+
+    public static class FeederConstants {
+        public static final int FEEDER_PORT = 12;
+
+        public static final double FEEDER_VELOCITY_P = 0.13832;
+        public static final double FEEDER_VELOCITY_S_VOLTS = 0.28575;
+        public static final double FEEDER_VELOCITY_V_VOLTS = 0.2089;
+
+        public static final double FEEDER_GEARING = 3.0;
+
+        public static final double FEEDER_RPM = 200.0;
     }
 
     public static class LimeLightConstants {
         public static final String NETWORK_TABLES_ID = "limelight";
         public static final String STREAM_URL = "http://10.37.29.11:5800";
+
+        public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(19);
+        public static final double MOUNT_ANGLE_DEGREES = 45.0;
+
+        public static final double P_LIMELIGHT_DISTANCE = 0.0;
+        public static final double LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS = 0.2;
+
+        public static final double P_LIMELIGHT_ANGLE = 0.0;
+        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.0;
+    }
+
+    public static class FieldConstants {
+        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
+
+        public static final double VISION_TARGET_LENGTH_METERS = Units.inchesToMeters(5);
+        public static final double VISION_TARGET_HEIGHT_METERS = Units.inchesToMeters(2);
+
+        public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
+                - (VISION_TARGET_HEIGHT_METERS / 2);
     }
 }

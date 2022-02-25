@@ -9,17 +9,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
-import frc.robot.commands.climber.ClimberBackwardCommand;
-import frc.robot.commands.climber.ClimberDownCommand;
-import frc.robot.commands.climber.ClimberForwardCommand;
-import frc.robot.commands.climber.ClimberUpCommand;
+import frc.robot.commands.intake.IntakeDeploy;
+import frc.robot.commands.intake.IntakeSpinnersRun;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
+import frc.robot.commands.shooter.SetAimCommand;
 import frc.robot.joysticks.PlaystationController;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.LengthClimber;
-import frc.robot.subsystems.RotationClimber;
-import frc.robot.subsystems.intake.*;
+import frc.robot.subsystems.*;
 import frc.robot.utils.ShuffleboardTabs;
 
 /**
@@ -32,11 +29,12 @@ import frc.robot.utils.ShuffleboardTabs;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
-    private final LengthClimber lengthClimber = new LengthClimber();
-    private final RotationClimber rotationClimber = new RotationClimber();
+    private final LimeLight limeLight = new LimeLight();
+    private final Feeder feeder = new Feeder();
+    private final Shooter shooter = new Shooter();
+    private final Climber climber = new Climber();
     private final Intake intake = new Intake();
-//    private final LimeLight limeLight = new LimeLight();
-//    private final Shooter shooter = new Shooter();
+    private final Spinners spinners = new Spinners();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
@@ -66,12 +64,20 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        driverController.square.whileHeld(
+                new StartEndCommand(() -> shooter.setShooterRPM(2400), () -> shooter.setShooterRPM(0), shooter));
+        driverController.circle
+                .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(1200), () -> feeder.setFeederRPM(0), feeder));
+        driverController.leftButton.whenPressed(new SetAimCommand(true, shooter));
+        driverController.rightButton.whenPressed(new SetAimCommand(false, shooter));
         evaluateDriveStyle();
         driverController.triangle.whenHeld(new ClimberUpCommand(lengthClimber));
         driverController.x.whenHeld(new ClimberDownCommand(lengthClimber));
         driverController.circle.whenHeld(new ClimberForwardCommand(rotationClimber));
         driverController.square.whenHeld(new ClimberBackwardCommand(rotationClimber));
 
+        driverController.triangle.whenPressed(new IntakeDeploy(intake));
+        driverController.leftButton.whenHeld(new IntakeSpinnersRun(intake, spinners));
     }
 
     public void evaluateDriveStyle() {

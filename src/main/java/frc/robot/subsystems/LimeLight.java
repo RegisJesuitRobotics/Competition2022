@@ -7,7 +7,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LimeLightConstants;
+import frc.robot.Constants.FieldConstants;
+import static frc.robot.Constants.LimeLightConstants.*;
 
 public class LimeLight extends SubsystemBase {
     public enum LightMode {
@@ -23,8 +24,7 @@ public class LimeLight extends SubsystemBase {
         }
     }
 
-    private final NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault()
-            .getTable(LimeLightConstants.NETWORK_TABLES_ID);
+    private final NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault().getTable(NETWORK_TABLES_ID);
     private final NetworkTableEntry validTarget = limelightNetworkTable.getEntry("tv");
     private final NetworkTableEntry horizontalOffset = limelightNetworkTable.getEntry("tx");
     private final NetworkTableEntry verticalOffset = limelightNetworkTable.getEntry("ty");
@@ -36,15 +36,17 @@ public class LimeLight extends SubsystemBase {
     public LimeLight() {
         ShuffleboardTab limelightTab = Shuffleboard.getTab("limelight");
 
-        limelightTab.addBoolean("Valid Target?", () -> validTarget.getBoolean(false));
-        limelightTab.addNumber("Horizontal Offset", () -> horizontalOffset.getDouble(0));
-        limelightTab.addNumber("Vertical Offset", () -> verticalOffset.getDouble(0));
+        limelightTab.addBoolean("Valid Target?", this::hasValidTarget);
+        limelightTab.addNumber("Horizontal Offset", this::getHorizontalOffset);
+        limelightTab.addNumber("Vertical Offset", this::getVerticalOffset);
+        limelightTab.addNumber("Target Area", this::getTargetArea);
+        limelightTab.addNumber("Estimated Distance", this::getEstimatedDistance);
 
-        limelightTab.addCamera("Limelight", "Limelight", LimeLightConstants.STREAM_URL);
+        limelightTab.addCamera("Limelight", "Limelight", STREAM_URL);
     }
 
     public boolean hasValidTarget() {
-        return validTarget.getBoolean(false);
+        return validTarget.getDouble(0.0) == 1.0;
     }
 
     public double getHorizontalOffset() {
@@ -57,6 +59,11 @@ public class LimeLight extends SubsystemBase {
 
     public double getTargetArea() {
         return targetArea.getDouble(0);
+    }
+
+    public double getEstimatedDistance() {
+        return (FieldConstants.VISION_TARGET_DISTANCE_FROM_GROUND - MOUNT_HEIGHT_METERS)
+                / Math.tan(Math.toRadians(MOUNT_ANGLE_DEGREES - getVerticalOffset()));
     }
 
     public void setLightMode(LightMode mode) {
