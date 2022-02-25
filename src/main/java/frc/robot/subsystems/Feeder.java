@@ -39,8 +39,12 @@ public class Feeder extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double feederFeedback = feederPidController.calculate(feederEncoder.getVelocity(), feederTargetRPS);
-        double feederFeedforward = feederFeedForward.calculate(feederTargetRPS);
-        feederMotor.setVoltage(feederFeedback + feederFeedforward);
+        if (feederTargetRPS == 0) {
+            feederMotor.setVoltage(0.0);
+        } else {
+            double feederFeedback = feederPidController.calculate(feederEncoder.getVelocity(), feederTargetRPS);
+            double feederFeedforward = feederFeedForward.calculate(feederTargetRPS);
+            feederMotor.setVoltage(feederFeedback + feederFeedforward);
+        }
     }
 }

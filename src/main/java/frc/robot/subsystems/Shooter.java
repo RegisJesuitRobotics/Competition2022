@@ -44,6 +44,7 @@ public class Shooter extends SubsystemBase {
 
         shooterTab.addNumber("Target Shooter RPM", () -> shooterTargetRPS * 60);
         shooterTab.addNumber("Actual Shooter RPM", this::getShooterRPM);
+        shooterTab.addBoolean("Shooting Close", () -> shooterSolenoid.get() == Value.kReverse);
     }
 
 
@@ -58,7 +59,7 @@ public class Shooter extends SubsystemBase {
 
     public void toggleAimState() {
         Value value = shooterSolenoid.get();
-        if (value == Value.kReverse || value == Value.kOff) {
+        if (value == Value.kReverse) {
             shooterSolenoid.set(Value.kForward);
         } else {
             shooterSolenoid.set(Value.kReverse);
