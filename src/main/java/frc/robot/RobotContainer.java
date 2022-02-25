@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.climber.ClimberBackwardCommand;
 import frc.robot.commands.climber.ClimberDownCommand;
@@ -37,7 +39,6 @@ import frc.robot.utils.ShuffleboardTabs;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
-//    private final LimeLight limeLight = new LimeLight();
     private final Feeder feeder = new Feeder();
     private final Shooter shooter = new Shooter();
     private final LengthClimber lengthClimber = new LengthClimber();
@@ -47,8 +48,6 @@ public class RobotContainer {
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
-
-    private final SendableChooser<Command> autoCommandChooser = new SendableChooser<>();
 
     private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
 
@@ -61,8 +60,6 @@ public class RobotContainer {
         teleopDriveStyle.addOption("Arcade Drive (Everyone else)",
                 new ArcadeDriveCommand(driveTrain, driverController));
 
-        // TODO: add auto commands to chooser
-        ShuffleboardTabs.getAutoTab().add("Chooser", autoCommandChooser);
         ShuffleboardTabs.getTeleopTab().add("Drive Style", teleopDriveStyle);
         configureButtonBindings();
     }
@@ -105,7 +102,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder)
-                .andThen(new SimpleAutoDriveCommand(-0.5, 0.0, driveTrain).withTimeout(0.5));
+        return new InstantCommand(() -> shooter.setAimState(Value.kReverse))
+                .andThen(new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder))
+                .andThen(new SimpleAutoDriveCommand(-0.5, 0.0, driveTrain).withTimeout(1));
     }
 }

@@ -57,12 +57,16 @@ public class Shooter extends SubsystemBase {
         return shooterEncoder.getVelocity() * 60;
     }
 
+    public void setAimState(Value state) {
+        shooterSolenoid.set(state);
+    }
+
     public void toggleAimState() {
         Value value = shooterSolenoid.get();
         if (value == Value.kReverse) {
-            shooterSolenoid.set(Value.kForward);
+            setAimState(Value.kForward);
         } else {
-            shooterSolenoid.set(Value.kReverse);
+            setAimState(Value.kReverse);
         }
     }
 
