@@ -71,6 +71,9 @@ public final class Constants {
         public static final double SHOOTER_VELOCITY_S_VOLTS = 0.096502;
         public static final double SHOOTER_VELOCITY_V_VOLTS = 0.35741;
 
+        public static final int SHOOTER_AIM_OPEN_PORT = 15;
+        public static final int SHOOTER_AIM_CLOSE_PORT = 14;
+
         public static final double SHOOTER_GEARING = 3.0;
 
         public static final double FAR_DISTANCE_RPM = 2000.0;

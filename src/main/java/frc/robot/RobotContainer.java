@@ -9,13 +9,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
-import frc.robot.commands.climber.ClimberBackwardCommand;
-import frc.robot.commands.climber.ClimberDownCommand;
-import frc.robot.commands.climber.ClimberForwardCommand;
-import frc.robot.commands.climber.ClimberUpCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
+import frc.robot.commands.shooter.SetAimCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
 import frc.robot.utils.ShuffleboardTabs;
@@ -64,15 +61,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         driverController.square.whileHeld(
-                new StartEndCommand(() -> shooter.setShooterRPM(600), () -> shooter.setShooterRPM(0), shooter));
+                new StartEndCommand(() -> shooter.setShooterRPM(2400), () -> shooter.setShooterRPM(0), shooter));
         driverController.circle
-                .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(600), () -> feeder.setFeederRPM(0), feeder));
+                .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(1200), () -> feeder.setFeederRPM(0), feeder));
+        driverController.leftButton.whenPressed(new SetAimCommand(true, shooter));
+        driverController.rightButton.whenPressed(new SetAimCommand(false, shooter));
         evaluateDriveStyle();
-        driverController.dPad.up.whenHeld(new ClimberUpCommand(climber));
-        driverController.dPad.down.whenHeld(new ClimberDownCommand(climber));
-        driverController.dPad.right.whenHeld(new ClimberForwardCommand(climber));
-        driverController.dPad.left.whenHeld(new ClimberBackwardCommand(climber));
-
     }
 
     public void evaluateDriveStyle() {

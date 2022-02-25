@@ -7,6 +7,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +23,9 @@ public class Shooter extends SubsystemBase {
             SHOOTER_VELOCITY_V_VOLTS);
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
     private double shooterTargetRPS = 0.0;
+
+    private final DoubleSolenoid shooterSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, SHOOTER_AIM_OPEN_PORT,
+            SHOOTER_AIM_CLOSE_PORT);
 
     private final ShuffleboardTab shooterTab = Shuffleboard.getTab("Shooter");
 
@@ -47,10 +53,22 @@ public class Shooter extends SubsystemBase {
         return shooterEncoder.getVelocity() * 60;
     }
 
+    public void setAimState(boolean farShotMode) {
+        if (farShotMode) {
+            shooterSolenoid.set(Value.kForward);
+        } else {
+            shooterSolenoid.set(Value.kReverse);
+        }
+    }
+
     @Override
     public void periodic() {
-        double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), shooterTargetRPS);
-        double shooterFeedforward = shooterFeedForward.calculate(shooterTargetRPS);
-        shooterMotor.setVoltage(shooterFeedback + shooterFeedforward);
+        if (shooterTargetRPS == 0) {
+            shooterMotor.setVoltage(0);
+        } else {
+            double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), shooterTargetRPS);
+            double shooterFeedforward = shooterFeedForward.calculate(shooterTargetRPS);
+            shooterMotor.setVoltage(shooterFeedback + shooterFeedforward);
+        }
     }
 }

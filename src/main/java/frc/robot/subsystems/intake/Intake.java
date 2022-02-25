@@ -18,6 +18,12 @@ public class Intake extends SubsystemBase {
             CANSparkMaxLowLevel.MotorType.kBrushless);
     private final Solenoid intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.SOLENOID_PORT);
 
+    public Intake() {
+        intakeMotor.restoreFactoryDefaults();
+
+        intakeMotor.burnFlash();
+    }
+
     public void setPercentage(double percentage) {
         intakeMotor.set(percentage);
     }
