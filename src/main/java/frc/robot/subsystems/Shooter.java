@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -22,6 +23,8 @@ public class Shooter extends SubsystemBase {
     private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(SHOOTER_VELOCITY_S_VOLTS,
             SHOOTER_VELOCITY_V_VOLTS);
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
+    private final SlewRateLimiter rateLimiter = new SlewRateLimiter(800);
+
     private double shooterTargetRPS = 0.0;
 
     private final DoubleSolenoid shooterSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, SHOOTER_AIM_OPEN_PORT,
@@ -53,8 +56,9 @@ public class Shooter extends SubsystemBase {
         return shooterEncoder.getVelocity() * 60;
     }
 
-    public void setAimState(boolean farShotMode) {
-        if (farShotMode) {
+    public void toggleAimState() {
+        Value value = shooterSolenoid.get();
+        if (value == Value.kReverse || value == Value.kOff) {
             shooterSolenoid.set(Value.kForward);
         } else {
             shooterSolenoid.set(Value.kReverse);
@@ -64,10 +68,12 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         if (shooterTargetRPS == 0) {
+            rateLimiter.reset(0);
             shooterMotor.setVoltage(0);
         } else {
-            double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), shooterTargetRPS);
-            double shooterFeedforward = shooterFeedForward.calculate(shooterTargetRPS);
+            double actualTarget = rateLimiter.calculate(shooterTargetRPS);
+            double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), actualTarget);
+            double shooterFeedforward = shooterFeedForward.calculate(actualTarget);
             shooterMotor.setVoltage(shooterFeedback + shooterFeedforward);
         }
     }

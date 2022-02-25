@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.auto.TrajectoryCommandGenerator;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.climber.ClimberBackwardCommand;
 import frc.robot.commands.climber.ClimberDownCommand;
 import frc.robot.commands.climber.ClimberForwardCommand;
 import frc.robot.commands.climber.ClimberUpCommand;
-import frc.robot.commands.intake.IntakeDeployCommand;
-import frc.robot.commands.intake.IntakeSpinnersRunCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
-import frc.robot.commands.shooter.SetAimCommand;
+import frc.robot.commands.intake.IntakeDeployCommand;
+import frc.robot.commands.intake.IntakeSpinnersRunCommand;
+import frc.robot.commands.intake.IntakeUnDeployCommand;
+import frc.robot.commands.shooter.ToggleAimCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.intake.Intake;
@@ -54,8 +54,9 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        teleopDriveStyle.addOption("Tankish Drive (Aidan)", new TankishDriveCommand(driveTrain, driverController));
-        teleopDriveStyle.setDefaultOption("Arcade Drive (Everyone else)",
+        teleopDriveStyle.setDefaultOption("Tankish Drive (Aidan)",
+                new TankishDriveCommand(driveTrain, driverController));
+        teleopDriveStyle.addOption("Arcade Drive (Everyone else)",
                 new ArcadeDriveCommand(driveTrain, driverController));
 
         // TODO: add auto commands to chooser
@@ -71,20 +72,23 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        driverController.square.whileHeld(
-                new StartEndCommand(() -> shooter.setShooterRPM(2400), () -> shooter.setShooterRPM(0), shooter));
-        driverController.circle
+        driverController.share.whileHeld(
+                new StartEndCommand(() -> shooter.setShooterRPM(4600), () -> shooter.setShooterRPM(0), shooter));
+        driverController.options
                 .whileHeld(new StartEndCommand(() -> feeder.setFeederRPM(1200), () -> feeder.setFeederRPM(0), feeder));
-        driverController.leftButton.whenPressed(new SetAimCommand(true, shooter));
-        driverController.rightButton.whenPressed(new SetAimCommand(false, shooter));
-        evaluateDriveStyle();
-        driverController.triangle.whenHeld(new ClimberUpCommand(lengthClimber));
-        driverController.x.whenHeld(new ClimberDownCommand(lengthClimber));
-        driverController.circle.whenHeld(new ClimberForwardCommand(rotationClimber));
-        driverController.square.whenHeld(new ClimberBackwardCommand(rotationClimber));
 
-        driverController.triangle.whenPressed(new IntakeDeployCommand(intake));
+        driverController.rightButton.whenPressed(new ToggleAimCommand(shooter));
+
+        operatorController.triangle.whenHeld(new ClimberUpCommand(lengthClimber));
+        operatorController.x.whenHeld(new ClimberDownCommand(lengthClimber));
+        operatorController.circle.whenHeld(new ClimberForwardCommand(rotationClimber));
+        operatorController.square.whenHeld(new ClimberBackwardCommand(rotationClimber));
+
+        driverController.rightButton.whenPressed(new IntakeDeployCommand(intake));
+        driverController.dPad.left.whenPressed(new IntakeUnDeployCommand(intake));
         driverController.leftButton.whenHeld(new IntakeSpinnersRunCommand(intake, spinners));
+
+        evaluateDriveStyle();
     }
 
     public void evaluateDriveStyle() {
@@ -97,6 +101,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return TrajectoryCommandGenerator.getCommandFromFile("2BallLeft", driveTrain);
+//        return TrajectoryCommandGenerator.getCommandFromFile("2BallLeft", driveTrain);
+        return null;
     }
 }

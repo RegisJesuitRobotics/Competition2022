@@ -23,6 +23,7 @@ public class Intake extends SubsystemBase {
 
     public Intake() {
         intakeMotor.restoreFactoryDefaults();
+        intakeMotor.setInverted(true);
 
         intakeMotor.burnFlash();
     }

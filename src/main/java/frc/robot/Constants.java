@@ -72,14 +72,14 @@ public final class Constants {
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
-        public static final double SHOOTER_VELOCITY_P = 0.43187;
-        public static final double SHOOTER_VELOCITY_S_VOLTS = 0.096502;
-        public static final double SHOOTER_VELOCITY_V_VOLTS = 0.35741;
+        public static final double SHOOTER_VELOCITY_P = 0.226;
+        public static final double SHOOTER_VELOCITY_S_VOLTS = 0.17322;
+        public static final double SHOOTER_VELOCITY_V_VOLTS = 0.12609;
 
         public static final int SHOOTER_AIM_OPEN_PORT = 15;
         public static final int SHOOTER_AIM_CLOSE_PORT = 14;
 
-        public static final double SHOOTER_GEARING = 3.0;
+        public static final double SHOOTER_GEARING = 1.0;
 
         public static final double FAR_DISTANCE_RPM = 2000.0;
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
@@ -104,15 +104,16 @@ public final class Constants {
         public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(19);
         public static final double MOUNT_ANGLE_DEGREES = 45.0;
 
-        public static final double P_LIMELIGHT_DISTANCE = 0.0;
+        public static final double P_LIMELIGHT_DISTANCE = 0.4;
         public static final double LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS = 0.2;
 
-        public static final double P_LIMELIGHT_ANGLE = 0.0;
-        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.0;
+        public static final double P_LIMELIGHT_ANGLE = 0.03;
+        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.5;
     }
 
     public static class FieldConstants {
-        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
+//        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
+        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters(83); // 8ft 8
 
         public static final double VISION_TARGET_LENGTH_METERS = Units.inchesToMeters(5);
         public static final double VISION_TARGET_HEIGHT_METERS = Units.inchesToMeters(2);
