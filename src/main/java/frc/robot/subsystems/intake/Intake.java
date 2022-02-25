@@ -26,6 +26,12 @@ public class Intake extends SubsystemBase {
         intakeMotor.setInverted(true);
     }
 
+    public Intake() {
+        intakeMotor.restoreFactoryDefaults();
+
+        intakeMotor.burnFlash();
+    }
+
     public void setPercentage(double percentage) {
         intakeMotor.set(percentage);
     }
