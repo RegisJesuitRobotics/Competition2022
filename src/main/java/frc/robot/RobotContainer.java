@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
+import frc.robot.commands.intake.IntakeDeploy;
+import frc.robot.commands.intake.IntakeSpinnersRun;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
@@ -31,6 +33,8 @@ public class RobotContainer {
     private final Feeder feeder = new Feeder();
     private final Shooter shooter = new Shooter();
     private final Climber climber = new Climber();
+    private final Intake intake = new Intake();
+    private final Spinners spinners = new Spinners();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
@@ -67,6 +71,9 @@ public class RobotContainer {
         driverController.leftButton.whenPressed(new SetAimCommand(true, shooter));
         driverController.rightButton.whenPressed(new SetAimCommand(false, shooter));
         evaluateDriveStyle();
+
+        driverController.triangle.whenPressed(new IntakeDeploy(intake));
+        driverController.leftButton.whenHeld(new IntakeSpinnersRun(intake, spinners));
     }
 
     public void evaluateDriveStyle() {

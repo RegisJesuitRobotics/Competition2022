@@ -12,6 +12,7 @@ public class ClimberForwardCommand extends CommandBase {
     private final double PERCENT = 0.5;
     private final Climber climber;
 
+
     public ClimberForwardCommand(Climber climber) {
         // Use addRequirements() here to declare subsystem dependencies.
         this.climber = climber;
