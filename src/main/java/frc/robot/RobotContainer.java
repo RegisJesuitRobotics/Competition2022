@@ -74,7 +74,7 @@ public class RobotContainer {
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
-        driverController.rightButton.whenPressed(new IntakeSpinnersRunCommand(intake, spinners));
+        driverController.rightButton.whenHeld(new IntakeSpinnersRunCommand(intake, spinners));
 
         driverController.options.whenPressed(new IntakeDeployCommand(intake));
 
