@@ -22,6 +22,6 @@ public class IntakeDeployCommand extends InstantCommand {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        intake.setSolenoid(true);
+        intake.setSolenoid();
     }
 }

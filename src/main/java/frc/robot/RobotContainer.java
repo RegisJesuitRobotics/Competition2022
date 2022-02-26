@@ -76,7 +76,7 @@ public class RobotContainer {
 
         driverController.rightButton.whenPressed(new IntakeSpinnersRunCommand(intake, spinners));
 
-        driverController.options.whenPressed(new IntakeToggleCommand(intake));
+        driverController.options.whenPressed(new IntakeDeployCommand(intake));
 
         operatorController.share.whenPressed(new ToggleAimCommand(shooter));
         operatorController.leftButton.whileHeld(new RunFeederCommand(feeder));

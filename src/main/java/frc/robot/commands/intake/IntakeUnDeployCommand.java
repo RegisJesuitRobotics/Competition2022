@@ -14,6 +14,6 @@ public class IntakeUnDeployCommand extends InstantCommand {
 
     @Override
     public void initialize() {
-        intake.setSolenoid(false);
+        intake.setSolenoid();
     }
 }
