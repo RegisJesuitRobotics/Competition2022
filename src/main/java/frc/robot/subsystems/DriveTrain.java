@@ -154,10 +154,10 @@ public class DriveTrain extends SubsystemBase {
             rightBack.setIdleMode(IdleMode.kBrake);
             rightFront.setIdleMode(IdleMode.kBrake);
         } else {
-            leftTop.setIdleMode(IdleMode.kCoast);
+            leftTop.setIdleMode(IdleMode.kBrake);
             leftBack.setIdleMode(IdleMode.kCoast);
             leftFront.setIdleMode(IdleMode.kCoast);
-            rightTop.setIdleMode(IdleMode.kCoast);
+            rightTop.setIdleMode(IdleMode.kBrake);
             rightBack.setIdleMode(IdleMode.kCoast);
             rightFront.setIdleMode(IdleMode.kCoast);
         }

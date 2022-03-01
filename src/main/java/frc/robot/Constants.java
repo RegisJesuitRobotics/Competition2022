@@ -65,7 +65,7 @@ public final class Constants {
         public static final int RIGHT_CLIMBER_LENGTH_PORT = 11;
         public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
 
-        public static final double LENGTH_SPEED = 1;
+        public static final double LENGTH_SPEED = 0.7;
         public static final double ROTATION_SPEED = 0.2;
     }
 
