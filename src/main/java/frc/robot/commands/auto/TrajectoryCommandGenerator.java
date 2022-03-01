@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import static frc.robot.Constants.TrajectoryConstants.*;
 
 public class TrajectoryCommandGenerator {
-    private static final String DIRECTORY = "paths/";
+    private static final String DIRECTORY = "paths/output/";
 //    private static final String DIRECTORY = "pathplanner/generatedJSON/";
     private static final String FILE_EXTENSION = ".wpilib.json";
 
@@ -45,8 +45,6 @@ public class TrajectoryCommandGenerator {
                 () -> driveTrain.resetOdometry(trajectory.getInitialPose()));
 
         InstantCommand stopCommand = new InstantCommand(() -> driveTrain.voltageDrive(0, 0));
-
-        driveTrain.setField2dTrajectory(trajectory);
 
         return resetOdometryCommand.andThen(ramseteCommand).andThen(stopCommand);
     }
