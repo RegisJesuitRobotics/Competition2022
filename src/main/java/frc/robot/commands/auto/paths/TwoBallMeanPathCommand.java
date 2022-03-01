@@ -21,6 +21,9 @@ public class TwoBallMeanPathCommand extends SequentialCommandGroup {
                 race(new IntakeSpinnersRunCommand(intake, spinners),
                         TrajectoryCommandGenerator.getCommandFromFile("2BallMeanA", driveTrain)),
                 new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
-                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder));
+                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder),
+                race(new IntakeSpinnersRunCommand(intake, spinners),
+                        TrajectoryCommandGenerator.getCommandFromFile("2BallMeanB", driveTrain)),
+                new RunShooterAndFeederCommand(3000.0, shooter, feeder));
     }
 }
