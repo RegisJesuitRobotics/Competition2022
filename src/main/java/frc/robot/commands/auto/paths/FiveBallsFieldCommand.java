@@ -14,13 +14,20 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
-public class fourballsfieldcommand extends SequentialCommandGroup {
-    public fourballsfieldcommand(DriveTrain driveTrain, Intake intake, Spinners spinners, Shooter shooter,
+public class FiveBallsFieldCommand extends SequentialCommandGroup {
+    public FiveBallsFieldCommand(DriveTrain driveTrain, Intake intake, Spinners spinners, Shooter shooter,
             LimeLight limeLight, Feeder feeder) {
         super(new IntakeDeployCommand(intake), // hamburger
                 race(new IntakeSpinnersRunCommand(intake, spinners),
-                        TrajectoryCommandGenerator.getCommandFromFile("fourballsfieldcommand", driveTrain)),
+                        TrajectoryCommandGenerator.getCommandFromFile("5BallFieldA", driveTrain)),
                 new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
-                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder));
+                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder),
+               
+                race(new IntakeSpinnersRunCommand(intake, spinners),
+                        TrajectoryCommandGenerator.getCommandFromFile("5BallFieldB", driveTrain)),
+                new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
+                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder)
+                );
+
     }
 }

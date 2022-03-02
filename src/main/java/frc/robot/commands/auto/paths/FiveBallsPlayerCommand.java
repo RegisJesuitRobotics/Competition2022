@@ -14,16 +14,26 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
-public class TwoBallMeanPathCommand extends SequentialCommandGroup {
-    public TwoBallMeanPathCommand(DriveTrain driveTrain, Intake intake, Spinners spinners, Shooter shooter,
+public class FiveBallsPlayerCommand extends SequentialCommandGroup {
+    public FiveBallsPlayerCommand(DriveTrain driveTrain, Intake intake, Spinners spinners, Shooter shooter,
             LimeLight limeLight, Feeder feeder) {
-        super(new IntakeDeployCommand(intake),
-                race(new IntakeSpinnersRunCommand(intake, spinners),
-                        TrajectoryCommandGenerator.getCommandFromFile("2BallMeanA", driveTrain)),
+        super(new IntakeDeployCommand(intake), // hamburger
+               race(new IntakeSpinnersRunCommand(intake, spinners),
+                     TrajectoryCommandGenerator.getCommandFromFile("5BallPlayerA", driveTrain)),
                 new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
                 new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder),
+             
+                
                 race(new IntakeSpinnersRunCommand(intake, spinners),
-                        TrajectoryCommandGenerator.getCommandFromFile("2BallMeanB", driveTrain)),
-                new RunShooterAndFeederCommand(3000.0, shooter, feeder));
-    }
+                        TrajectoryCommandGenerator.getCommandFromFile("5BallPlayerB", driveTrain)),
+                new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
+                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder),
+
+
+                race(new IntakeSpinnersRunCommand(intake, spinners),
+                        TrajectoryCommandGenerator.getCommandFromFile("5BallPlayerC", driveTrain)),
+                new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
+                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder)
+                );
+}
 }

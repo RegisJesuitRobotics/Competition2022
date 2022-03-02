@@ -14,12 +14,12 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
-public class fourballsplayercommand extends SequentialCommandGroup {
-    public fourballsplayercommand(DriveTrain driveTrain, Intake intake, Spinners spinners, Shooter shooter,
-             LimeLight limeLight, Feeder feeder) {
-        super(new IntakeDeployCommand(intake), // hamburger
+public class ThreeBallPathCommand extends SequentialCommandGroup {
+    public ThreeBallPathCommand(DriveTrain driveTrain, Intake intake, Spinners spinners, Shooter shooter,
+    LimeLight limeLight, Feeder feeder) {
+    super(new IntakeDeployCommand(intake),
         race(new IntakeSpinnersRunCommand(intake, spinners),
-                TrajectoryCommandGenerator.getCommandFromFile("fourballsfieldcommand", driveTrain)),
+                TrajectoryCommandGenerator.getCommandFromFile("3Ball", driveTrain)),
         new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
         new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder));
 }
