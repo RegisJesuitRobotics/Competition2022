@@ -67,6 +67,9 @@ public final class Constants {
 
         public static final double LENGTH_SPEED = 0.5;
         public static final double ROTATION_SPEED = 0.2;
+
+        public static final double MAX_CLIMBER_LENGTH_ENCODER_VALUE = 0.0;
+        public static final double MIN_CLIMBER_LENGTH_ENCODER_VALUE = 0.0;
     }
 
     public static class ShooterConstants {

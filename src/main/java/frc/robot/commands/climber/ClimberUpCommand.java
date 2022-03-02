@@ -4,14 +4,20 @@
 
 package frc.robot.commands.climber;
 
+import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.LengthClimber;
 
 public class ClimberUpCommand extends CommandBase {
     private final LengthClimber climber;
 
-    public ClimberUpCommand(LengthClimber climber) {
+
+    public ClimberUpCommand(LengthClimber climber){ 
         this.climber = climber;
         addRequirements(climber);
     }
@@ -19,7 +25,9 @@ public class ClimberUpCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climber.setLengthPercent(ClimberConstants.LENGTH_SPEED);
+        
+            climber.setLengthPercent(ClimberConstants.LENGTH_SPEED);
+        
     }
 
     // Called once the command ends or is interrupted.
