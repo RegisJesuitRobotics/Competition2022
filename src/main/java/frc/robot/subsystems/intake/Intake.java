@@ -47,7 +47,12 @@ public class Intake extends SubsystemBase {
     }
 
     public void toggleSolenoid() {
-        intakeSolenoidRight.toggle();
-        intakeSolenoidLeft.toggle();
+        if (intakeSolenoidRight.get() == Value.kOff || intakeSolenoidLeft.get() == Value.kOff) {
+            intakeSolenoidRight.set(Value.kForward);
+            intakeSolenoidRight.set(Value.kForward);
+        } else {
+            intakeSolenoidRight.toggle();
+            intakeSolenoidLeft.toggle();
+        }
     }
 }
