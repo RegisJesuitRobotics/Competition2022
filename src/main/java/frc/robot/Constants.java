@@ -38,7 +38,7 @@ public final class Constants {
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
                 TRACK_WIDTH_METERS);
 
-        public static final double DRIVER_RATE_LIMITER_PER_SECOND = 2; // Takes 1/2 a second to go from 0-1
+        public static final double DRIVER_RATE_LIMITER_PER_SECOND = 1.75; // Takes 1/1.75 a second to go from 0-1
     }
 
     public static class TrajectoryConstants {

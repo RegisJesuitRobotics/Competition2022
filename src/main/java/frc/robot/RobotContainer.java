@@ -21,6 +21,7 @@ import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.feeder.RunFeederCommand;
 import frc.robot.commands.intake.*;
+import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.RunShooterAndFeederCommand;
 import frc.robot.commands.shooter.RunShooterCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
@@ -45,6 +46,7 @@ public class RobotContainer {
     private final RotationClimber rotationClimber = new RotationClimber();
     private final Intake intake = new Intake();
     private final Spinners spinners = new Spinners();
+    private final LimeLight limeLight = new LimeLight();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
@@ -73,6 +75,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
+
+        driverController.x.whileHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
 
         driverController.rightButton.whenHeld(new IntakeSpinnersRunCommand(intake, spinners));
 
