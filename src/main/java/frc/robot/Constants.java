@@ -34,9 +34,11 @@ public final class Constants {
         public static final double DISTANCE_PER_ROTATION = (WHEEL_DIAMETER_METERS * Math.PI) / (GEARING);
 
         // Distance between wheels of opposite sides
-        public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(26);
+        public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(27.5);
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
                 TRACK_WIDTH_METERS);
+
+        public static final double DRIVER_RATE_LIMITER_PER_SECOND = 2; // Takes 1/2 a second to go from 0-1
     }
 
     public static class TrajectoryConstants {
