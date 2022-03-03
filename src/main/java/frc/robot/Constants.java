@@ -55,6 +55,7 @@ public final class Constants {
     public static class IntakeConstants {
         public static final int INTAKE_PORT = 14;
         public static final int SPINNER_PORT = 6;
+
         public static final int SOLENOID_RIGHT_FORWARD_PORT = 0;
         public static final int SOLENOID_RIGHT_REVERSE_PORT = 1;
         public static final int SOLENOID_LEFT_FORWARD_PORT = 8;
@@ -114,8 +115,7 @@ public final class Constants {
     }
 
     public static class FieldConstants {
-//        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
-        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters(83); // 8ft 8
+        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
 
         public static final double VISION_TARGET_LENGTH_METERS = Units.inchesToMeters(5);
         public static final double VISION_TARGET_HEIGHT_METERS = Units.inchesToMeters(2);

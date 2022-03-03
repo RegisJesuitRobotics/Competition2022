@@ -5,6 +5,6 @@ import frc.robot.subsystems.Shooter;
 
 public class WaitForShooterWarmupCommand extends WaitUntilCommand {
     public WaitForShooterWarmupCommand(double targetRPM, Shooter shooter) {
-        super(() -> shooter.getShooterRPM() >= targetRPM - 50);
+        super(() -> shooter.getShooterRPM() >= targetRPM);
     }
 }

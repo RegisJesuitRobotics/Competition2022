@@ -21,7 +21,6 @@ public class Intake extends SubsystemBase {
             IntakeConstants.SOLENOID_RIGHT_FORWARD_PORT, IntakeConstants.SOLENOID_RIGHT_REVERSE_PORT);
     private final DoubleSolenoid intakeSolenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH,
             IntakeConstants.SOLENOID_LEFT_FORWARD_PORT, IntakeConstants.SOLENOID_LEFT_REVERSE_PORT);
-    private static boolean toggle = true;
 
     public Intake() {
         intakeMotor.restoreFactoryDefaults();
@@ -35,15 +34,14 @@ public class Intake extends SubsystemBase {
         intakeMotor.set(percentage);
     }
 
-    public void setSolenoid() {
-        if (toggle) {
+    public void setSolenoid(boolean deployed) {
+        if (deployed) {
             intakeSolenoidRight.set(Value.kForward);
             intakeSolenoidLeft.set(Value.kForward);
         } else {
             intakeSolenoidRight.set(Value.kReverse);
             intakeSolenoidLeft.set(Value.kReverse);
         }
-        toggle = !toggle;
     }
 
     public void toggleSolenoid() {

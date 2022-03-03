@@ -72,14 +72,9 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (shooterTargetRPS == 0) {
-            rateLimiter.reset(0);
-            shooterMotor.setVoltage(0);
-        } else {
-            double actualTarget = rateLimiter.calculate(shooterTargetRPS);
-            double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), actualTarget);
-            double shooterFeedforward = shooterFeedForward.calculate(actualTarget);
-            shooterMotor.setVoltage(shooterFeedback + shooterFeedforward);
-        }
+        double actualTarget = rateLimiter.calculate(shooterTargetRPS);
+        double shooterFeedback = shooterPidController.calculate(shooterEncoder.getVelocity(), actualTarget);
+        double shooterFeedforward = shooterFeedForward.calculate(actualTarget);
+        shooterMotor.setVoltage(shooterFeedback + shooterFeedforward);
     }
 }
