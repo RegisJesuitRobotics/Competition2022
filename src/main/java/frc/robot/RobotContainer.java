@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -27,7 +28,6 @@ import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
-import frc.robot.utils.ShuffleboardTabs;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -60,7 +60,7 @@ public class RobotContainer {
         teleopDriveStyle.addOption("Arcade Drive (Everyone else)",
                 new ArcadeDriveCommand(driveTrain, driverController));
 
-        ShuffleboardTabs.getTeleopTab().add("Drive Style", teleopDriveStyle);
+        Shuffleboard.getTab("DriveTrain").add("Drive Style", teleopDriveStyle);
         configureButtonBindings();
     }
 

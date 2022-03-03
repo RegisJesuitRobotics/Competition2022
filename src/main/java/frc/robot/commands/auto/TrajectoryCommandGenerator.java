@@ -46,8 +46,6 @@ public class TrajectoryCommandGenerator {
 
         InstantCommand stopCommand = new InstantCommand(() -> driveTrain.voltageDrive(0, 0));
 
-        driveTrain.setField2dTrajectory(trajectory);
-
         return resetOdometryCommand.andThen(ramseteCommand).andThen(stopCommand);
     }
 }
