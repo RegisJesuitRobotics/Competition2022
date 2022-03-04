@@ -86,6 +86,8 @@ public final class Constants {
 
         public static final double CLOSE_DISTANCE_RPM = 4600.0;
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
+
+        public static final int SHOOTER_SHOT_THRESHOLD = 0;
     }
 
     public static class FeederConstants {

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import static frc.robot.Constants.ShooterConstants.*;
 
@@ -24,6 +25,7 @@ public class Shooter extends SubsystemBase {
             SHOOTER_VELOCITY_V_VOLTS);
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
     private final SlewRateLimiter rateLimiter = new SlewRateLimiter(800);
+    private final int SHOOTER_SHOT_THRESHOLD = Constants.ShooterConstants.SHOOTER_SHOT_THRESHOLD;
 
     private double shooterTargetRPS = 0.0;
 
