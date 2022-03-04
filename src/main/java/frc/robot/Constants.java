@@ -109,6 +109,7 @@ public final class Constants {
         public static final double LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS = 0.2;
 
         public static final double P_LIMELIGHT_ANGLE = 0.03;
+        public static final double ARB_FF_LIMELIGHT_ANGLE = 0.2;
         public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.5;
     }
 
