@@ -4,7 +4,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -16,8 +15,8 @@ public class LengthClimber extends SubsystemBase {
             CANSparkMaxLowLevel.MotorType.kBrushless);
     private final CANSparkMax rightClimberLength = new CANSparkMax(RIGHT_CLIMBER_LENGTH_PORT,
             CANSparkMaxLowLevel.MotorType.kBrushless);
-    
-    
+
+
     public RelativeEncoder leftEncoder = leftClimberLength.getEncoder();
     private final double MAX_CLIMBER_LENGTH_ENCODER_VALUE = Constants.ClimberConstants.MAX_CLIMBER_LENGTH_ENCODER_VALUE;
     private final double MIN_CLIMBER_LENGTH_ENCODER_VALUE = Constants.ClimberConstants.MIN_CLIMBER_LENGTH_ENCODER_VALUE;
@@ -34,9 +33,9 @@ public class LengthClimber extends SubsystemBase {
     }
 
     public void setLengthPercent(double percent) {
-        if (leftEncoder.getPosition() > MAX_CLIMBER_LENGTH_ENCODER_VALUE && percent > 0){
+        if (leftEncoder.getPosition() > MAX_CLIMBER_LENGTH_ENCODER_VALUE && percent > 0) {
             return;
-        } else if (leftEncoder.getPosition() < MIN_CLIMBER_LENGTH_ENCODER_VALUE && percent < 0){
+        } else if (leftEncoder.getPosition() < MIN_CLIMBER_LENGTH_ENCODER_VALUE && percent < 0) {
             return;
         }
         leftClimberLength.set(percent);

@@ -7,17 +7,15 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
-public class WaitUntilShot extends WaitUntilCommand{
-  /** Creates a new WaitUntilShot. */
 
-  private final static int SHOOTER_SHOT_THRESHOLD = Constants.ShooterConstants.SHOOTER_SHOT_THRESHOLD;
-  
-  public WaitUntilShot(Shooter shooter) {
-    
-    super(() -> shooter.getShooterRPM() < SHOOTER_SHOT_THRESHOLD);
-  }
+public class WaitUntilShot extends WaitUntilCommand {
+    /** Creates a new WaitUntilShot. */
+
+    private final static int SHOOTER_SHOT_THRESHOLD = Constants.ShooterConstants.SHOOTER_SHOT_THRESHOLD;
+
+    public WaitUntilShot(Shooter shooter) {
+
+        super(() -> shooter.getShooterRPM() < SHOOTER_SHOT_THRESHOLD);
+    }
 }
-
- 
