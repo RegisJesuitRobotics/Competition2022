@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SelectCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
@@ -25,6 +26,8 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 import frc.robot.utils.ShuffleboardTabs;
+
+import java.util.Map;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -76,12 +79,21 @@ public class RobotContainer {
 
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
 
-        operatorController.share.whenPressed(new ToggleAimCommand(shooter));
-        operatorController.leftButton.whileHeld(new RunFeederCommand(feeder));
+        operatorController.share.whenPressed(new RunFeederCommand(feeder));
         operatorController.rightButton
-                .whileHeld(new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder));
-        operatorController.dPad.left.whileHeld(new RunShooterCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter));
-        operatorController.options.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
+                .whileHeld(new SelectCommand(
+                        Map.ofEntries(
+                                Map.entry(true,
+                                        new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter,
+                                                feeder)),
+                                Map.entry(false, new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM,
+                                        shooter, feeder))),
+                        shooter::isAimingClose));
+        operatorController.dPad.left.whileHeld(new ToggleAimCommand(shooter));
+        operatorController.leftButton.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain)); // When held so
+                                                                                                         // it ends when
+                                                                                                         // aligned
+        operatorController.leftTrigger.whileHeld(new RunShooterCommand(2000, shooter));
 
 //        operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
 //        operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));

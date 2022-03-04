@@ -82,6 +82,7 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 1.0;
 
+        public static final double FAR_DISTANCE_RPM = -1;
         public static final double CLOSE_DISTANCE_RPM = 4600.0;
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
     }
