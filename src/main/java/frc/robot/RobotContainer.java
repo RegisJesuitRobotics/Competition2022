@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.climber.ClimberBackwardCommand;
+import frc.robot.commands.climber.ClimberDownCommand;
+import frc.robot.commands.climber.ClimberForwardCommand;
+import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
@@ -83,10 +87,10 @@ public class RobotContainer {
         operatorController.dPad.left.whileHeld(new RunShooterCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter));
         operatorController.options.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
 
-//        operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
-//        operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));
-//        operatorController.circle.whileHeld(new ClimberForwardCommand(rotationClimber));
-//        operatorController.square.whileHeld(new ClimberBackwardCommand(rotationClimber));
+        operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
+        operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));
+        operatorController.circle.whileHeld(new ClimberForwardCommand(rotationClimber));
+        operatorController.square.whileHeld(new ClimberBackwardCommand(rotationClimber));
 
         evaluateDriveStyle();
     }
