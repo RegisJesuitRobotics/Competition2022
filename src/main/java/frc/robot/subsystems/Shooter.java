@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
     private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(SHOOTER_VELOCITY_S_VOLTS,
             SHOOTER_VELOCITY_V_VOLTS);
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
-    private final SlewRateLimiter rateLimiter = new SlewRateLimiter(800);
+    private final SlewRateLimiter rateLimiter = new SlewRateLimiter(1000);
 
     private double shooterTargetRPS = 0.0;
 
@@ -37,6 +37,7 @@ public class Shooter extends SubsystemBase {
         // per second
         // because sys-id uses rotation/s and translating the gains seems overkill when
         // we can just do it this way
+        shooterMotor.restoreFactoryDefaults();
         shooterMotor.setInverted(true);
         shooterMotor.setIdleMode(IdleMode.kCoast);
         shooterEncoder.setVelocityConversionFactor(1 / (SHOOTER_GEARING * 60));
@@ -45,6 +46,8 @@ public class Shooter extends SubsystemBase {
         shooterTab.addNumber("Target Shooter RPM", () -> shooterTargetRPS * 60);
         shooterTab.addNumber("Actual Shooter RPM", this::getShooterRPM);
         shooterTab.addBoolean("Shooting Close", this::isAimingClose);
+
+        setAimState(Value.kReverse);
     }
 
 

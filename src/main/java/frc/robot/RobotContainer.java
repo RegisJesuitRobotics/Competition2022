@@ -4,14 +4,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SelectCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.climber.ClimberBackwardCommand;
+import frc.robot.commands.climber.ClimberDownCommand;
+import frc.robot.commands.climber.ClimberForwardCommand;
+import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
@@ -75,30 +76,33 @@ public class RobotContainer {
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
-        driverController.rightButton.whenHeld(new IntakeSpinnersRunCommand(intake, spinners));
+        driverController.rightButton
+                .whileHeld(new SelectCommand(Map.ofEntries(Map.entry(true, new IntakeRunCommand(0.7, intake)),
+                        Map.entry(false, new WaitUntilCommand(() -> false))), intake::isDeployed));
 
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
 
-        operatorController.share.whenPressed(new RunFeederCommand(feeder));
+        operatorController.share.whileHeld(new RunFeederCommand(feeder));
         operatorController.rightButton
-                .whileHeld(new SelectCommand(
-                        Map.ofEntries(
-                                Map.entry(true,
-                                        new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter,
-                                                feeder)),
-                                Map.entry(false, new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM,
-                                        shooter, feeder))),
-                        shooter::isAimingClose));
-        operatorController.dPad.left.whileHeld(new ToggleAimCommand(shooter));
+                .whileHeld(
+                        new SelectCommand(
+                                Map.ofEntries(
+                                        Map.entry(true,
+                                                new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM,
+                                                        shooter, feeder, spinners)),
+                                        Map.entry(false, new RunShooterAndFeederCommand(
+                                                ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder, spinners))),
+                                shooter::isAimingClose));
+        operatorController.dPad.left.whenPressed(new ToggleAimCommand(shooter));
         operatorController.leftButton.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain)); // When held so
                                                                                                          // it ends when
                                                                                                          // aligned
         operatorController.leftTrigger.whileHeld(new RunShooterCommand(2000, shooter));
 
-//        operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
-//        operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));
-//        operatorController.circle.whileHeld(new ClimberForwardCommand(rotationClimber));
-//        operatorController.square.whileHeld(new ClimberBackwardCommand(rotationClimber));
+        operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
+        operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));
+        operatorController.circle.whileHeld(new ClimberForwardCommand(rotationClimber));
+        operatorController.square.whileHeld(new ClimberBackwardCommand(rotationClimber));
 
         evaluateDriveStyle();
     }
@@ -113,8 +117,9 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new InstantCommand(() -> shooter.setAimState(Value.kReverse))
-                .andThen(new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder))
-                .andThen(new SimpleAutoDriveCommand(-0.5, 0.0, driveTrain).withTimeout(1));
+//        return new InstantCommand(() -> shooter.setAimState(Value.kReverse))
+//                .andThen(new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder))
+//                .andThen(new SimpleAutoDriveCommand(-0.5, 0.0, driveTrain).withTimeout(1));
+        return null;
     }
 }

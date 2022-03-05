@@ -15,12 +15,12 @@ public class RunFeederCommand extends CommandBase {
 
     @Override
     public void execute() {
-        feeder.setFeederRPM(FeederConstants.FEEDER_RPM);
+        feeder.setFeederPercent(FeederConstants.FEEDER_PERCENT);
     }
 
     @Override
     public void end(boolean interrupted) {
-        feeder.setFeederRPM(0.0);
+        feeder.setFeederPercent(0.0);
     }
 
     @Override

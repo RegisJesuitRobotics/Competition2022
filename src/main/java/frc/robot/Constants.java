@@ -82,21 +82,15 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 1.0;
 
-        public static final double FAR_DISTANCE_RPM = -1;
-        public static final double CLOSE_DISTANCE_RPM = 4600.0;
+        public static final double FAR_DISTANCE_RPM = 4200.0;
+        public static final double CLOSE_DISTANCE_RPM = 3800.0;
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
     }
 
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_VELOCITY_P = 0.13832;
-        public static final double FEEDER_VELOCITY_S_VOLTS = 0.28575;
-        public static final double FEEDER_VELOCITY_V_VOLTS = 0.2089;
-
-        public static final double FEEDER_GEARING = 3.0;
-
-        public static final double FEEDER_RPM = 1200.0;
+        public static final double FEEDER_PERCENT = 0.8;
     }
 
     public static class LimeLightConstants {
