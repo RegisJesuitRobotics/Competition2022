@@ -9,6 +9,6 @@ import frc.robot.subsystems.Shooter;
 public class RunShooterAndFeederCommand extends ParallelRaceGroup {
     public RunShooterAndFeederCommand(double shooterRPM, Shooter shooter, Feeder feeder) {
         super(new RunShooterCommand(shooterRPM, shooter), new SequentialCommandGroup(
-                new WaitForShooterWarmupCommand(shooterRPM, shooter), new RunFeederCommand(feeder)));
+                new WaitForShooterWarmupCommand(shooterRPM - 50, shooter), new RunFeederCommand(feeder)));
     }
 }

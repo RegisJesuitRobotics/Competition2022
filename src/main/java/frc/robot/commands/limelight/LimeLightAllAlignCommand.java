@@ -35,7 +35,8 @@ public class LimeLightAllAlignCommand extends CommandBase {
             distanceError = limeLight.getEstimatedDistance() - targetDistance;
         }
         driveTrain.arcadeDrive(LimeLightConstants.P_LIMELIGHT_DISTANCE * distanceError,
-                LimeLightConstants.P_LIMELIGHT_ANGLE * limeLight.getHorizontalOffset());
+                LimeLightConstants.P_LIMELIGHT_ANGLE * limeLight.getHorizontalOffset()
+                        + LimeLightConstants.ARB_FF_LIMELIGHT_ANGLE * Math.signum(limeLight.getHorizontalOffset()));
     }
 
     @Override
