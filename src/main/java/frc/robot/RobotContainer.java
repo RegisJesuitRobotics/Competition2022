@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.climber.ClimberBackwardCommand;
@@ -17,11 +18,10 @@ import frc.robot.commands.climber.ClimberUpCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
-import frc.robot.commands.feeder.RunFeederCommand;
+import frc.robot.commands.feeder.FeederRunCommand;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
-import frc.robot.commands.shooter.RunShooterAndFeederCommand;
-import frc.robot.commands.shooter.RunShooterCommand;
+import frc.robot.commands.shooter.ShooterAndFeederRunCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
@@ -73,25 +73,25 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        // Driver
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
         driverController.rightButton.whileHeld(
-                new ConditionalCommand(new IntakeRunCommand(0.7, intake), new DoNothingCommand(), intake::isDeployed));
+                new ConditionalCommand(new IntakeRunCommand(intake), new DoNothingCommand(), intake::isDeployed));
 
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
 
-        operatorController.share.whileHeld(new RunFeederCommand(feeder));
+        // Operator
+        operatorController.share.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED / 2, feeder));
+        operatorController.options.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED / 2, feeder));
         operatorController.rightButton.whileHeld(new ConditionalCommand(
-                new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder, spinners),
-                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder, spinners),
+                new ShooterAndFeederRunCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder, spinners),
+                new ShooterAndFeederRunCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder, spinners),
                 shooter::isAimingClose));
 
         operatorController.dPad.left.whenPressed(new ToggleAimCommand(shooter));
-        operatorController.leftButton.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain)); // When held so
-                                                                                                         // it ends when
-                                                                                                         // aligned
-        operatorController.leftTrigger.whileHeld(new RunShooterCommand(2000, shooter));
+        operatorController.leftButton.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
 
         operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
         operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));

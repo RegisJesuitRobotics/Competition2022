@@ -5,14 +5,13 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.intake.Intake;
 
 public class IntakeRunCommand extends CommandBase {
-    private final double speed;
     private final Intake intake;
 
-    public IntakeRunCommand(double speed, Intake intake) {
-        this.speed = speed;
+    public IntakeRunCommand(Intake intake) {
         this.intake = intake;
 
         addRequirements(intake);
@@ -25,7 +24,7 @@ public class IntakeRunCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intake.setPercentage(speed);
+        intake.setPercentage(IntakeConstants.INTAKE_SPEED);
     }
 
     // Called once the command ends or is interrupted.

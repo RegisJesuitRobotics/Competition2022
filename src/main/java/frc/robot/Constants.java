@@ -58,6 +58,8 @@ public final class Constants {
         public static final int SOLENOID_RIGHT_REVERSE_PORT = 1;
         public static final int SOLENOID_LEFT_FORWARD_PORT = 8;
         public static final int SOLENOID_LEFT_REVERSE_PORT = 7;
+        public static final double SPINNER_SPEED = 1.0;
+        public static final double INTAKE_SPEED = 0.7;
     }
 
     public static class ClimberConstants {
@@ -73,7 +75,7 @@ public final class Constants {
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
-        public static final double SHOOTER_VELOCITY_P = 0.226;
+        public static final double SHOOTER_VELOCITY_P = 0.220;
         public static final double SHOOTER_VELOCITY_S_VOLTS = 0.17322;
         public static final double SHOOTER_VELOCITY_V_VOLTS = 0.12609;
 
@@ -82,15 +84,15 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 1.0;
 
-        public static final double FAR_DISTANCE_RPM = 4200.0;
-        public static final double CLOSE_DISTANCE_RPM = 3800.0;
+        public static final double FAR_DISTANCE_RPM = 4400.0;
+        public static final double CLOSE_DISTANCE_RPM = 3700.0;
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
     }
 
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_PERCENT = 0.6;
+        public static final double FEEDER_SPEED = 0.4;
     }
 
     public static class LimeLightConstants {
