@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.climber.ClimberBackwardCommand;
 import frc.robot.commands.climber.ClimberDownCommand;
 import frc.robot.commands.climber.ClimberForwardCommand;
@@ -28,7 +29,6 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 import frc.robot.utils.ShuffleboardTabs;
 
-import java.util.Map;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -76,23 +76,17 @@ public class RobotContainer {
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
-        driverController.rightButton
-                .whileHeld(new SelectCommand(Map.ofEntries(Map.entry(true, new IntakeRunCommand(0.7, intake)),
-                        Map.entry(false, new WaitUntilCommand(() -> false))), intake::isDeployed));
+        driverController.rightButton.whileHeld(
+                new ConditionalCommand(new IntakeRunCommand(0.7, intake), new DoNothingCommand(), intake::isDeployed));
 
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
 
         operatorController.share.whileHeld(new RunFeederCommand(feeder));
-        operatorController.rightButton
-                .whileHeld(
-                        new SelectCommand(
-                                Map.ofEntries(
-                                        Map.entry(true,
-                                                new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM,
-                                                        shooter, feeder, spinners)),
-                                        Map.entry(false, new RunShooterAndFeederCommand(
-                                                ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder, spinners))),
-                                shooter::isAimingClose));
+        operatorController.rightButton.whileHeld(new ConditionalCommand(
+                new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder, spinners),
+                new RunShooterAndFeederCommand(ShooterConstants.FAR_DISTANCE_RPM, shooter, feeder, spinners),
+                shooter::isAimingClose));
+
         operatorController.dPad.left.whenPressed(new ToggleAimCommand(shooter));
         operatorController.leftButton.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain)); // When held so
                                                                                                          // it ends when

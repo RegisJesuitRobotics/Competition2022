@@ -90,7 +90,7 @@ public final class Constants {
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_PERCENT = 0.8;
+        public static final double FEEDER_PERCENT = 0.6;
     }
 
     public static class LimeLightConstants {
