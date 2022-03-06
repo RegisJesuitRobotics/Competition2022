@@ -97,6 +97,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return TrajectoryCommandGenerator.getCommandFromFile("2BallLeft", driveTrain);
+        return TrajectoryCommandGenerator.getCommandFromFile("TestPath", driveTrain);
     }
 }

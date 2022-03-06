@@ -40,11 +40,11 @@ public final class Constants {
     }
 
     public static class TrajectoryConstants {
-        public static final double S_VOLTS = 0.55345;
-        public static final double V_VOLT_SECONDS_PER_METER = 2.384;
-        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.15702;
+        public static final double S_VOLTS = 0.13914;
+        public static final double V_VOLT_SECONDS_PER_METER = 2.2924;
+        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.39289;
 
-        public static final double P_DRIVE_VEL = 2.5832;
+        public static final double P_DRIVE_VEL = 3.0811;
 
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
