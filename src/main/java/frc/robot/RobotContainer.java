@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
-import frc.robot.commands.climber.ClimberBackwardCommand;
-import frc.robot.commands.climber.ClimberDownCommand;
-import frc.robot.commands.climber.ClimberForwardCommand;
-import frc.robot.commands.climber.ClimberUpCommand;
+import frc.robot.commands.climber.ClimberControllerControlCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
@@ -23,6 +20,7 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.ShooterAndFeederRunCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
+import frc.robot.joysticks.Logitech3DProController;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.intake.Intake;
@@ -50,8 +48,11 @@ public class RobotContainer {
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
+    private final Logitech3DProController operatorClimberController = new Logitech3DProController(2);
 
     private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
+    private final ClimberControllerControlCommand climberControlCommand = new ClimberControllerControlCommand(
+            operatorClimberController, lengthClimber, rotationClimber);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -93,11 +94,7 @@ public class RobotContainer {
         operatorController.dPad.left.whenPressed(new ToggleAimCommand(shooter));
         operatorController.leftButton.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
 
-        operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
-        operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));
-        operatorController.circle.whileHeld(new ClimberForwardCommand(rotationClimber));
-        operatorController.square.whileHeld(new ClimberBackwardCommand(rotationClimber));
-
+        lengthClimber.setDefaultCommand(climberControlCommand);
         evaluateDriveStyle();
     }
 
