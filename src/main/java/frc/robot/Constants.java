@@ -18,8 +18,6 @@ import edu.wpi.first.math.util.Units;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final boolean autoSwitchShuffleboardTab = false;
-
     public static class DriveConstants {
         public static final int LEFT_TOP_PORT = 2;
         public static final int LEFT_FRONT_PORT = 1;
@@ -86,11 +84,14 @@ public final class Constants {
 
         public static final double FAR_DISTANCE_RPM = 4400.0;
         public static final double CLOSE_DISTANCE_RPM = 3700.0;
-        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
+
+        // TODO: get this value
+        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
     }
 
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
+        public static final int FEEDER_SENSOR_PORT = -1;
 
         public static final double FEEDER_SPEED = 0.4;
     }
