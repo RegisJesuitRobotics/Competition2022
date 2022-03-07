@@ -3,8 +3,8 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.joysticks.Logitech3DProController;
-import frc.robot.subsystems.LengthClimber;
-import frc.robot.subsystems.RotationClimber;
+import frc.robot.subsystems.climber.LengthClimber;
+import frc.robot.subsystems.climber.RotationClimber;
 
 public class ClimberControllerControlCommand extends CommandBase {
     private final Logitech3DProController logitechController;

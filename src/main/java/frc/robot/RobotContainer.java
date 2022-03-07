@@ -23,6 +23,8 @@ import frc.robot.commands.shooter.ToggleAimCommand;
 import frc.robot.joysticks.Logitech3DProController;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.climber.LengthClimber;
+import frc.robot.subsystems.climber.RotationClimber;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 import frc.robot.utils.ShuffleboardTabs;
