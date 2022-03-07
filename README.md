@@ -2,10 +2,9 @@
 
 ## Getting started
 Clone the repository with the command `git clone https://github.com/RegisJesuitRobotics/Competition2022.git`.
+
 ## Reformatting code
 Run `./gradlew spotlessApply` to reformat code.
-
-Clone the repository with the command `git clone https://github.com/RegisJesuitRobotics/Competition2022.git`. Recurse submodules makes it so it also clones the Pure Pursuit library
 
 ## Controls
 ### Driver controls
