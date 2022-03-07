@@ -23,11 +23,13 @@ public class ClimberControllerControlCommand extends CommandBase {
     @Override
     public void execute() {
         // Either both-climbers buttons pressed
-        if (logitechController.buttonEight.get() || logitechController.buttonNine.get()) {
-            if (logitechController.buttonEight.get() && logitechController.buttonNine.get()) {
+        boolean bothUp = logitechController.buttonEight.get();
+        boolean bothDown = logitechController.buttonNine.get();
+        if (bothUp || bothDown) {
+            if (bothUp && bothDown) {
                 // Both are pressed
                 lengthClimber.setBothPercent(0.0);
-            } else if (logitechController.buttonEight.get()) {
+            } else if (bothUp) {
                 // Up is pressed
                 lengthClimber.setBothPercent(ClimberConstants.LENGTH_SPEED);
             } else {
@@ -38,11 +40,13 @@ public class ClimberControllerControlCommand extends CommandBase {
         }
 
         // Either left-climbers buttons pressed
-        if (logitechController.buttonSix.get() || logitechController.buttonSeven.get()) {
-            if (logitechController.buttonSix.get() && logitechController.buttonSeven.get()) {
+        boolean leftUp = logitechController.buttonSix.get();
+        boolean leftDown = logitechController.buttonSeven.get();
+        if (leftUp || leftDown) {
+            if (leftUp && leftDown) {
                 // Both are pressed
                 lengthClimber.setLeftPercent(0.0);
-            } else if (logitechController.buttonSix.get()) {
+            } else if (leftUp) {
                 // Up is pressed
                 lengthClimber.setLeftPercent(ClimberConstants.LENGTH_SPEED);
             } else {
@@ -53,16 +57,30 @@ public class ClimberControllerControlCommand extends CommandBase {
         }
 
         // Either right-climbers buttons pressed
-        if (logitechController.buttonTen.get() || logitechController.buttonEleven.get()) {
-            if (logitechController.buttonTen.get() && logitechController.buttonEleven.get()) {
+        boolean rightUp = logitechController.buttonTen.get();
+        boolean rightDown = logitechController.buttonEleven.get();
+        if (rightUp || rightDown) {
+            if (rightUp && rightDown) {
                 // Both are pressed
                 lengthClimber.setRightPercent(0.0);
-            } else if (logitechController.buttonTen.get()) {
+            } else if (rightUp) {
                 // Up is pressed
                 lengthClimber.setRightPercent(ClimberConstants.LENGTH_SPEED);
             } else {
                 // Down is pressed
                 lengthClimber.setRightPercent(-ClimberConstants.LENGTH_SPEED);
+            }
+        }
+
+        boolean bothForward = logitechController.buttonFour.get();
+        boolean bothBackward = logitechController.buttonFive.get();
+        if (bothForward || bothBackward) {
+            if (bothForward && bothBackward) {
+                rotationClimber.setRotationPercent(0.0);
+            } else if (bothForward) {
+                rotationClimber.setRotationPercent(ClimberConstants.ROTATION_SPEED);
+            } else {
+                rotationClimber.setRotationPercent(-ClimberConstants.ROTATION_SPEED);
             }
         }
     }
