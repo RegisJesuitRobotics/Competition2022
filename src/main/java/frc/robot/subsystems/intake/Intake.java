@@ -5,6 +5,7 @@
 package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -23,6 +24,8 @@ public class Intake extends SubsystemBase {
 
     public Intake() {
         intakeMotor.restoreFactoryDefaults();
+        intakeMotor.setInverted(true);
+        intakeMotor.setIdleMode(IdleMode.kCoast);
 
         intakeMotor.burnFlash();
     }
@@ -38,6 +41,16 @@ public class Intake extends SubsystemBase {
         } else {
             intakeSolenoidRight.set(Value.kReverse);
             intakeSolenoidLeft.set(Value.kReverse);
+        }
+    }
+
+    public void toggleSolenoid() {
+        if (intakeSolenoidRight.get() == Value.kOff || intakeSolenoidLeft.get() == Value.kOff) {
+            intakeSolenoidRight.set(Value.kForward);
+            intakeSolenoidLeft.set(Value.kForward);
+        } else {
+            intakeSolenoidRight.toggle();
+            intakeSolenoidLeft.toggle();
         }
     }
 }

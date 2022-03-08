@@ -34,7 +34,7 @@ public final class Constants {
         public static final double DISTANCE_PER_ROTATION = (WHEEL_DIAMETER_METERS * Math.PI) / (GEARING);
 
         // Distance between wheels of opposite sides
-        public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(26);
+        public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(27.5);
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
                 TRACK_WIDTH_METERS);
     }
@@ -53,6 +53,7 @@ public final class Constants {
     public static class IntakeConstants {
         public static final int INTAKE_PORT = 14;
         public static final int SPINNER_PORT = 6;
+
         public static final int SOLENOID_RIGHT_FORWARD_PORT = 0;
         public static final int SOLENOID_RIGHT_REVERSE_PORT = 1;
         public static final int SOLENOID_LEFT_FORWARD_PORT = 8;
@@ -65,23 +66,23 @@ public final class Constants {
         public static final int RIGHT_CLIMBER_LENGTH_PORT = 11;
         public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
 
-        public static final double LENGTH_SPEED = 0.5;
+        public static final double LENGTH_SPEED = 0.7;
         public static final double ROTATION_SPEED = 0.2;
     }
 
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
-        public static final double SHOOTER_VELOCITY_P = 0.43187;
-        public static final double SHOOTER_VELOCITY_S_VOLTS = 0.096502;
-        public static final double SHOOTER_VELOCITY_V_VOLTS = 0.35741;
+        public static final double SHOOTER_VELOCITY_P = 0.226;
+        public static final double SHOOTER_VELOCITY_S_VOLTS = 0.17322;
+        public static final double SHOOTER_VELOCITY_V_VOLTS = 0.12609;
 
         public static final int SHOOTER_AIM_OPEN_PORT = 15;
         public static final int SHOOTER_AIM_CLOSE_PORT = 14;
 
-        public static final double SHOOTER_GEARING = 3.0;
+        public static final double SHOOTER_GEARING = 1.0;
 
-        public static final double FAR_DISTANCE_RPM = 2000.0;
+        public static final double CLOSE_DISTANCE_RPM = 4600.0;
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
     }
 
@@ -94,7 +95,7 @@ public final class Constants {
 
         public static final double FEEDER_GEARING = 3.0;
 
-        public static final double FEEDER_RPM = 200.0;
+        public static final double FEEDER_RPM = 1200.0;
     }
 
     public static class LimeLightConstants {
@@ -104,11 +105,12 @@ public final class Constants {
         public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(19);
         public static final double MOUNT_ANGLE_DEGREES = 45.0;
 
-        public static final double P_LIMELIGHT_DISTANCE = 0.0;
+        public static final double P_LIMELIGHT_DISTANCE = 0.4;
         public static final double LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS = 0.2;
 
-        public static final double P_LIMELIGHT_ANGLE = 0.0;
-        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.0;
+        public static final double P_LIMELIGHT_ANGLE = 0.03;
+        public static final double ARB_FF_LIMELIGHT_ANGLE = 0.2;
+        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.5;
     }
 
     public static class FieldConstants {
