@@ -57,7 +57,9 @@ public class DriveTrain extends SubsystemBase {
         leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to
 
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
-        rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
+        rightEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
+
+        resetEncoders();
 
         leftTop.burnFlash();
         leftBack.burnFlash();

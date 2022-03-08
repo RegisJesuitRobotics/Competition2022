@@ -34,17 +34,17 @@ public final class Constants {
         public static final double DISTANCE_PER_ROTATION = (WHEEL_DIAMETER_METERS * Math.PI) / (GEARING);
 
         // Distance between wheels of opposite sides
-        public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(27.5);
+        public static final double TRACK_WIDTH_METERS = 0.7483;
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
                 TRACK_WIDTH_METERS);
     }
 
     public static class TrajectoryConstants {
-        public static final double S_VOLTS = 0.13914;
-        public static final double V_VOLT_SECONDS_PER_METER = 2.2924;
-        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.39289;
+        public static final double S_VOLTS = 0.1518;
+        public static final double V_VOLT_SECONDS_PER_METER = 2.2596;
+        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.43163;
 
-        public static final double P_DRIVE_VEL = 3.0811;
+        public static final double P_DRIVE_VEL = 3.0842;
 
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
