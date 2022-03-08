@@ -1,5 +1,6 @@
 package frc.robot.joysticks;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class Logitech3DProController extends RaiderJoystick {
@@ -16,10 +17,36 @@ public class Logitech3DProController extends RaiderJoystick {
     public final JoystickButton buttonEleven = new JoystickButton(this, 11);
     public final JoystickButton buttonTwelve = new JoystickButton(this, 12);
 
-    // TODO: get this axis
-    public final Trigger throttle = new Trigger(this, 1);
-    public final DPad topStick = new DPad(this);
+    public final Trigger throttle = new Trigger(this, 3);
+    public final DPad dPad = new DPad(this);
+    private final ThreeAxisStick stick = new ThreeAxisStick(this, 0, 1, 2);
 
+    public static class ThreeAxisStick {
+        private final int xAxisPort;
+        private final int yAxisPort;
+        private final int zAxisPort;
+
+        private final GenericHID parent;
+
+        public ThreeAxisStick(GenericHID parent, int xAxisPort, int yAxisPort, int zAxisPort) {
+            this.parent = parent;
+            this.xAxisPort = xAxisPort;
+            this.yAxisPort = yAxisPort;
+            this.zAxisPort = zAxisPort;
+        }
+
+        public double getXAxis() {
+            return parent.getRawAxis(xAxisPort);
+        }
+
+        public double getYAxis() {
+            return parent.getRawAxis(yAxisPort);
+        }
+
+        public double getZAxis() {
+            return parent.getRawAxis(zAxisPort);
+        }
+    }
 
     public Logitech3DProController(int port) {
         super(port);
