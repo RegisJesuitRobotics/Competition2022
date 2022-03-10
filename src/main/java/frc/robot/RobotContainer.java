@@ -6,28 +6,28 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.auto.TrajectoryCommandGenerator;
-import frc.robot.commands.climber.ClimberBackwardCommand;
-import frc.robot.commands.climber.ClimberDownCommand;
-import frc.robot.commands.climber.ClimberForwardCommand;
-import frc.robot.commands.climber.ClimberUpCommand;
+import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
-import frc.robot.commands.feeder.RunFeederCommand;
+import frc.robot.commands.feeder.FeedOneBallCommand;
+import frc.robot.commands.feeder.FeederRunCommand;
+import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
-import frc.robot.commands.shooter.RunShooterAndFeederCommand;
-import frc.robot.commands.shooter.RunShooterCommand;
+import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
+import frc.robot.commands.shooter.TwoBallShootSequenceCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
-import frc.robot.utils.ShuffleboardTabs;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -61,7 +61,7 @@ public class RobotContainer {
         teleopDriveStyle.addOption("Arcade Drive (Everyone else)",
                 new ArcadeDriveCommand(driveTrain, driverController));
 
-        ShuffleboardTabs.getTeleopTab().add("Drive Style", teleopDriveStyle);
+        Shuffleboard.getTab("DriveTrainRaw").add("Drive Style", teleopDriveStyle);
         configureButtonBindings();
     }
 
@@ -72,24 +72,39 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        // Driver
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
-        driverController.rightButton.whenHeld(new IntakeSpinnersRunCommand(intake, spinners));
+        driverController.rightButton.whileHeld(new ConditionalCommand(
+                new IntakeRunAndLoadBallToWaitCommand(feeder, intake), new DoNothingCommand(), intake::isDeployed));
+
+        driverController.triangle.whileHeld(
+                new ConditionalCommand(new IntakeRunCommand(intake), new DoNothingCommand(), intake::isDeployed));
 
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
 
-        operatorController.share.whenPressed(new ToggleAimCommand(shooter));
-        operatorController.leftButton.whileHeld(new RunFeederCommand(feeder));
-        operatorController.rightButton
-                .whileHeld(new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder));
-        operatorController.dPad.left.whileHeld(new RunShooterCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter));
-        operatorController.options.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
+        // Operator
+        operatorController.rightButton.whenHeld(new ConditionalCommand(
+                new TwoBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
+                new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
+                shooter::isAimingClose));
+        operatorController.leftButton.whenHeld(new ConditionalCommand(
+                new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
+                new OneBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
+                shooter::isAimingClose));
 
-        operatorController.triangle.whileHeld(new ClimberUpCommand(lengthClimber));
-        operatorController.x.whileHeld(new ClimberDownCommand(lengthClimber));
-        operatorController.circle.whileHeld(new ClimberForwardCommand(rotationClimber));
-        operatorController.square.whileHeld(new ClimberBackwardCommand(rotationClimber));
+        operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneCommand(feeder));
+        operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
+        operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED, feeder));
+        operatorController.dPad.down.whenHeld(new FeedOneBallCommand(feeder));
+
+        operatorController.triangle.whenHeld(new LimeLightAllAlignCommand(
+                ShooterConstants.FAR_SHOOTING_LOCATION_DISTANCE_METERS, limeLight, driveTrain));
+        operatorController.circle.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
+        operatorController.square.whenPressed(new ToggleAimCommand(shooter));
+
+        operatorController.share.whileHeld(new SpinnersRunCommand(spinners));
 
         evaluateDriveStyle();
     }
