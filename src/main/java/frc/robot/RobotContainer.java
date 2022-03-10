@@ -21,7 +21,7 @@ import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.ShooterAndFeederRunCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
 import frc.robot.joysticks.Logitech3DProController;
-import frc.robot.joysticks.PlaystationController;
+import frc.robot.joysticks.PseudoXboxController;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.climber.LengthClimber;
 import frc.robot.subsystems.climber.RotationClimber;
@@ -48,8 +48,8 @@ public class RobotContainer {
     private final Spinners spinners = new Spinners();
     private final LimeLight limeLight = new LimeLight();
 
-    private final PlaystationController driverController = new PlaystationController(0);
-    private final PlaystationController operatorController = new PlaystationController(1);
+    private final PseudoXboxController driverController = new PseudoXboxController(0);
+    private final PseudoXboxController operatorController = new PseudoXboxController(1);
     private final Logitech3DProController operatorClimberController = new Logitech3DProController(2);
 
     private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();

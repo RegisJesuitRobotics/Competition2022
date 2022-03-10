@@ -1,14 +1,14 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.joysticks.PlaystationController;
+import frc.robot.joysticks.PseudoXboxController;
 import frc.robot.subsystems.DriveTrain;
 
 public class TankishDriveCommand extends CommandBase {
     private final DriveTrain driveTrain;
-    private final PlaystationController driverController;
+    private final PseudoXboxController driverController;
 
-    public TankishDriveCommand(DriveTrain driveTrain, PlaystationController driverController) {
+    public TankishDriveCommand(DriveTrain driveTrain, PseudoXboxController driverController) {
         this.driveTrain = driveTrain;
         this.driverController = driverController;
 
