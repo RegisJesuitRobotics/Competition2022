@@ -1,7 +1,6 @@
 package frc.robot.commands.auto.paths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
 import frc.robot.commands.drive.RotateDriveCommand;
@@ -21,21 +20,15 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
 // Start facing the hub with center of bot 0.4927 meters away
-public class FiveBallAutoCommand extends SequentialCommandGroup {
-    public FiveBallAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners,
+public class ThreeBallAutoCommand extends SequentialCommandGroup {
+    public ThreeBallAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners,
             LimeLight limeLight) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
                 new RotateDriveCommand(180.0, driveTrain), new IntakeDeployCommand(intake),
-                deadline(TrajectoryCommandGenerator.getCommandFromFile("5BallA", driveTrain),
+                deadline(TrajectoryCommandGenerator.getCommandFromFile("3BallA", driveTrain),
                         new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
                 new ShooterAimStateCommand(AimState.FAR, shooter),
-                new LimeLightAllAlignCommand(3.436, limeLight, driveTrain),
-                new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
-                new RotateDriveCommand(180.0, driveTrain),
-                deadline(sequence(TrajectoryCommandGenerator.getCommandFromFile("5BallB", driveTrain),
-                        new WaitCommand(0.5)), new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
-                TrajectoryCommandGenerator.getCommandFromFile("5BallC", driveTrain),
                 new LimeLightAllAlignCommand(3.436, limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners));
     }

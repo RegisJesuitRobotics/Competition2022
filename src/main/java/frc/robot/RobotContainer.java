@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
+import frc.robot.commands.auto.paths.*;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
@@ -50,6 +51,7 @@ public class RobotContainer {
     private final PlaystationController driverController = new PlaystationController(0);
     private final PlaystationController operatorController = new PlaystationController(1);
 
+    private final SendableChooser<Command> autoRoutineChooser = new SendableChooser<>();
     private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
 
     /**
@@ -60,6 +62,18 @@ public class RobotContainer {
                 new TankishDriveCommand(driveTrain, driverController));
         teleopDriveStyle.addOption("Arcade Drive (Everyone else)",
                 new ArcadeDriveCommand(driveTrain, driverController));
+
+        autoRoutineChooser.setDefaultOption("One Ball",
+                new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
+        autoRoutineChooser.addOption("Two Ball Bottom",
+                new TwoBallBottomAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+        autoRoutineChooser.addOption("Two Ball Top",
+                new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+        autoRoutineChooser.addOption("Three Ball",
+                new ThreeBallAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+        autoRoutineChooser.addOption("Five/Four Ball",
+                new FiveBallAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+        autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
         Shuffleboard.getTab("DriveTrainRaw").add("Drive Style", teleopDriveStyle);
         configureButtonBindings();
@@ -119,6 +133,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return TrajectoryCommandGenerator.getCommandFromFile("TestPath", driveTrain);
+        return autoRoutineChooser.getSelected();
     }
 }

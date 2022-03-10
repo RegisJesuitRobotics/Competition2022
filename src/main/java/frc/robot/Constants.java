@@ -46,6 +46,11 @@ public final class Constants {
 
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
+
+        public static final double P_ANGLE_POSITION_DEGREES = 0.71498;
+        public static final double I_ANGLE_POSITION_DEGREES = 0.0;
+        public static final double D_ANGLE_POSITION_DEGREES = 2.0589;
+        public static final double ARB_FF_ANGLE_POSITION_DEGREES = 0.31156;
     }
 
     public static class IntakeConstants {
@@ -84,6 +89,7 @@ public final class Constants {
 
         public static final double FAR_DISTANCE_RPM = 4400.0;
         public static final double CLOSE_DISTANCE_RPM = 3700.0;
+        public static final double EXPEL_BALL_RPM = 3000.0;
 
         // TODO: get this value
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
