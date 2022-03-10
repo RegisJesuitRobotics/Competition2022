@@ -27,8 +27,8 @@ public class ClimberControllerControlCommand extends CommandBase {
         boolean leftSet = false;
         boolean rightSet = false;
 
-        boolean bothExtend = logitechController.buttonTen.get();
-        boolean bothRetract = logitechController.buttonNine.get();
+        boolean bothRetract = logitechController.buttonTen.get();
+        boolean bothExtend = logitechController.buttonNine.get();
         if (bothExtend || bothRetract) {
             if (bothExtend && bothRetract) {
                 // Both are pressed
@@ -44,8 +44,8 @@ public class ClimberControllerControlCommand extends CommandBase {
         }
 
         // Either left-climbers buttons pressed
-        boolean leftExtend = logitechController.buttonTwelve.get();
-        boolean leftRetract = logitechController.buttonEleven.get();
+        boolean leftRetract = logitechController.buttonTwelve.get();
+        boolean leftExtend = logitechController.buttonEleven.get();
         if (leftExtend || leftRetract) {
             leftSet = true;
             if (leftExtend && leftRetract) {
@@ -62,8 +62,8 @@ public class ClimberControllerControlCommand extends CommandBase {
         }
 
         // Either right-climbers buttons pressed
-        boolean rightExtend = logitechController.buttonEight.get();
-        boolean rightRetract = logitechController.buttonSeven.get();
+        boolean rightRetract = logitechController.buttonEight.get();
+        boolean rightExtend = logitechController.buttonSeven.get();
         if (rightExtend || rightRetract) {
             rightSet = true;
             if (rightExtend && rightRetract) {
