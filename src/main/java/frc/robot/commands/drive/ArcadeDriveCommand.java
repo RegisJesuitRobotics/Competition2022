@@ -1,14 +1,14 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.joysticks.PseudoXboxController;
+import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCommand extends CommandBase {
     private final DriveTrain driveTrain;
-    private final PseudoXboxController driverController;
+    private final PlaystationController driverController;
 
-    public ArcadeDriveCommand(DriveTrain driveTrain, PseudoXboxController driverController) {
+    public ArcadeDriveCommand(DriveTrain driveTrain, PlaystationController driverController) {
         this.driveTrain = driveTrain;
         this.driverController = driverController;
 
