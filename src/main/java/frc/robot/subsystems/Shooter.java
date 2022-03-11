@@ -33,7 +33,7 @@ public class Shooter extends SubsystemBase {
     private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(SHOOTER_VELOCITY_S_VOLTS,
             SHOOTER_VELOCITY_V_VOLTS);
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
-    private final SlewRateLimiter rateLimiter = new SlewRateLimiter(1000);
+    private final SlewRateLimiter rateLimiter = new SlewRateLimiter(2000);
 
     private double shooterTargetRPS = 0.0;
 

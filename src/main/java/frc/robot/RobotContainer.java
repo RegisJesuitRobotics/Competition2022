@@ -15,9 +15,7 @@ import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
-import frc.robot.commands.feeder.FeedOneBallCommand;
-import frc.robot.commands.feeder.FeederRunCommand;
-import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
+import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
@@ -76,8 +74,9 @@ public class RobotContainer {
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
-        driverController.rightButton.whileHeld(new ConditionalCommand(
-                new IntakeRunAndLoadBallToWaitCommand(feeder, intake), new DoNothingCommand(), intake::isDeployed));
+        driverController.rightButton
+                .whileHeld(new ConditionalCommand(new IntakeRunAndLoadBallCommand(feeder, intake, shooter, spinners),
+                        new DoNothingCommand(), intake::isDeployed));
 
         driverController.triangle.whileHeld(
                 new ConditionalCommand(new IntakeRunCommand(intake), new DoNothingCommand(), intake::isDeployed));
@@ -94,10 +93,10 @@ public class RobotContainer {
                 new OneBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
                 shooter::isAimingClose));
 
-        operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneCommand(feeder));
+        operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
         operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
         operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED, feeder));
-        operatorController.dPad.down.whenHeld(new FeedOneBallCommand(feeder));
+        operatorController.dPad.down.whenHeld(new FeedOneBallToShooterCommand(feeder));
 
         operatorController.triangle.whenHeld(new LimeLightAllAlignCommand(
                 ShooterConstants.FAR_SHOOTING_LOCATION_DISTANCE_METERS, limeLight, driveTrain));
