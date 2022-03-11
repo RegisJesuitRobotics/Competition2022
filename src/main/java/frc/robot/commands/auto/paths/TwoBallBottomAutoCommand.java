@@ -31,6 +31,7 @@ public class TwoBallBottomAutoCommand extends SequentialCommandGroup {
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallBottomB", driveTrain),
                         new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
+                TrajectoryCommandGenerator.getCommandFromFile("2BallBottomC", driveTrain),
                 new OneBallShootSequenceCommand(ShooterConstants.EXPEL_BALL_RPM, feeder, shooter, spinners));
     }
 }
