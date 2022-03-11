@@ -4,14 +4,16 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.FeederConstants.*;
 
 public class Feeder extends SubsystemBase {
     private final CANSparkMax feederMotor = new CANSparkMax(FEEDER_PORT, MotorType.kBrushless);
-    private final DigitalInput feederSensor = new DigitalInput(FEEDER_SENSOR_PORT);
+    private final ColorSensorV3 feederSensor = new ColorSensorV3(Port.kOnboard);
 
     public Feeder() {
         feederMotor.restoreFactoryDefaults();
@@ -25,6 +27,11 @@ public class Feeder extends SubsystemBase {
     }
 
     public boolean isBallDetected() {
-        return !feederSensor.get();
+        return false;
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Prox", feederSensor.getProximity());
     }
 }
