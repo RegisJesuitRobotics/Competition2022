@@ -20,13 +20,13 @@ import frc.robot.subsystems.Shooter.AimState;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
-// Start facing the hub with center of bot 0.4927 meters away
+// Right up to hub facing toward it. Directly towards vertex in tarmac
 public class FiveBallAutoCommand extends SequentialCommandGroup {
     public FiveBallAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners,
             LimeLight limeLight) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                new RotateDriveCommand(180.0, driveTrain), new IntakeDeployCommand(intake),
+                new RotateDriveCommand(-124.5, driveTrain), new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("5BallA", driveTrain),
                         new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
                 new ShooterAimStateCommand(AimState.FAR, shooter),

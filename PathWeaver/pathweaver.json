@@ -4,8 +4,8 @@
   "maxVelocity": 2.0,
   "maxAcceleration": 1.0,
   "trackWidth": 0.6985,
-  "robotLength": 0.762,
-  "robotWidth": 0.7366,
+  "robotLength": 0.92075,
+  "robotWidth": 0.9017,
   "gameName": "Rapid React",
   "outputDir": "../src/main/deploy/paths"
 }

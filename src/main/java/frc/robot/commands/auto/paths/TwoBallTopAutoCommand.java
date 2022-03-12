@@ -19,14 +19,14 @@ import frc.robot.subsystems.Shooter.AimState;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
-// Center of bot 1.68123m away from edge of ball, straight on, parallel to the hub
+// Parallel to the hub, straight on the ball, top right bumper almost touching tape
 public class TwoBallTopAutoCommand extends SequentialCommandGroup {
     public TwoBallTopAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder,
             Spinners spinners, LimeLight limeLight) {
         super(new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopA", driveTrain),
                         new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
-                new ShooterAimStateCommand(AimState.FAR, shooter), new RotateDriveCommand(167, driveTrain),
+                new ShooterAimStateCommand(AimState.FAR, shooter), new RotateDriveCommand(145, driveTrain),
                 new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopB", driveTrain),
