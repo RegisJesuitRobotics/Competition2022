@@ -51,7 +51,7 @@ public final class Constants {
         public static final double P_ANGLE_POSITION_DEGREES = 0.04;
         public static final double I_ANGLE_POSITION_DEGREES = 0.0;
         public static final double D_ANGLE_POSITION_DEGREES = 2.0589;
-        public static final double ARB_FF_ANGLE_POSITION_DEGREES = 0.31156;
+        public static final double ARB_FF_ANGLE_POSITION_DEGREES = 0.75;
     }
 
     public static class IntakeConstants {

@@ -18,7 +18,7 @@ public class RotateDriveCommand extends CommandBase {
                 TrajectoryConstants.I_ANGLE_POSITION_DEGREES, 0.0);
 //        pidController = new PIDController(0.01, 0.0, 0.0);
         pidController.enableContinuousInput(-180, 180);
-        pidController.setTolerance(0.5);
+        pidController.setTolerance(1.5);
 
         addRequirements(driveTrain);
     }
@@ -32,6 +32,7 @@ public class RotateDriveCommand extends CommandBase {
     @Override
     public void execute() {
         double voltage = pidController.calculate(driveTrain.getHeading());
+        voltage += Math.signum(voltage) * TrajectoryConstants.ARB_FF_ANGLE_POSITION_DEGREES;
 
         // Gyro is increasing as clockwise
         driveTrain.voltageDrive(voltage, -voltage);
