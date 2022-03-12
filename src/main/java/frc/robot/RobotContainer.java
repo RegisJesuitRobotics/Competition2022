@@ -74,9 +74,10 @@ public class RobotContainer {
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
-        driverController.rightButton
-                .whileHeld(new ConditionalCommand(new IntakeRunAndLoadBallCommand(feeder, intake, shooter, spinners),
-                        new DoNothingCommand(), intake::isDeployed));
+        driverController.rightButton.whenHeld(new ConditionalCommand(
+                new ParallelCommandGroup(new IntakeRunCommand(intake),
+                        new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners)),
+                new DoNothingCommand(), intake::isDeployed));
 
         driverController.triangle.whileHeld(
                 new ConditionalCommand(new IntakeRunCommand(intake), new DoNothingCommand(), intake::isDeployed));

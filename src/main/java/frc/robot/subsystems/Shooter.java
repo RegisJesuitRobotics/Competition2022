@@ -34,6 +34,7 @@ public class Shooter extends SubsystemBase {
             SHOOTER_VELOCITY_V_VOLTS);
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
     private final SlewRateLimiter rateLimiter = new SlewRateLimiter(2000);
+    private AimState previousState = AimState.CLOSE;
 
     private double shooterTargetRPS = 0.0;
 
@@ -78,6 +79,10 @@ public class Shooter extends SubsystemBase {
         shooterSolenoid.set(value);
     }
 
+    public AimState getAimState() {
+        return shooterSolenoid.get() == Value.kForward ? AimState.FAR : AimState.CLOSE;
+    }
+
     public void toggleAimState() {
         Value value = shooterSolenoid.get();
         if (value == Value.kReverse) {
@@ -85,6 +90,15 @@ public class Shooter extends SubsystemBase {
         } else {
             setAimState(Value.kReverse);
         }
+    }
+
+    public void setTemporaryState(AimState temporaryState) {
+        previousState = getAimState();
+        setAimState(temporaryState);
+    }
+
+    public void restorePreviousState() {
+        setAimState(previousState);
     }
 
     public boolean isAimingClose() {

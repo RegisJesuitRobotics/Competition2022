@@ -9,6 +9,6 @@ import frc.robot.subsystems.intake.Spinners;
 
 public class IntakeRunAndLoadBallCommand extends ParallelCommandGroup {
     public IntakeRunAndLoadBallCommand(Feeder feeder, Intake intake, Shooter shooter, Spinners spinners) {
-        super(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners), new IntakeRunCommand(intake));
+        super(new IntakeRunCommand(intake), new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
     }
 }

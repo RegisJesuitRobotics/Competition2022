@@ -85,7 +85,7 @@ public final class Constants {
 
         public static final double FAR_DISTANCE_RPM = 4400.0;
         public static final double CLOSE_DISTANCE_RPM = 3700.0;
-        public static final double EXPEL_BALL_RPM = 1500.0;
+        public static final double EXPEL_BALL_RPM = 2000.0;
 
         // TODO: get this value
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
@@ -94,9 +94,9 @@ public final class Constants {
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_SPEED = 0.4;
+        public static final double FEEDER_SPEED = 0.15;
 
-        public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.8;
+        public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
     }
 
     public static class LimeLightConstants {
@@ -124,7 +124,7 @@ public final class Constants {
                 - (VISION_TARGET_HEIGHT_METERS / 2);
 
         // TODO: calibrate
-        public static final Color RED_BALL_COLOR = new Color(1.0, 0.0, 0.0);
-        public static final Color BLUE_BALL_COLOR = new Color(55.0, 32.0, 13.0);
+        public static final Color RED_BALL_COLOR = new Color(0.50, 0.35, 0.13);
+        public static final Color BLUE_BALL_COLOR = new Color(0.14, 0.38, 0.47);
     }
 }
