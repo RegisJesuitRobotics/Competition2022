@@ -108,10 +108,6 @@ public class DriveTrain extends SubsystemBase {
         return rightEncoder.getPosition();
     }
 
-    public double getAverageEncodersDistance() {
-        return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
-    }
-
     /**
      * @return the rate of change of the left encoder (meters/second)
      */
