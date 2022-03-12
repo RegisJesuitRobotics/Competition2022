@@ -125,6 +125,6 @@ public final class Constants {
 
         // TODO: calibrate
         public static final Color RED_BALL_COLOR = new Color(1.0, 0.0, 0.0);
-        public static final Color BLUE_BALL_COLOR = new Color(0.0, 0.0, 1.0);
+        public static final Color BLUE_BALL_COLOR = new Color(55.0, 32.0, 13.0);
     }
 }
