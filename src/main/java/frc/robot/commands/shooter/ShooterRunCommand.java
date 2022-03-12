@@ -3,11 +3,11 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class RunShooterCommand extends CommandBase {
+public class ShooterRunCommand extends CommandBase {
     private final Shooter shooter;
     private final double rpm;
 
-    public RunShooterCommand(double rpm, Shooter shooter) {
+    public ShooterRunCommand(double rpm, Shooter shooter) {
         this.rpm = rpm;
         this.shooter = shooter;
 

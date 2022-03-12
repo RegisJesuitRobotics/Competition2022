@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -18,8 +19,6 @@ import edu.wpi.first.math.util.Units;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final boolean autoSwitchShuffleboardTab = false;
-
     public static class DriveConstants {
         public static final int LEFT_TOP_PORT = 2;
         public static final int LEFT_FRONT_PORT = 1;
@@ -58,6 +57,8 @@ public final class Constants {
         public static final int SOLENOID_RIGHT_REVERSE_PORT = 1;
         public static final int SOLENOID_LEFT_FORWARD_PORT = 8;
         public static final int SOLENOID_LEFT_REVERSE_PORT = 7;
+        public static final double SPINNER_SPEED = 1.0;
+        public static final double INTAKE_SPEED = 0.7;
     }
 
     public static class ClimberConstants {
@@ -73,7 +74,7 @@ public final class Constants {
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
-        public static final double SHOOTER_VELOCITY_P = 0.226;
+        public static final double SHOOTER_VELOCITY_P = 0.220;
         public static final double SHOOTER_VELOCITY_S_VOLTS = 0.17322;
         public static final double SHOOTER_VELOCITY_V_VOLTS = 0.12609;
 
@@ -82,20 +83,20 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 1.0;
 
-        public static final double CLOSE_DISTANCE_RPM = 4600.0;
-        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = 5.0;
+        public static final double FAR_DISTANCE_RPM = 4400.0;
+        public static final double CLOSE_DISTANCE_RPM = 3700.0;
+        public static final double EXPEL_BALL_RPM = 2000.0;
+
+        // TODO: get this value
+        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
     }
 
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_VELOCITY_P = 0.13832;
-        public static final double FEEDER_VELOCITY_S_VOLTS = 0.28575;
-        public static final double FEEDER_VELOCITY_V_VOLTS = 0.2089;
+        public static final double FEEDER_SPEED = 0.15;
 
-        public static final double FEEDER_GEARING = 3.0;
-
-        public static final double FEEDER_RPM = 1200.0;
+        public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
     }
 
     public static class LimeLightConstants {
@@ -121,5 +122,9 @@ public final class Constants {
 
         public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
                 - (VISION_TARGET_HEIGHT_METERS / 2);
+
+        // TODO: calibrate
+        public static final Color RED_BALL_COLOR = new Color(0.50, 0.35, 0.13);
+        public static final Color BLUE_BALL_COLOR = new Color(0.14, 0.38, 0.47);
     }
 }

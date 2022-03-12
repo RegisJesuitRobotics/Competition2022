@@ -53,4 +53,8 @@ public class Intake extends SubsystemBase {
             intakeSolenoidLeft.toggle();
         }
     }
+
+    public boolean isDeployed() {
+        return intakeSolenoidLeft.get() == Value.kForward;
+    }
 }

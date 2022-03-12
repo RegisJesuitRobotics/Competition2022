@@ -9,12 +9,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.utils.ShuffleboardTabs;
 
 public class DriveTrain extends SubsystemBase {
     private final CANSparkMax leftTop = new CANSparkMax(DriveConstants.LEFT_TOP_PORT, MotorType.kBrushless);
@@ -65,11 +63,6 @@ public class DriveTrain extends SubsystemBase {
         rightTop.burnFlash();
         rightBack.burnFlash();
         rightFront.burnFlash();
-
-        ShuffleboardTabs.getAutoTab().addNumber("Left Encoder", this::getLeftEncoderDistance);
-        ShuffleboardTabs.getAutoTab().addNumber("Right Encoder", this::getRightEncoderDistance);
-        ShuffleboardTabs.getAutoTab().add("Field", field2d);
-        ShuffleboardTabs.getAutoTab().add("Gyro", gyro);
     }
 
     public void resetEncoders() {
@@ -115,10 +108,6 @@ public class DriveTrain extends SubsystemBase {
         return rightEncoder.getPosition();
     }
 
-    public double getAverageEncodersDistance() {
-        return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
-    }
-
     /**
      * @return the rate of change of the left encoder (meters/second)
      */
@@ -161,9 +150,5 @@ public class DriveTrain extends SubsystemBase {
             rightBack.setIdleMode(IdleMode.kCoast);
             rightFront.setIdleMode(IdleMode.kCoast);
         }
-    }
-
-    public void setField2dTrajectory(Trajectory trajectory) {
-        field2d.getObject("traj").setTrajectory(trajectory);
     }
 }

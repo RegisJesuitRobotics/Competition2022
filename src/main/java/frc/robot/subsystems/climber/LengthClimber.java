@@ -1,6 +1,7 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.climber;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,13 +18,26 @@ public class LengthClimber extends SubsystemBase {
         rightClimberLength.restoreFactoryDefaults();
         leftClimberLength.restoreFactoryDefaults();
 
-        rightClimberLength.follow(leftClimberLength, true);
+        leftClimberLength.setIdleMode(IdleMode.kBrake);
+        rightClimberLength.setIdleMode(IdleMode.kBrake);
+
+        leftClimberLength.setInverted(true);
+        rightClimberLength.setInverted(false);
 
         rightClimberLength.burnFlash();
         leftClimberLength.burnFlash();
     }
 
-    public void setLengthPercent(double percent) {
-        leftClimberLength.set(-percent);
+    public void setBothPercent(double percent) {
+        setLeftPercent(percent);
+        setRightPercent(percent);
+    }
+
+    public void setLeftPercent(double percent) {
+        leftClimberLength.set(percent);
+    }
+
+    public void setRightPercent(double percent) {
+        rightClimberLength.set(percent);
     }
 }
