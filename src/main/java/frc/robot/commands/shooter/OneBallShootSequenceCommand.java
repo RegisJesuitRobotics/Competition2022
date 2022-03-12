@@ -2,7 +2,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.feeder.FeedOneBallCommand;
+import frc.robot.commands.feeder.FeedOneBallToShooterCommand;
 import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
@@ -13,9 +13,9 @@ public class OneBallShootSequenceCommand extends ParallelRaceGroup {
         super(new ShooterRunCommand(shooterRPM, shooter), sequence(
                 // Wait for the shooter to warmup and while that is happening prepare the ball
                 deadline(new WaitForShooterWarmupCommand(shooterRPM, shooter),
-                        new LoadBallToWaitingZoneCommand(feeder)),
+                        new LoadBallToWaitingZoneCommand(feeder, spinners)),
                 // Feed the ball as it has warmed up
-                new FeedOneBallCommand(feeder),
+                new FeedOneBallToShooterCommand(feeder),
                 // Make sure the ball is through before stopping the shooter
                 new WaitCommand(0.3)));
     }

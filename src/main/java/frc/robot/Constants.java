@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -47,7 +48,7 @@ public final class Constants {
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
 
-        public static final double P_ANGLE_POSITION_DEGREES = 0.71498;
+        public static final double P_ANGLE_POSITION_DEGREES = 0.04;
         public static final double I_ANGLE_POSITION_DEGREES = 0.0;
         public static final double D_ANGLE_POSITION_DEGREES = 2.0589;
         public static final double ARB_FF_ANGLE_POSITION_DEGREES = 0.31156;
@@ -89,7 +90,7 @@ public final class Constants {
 
         public static final double FAR_DISTANCE_RPM = 4400.0;
         public static final double CLOSE_DISTANCE_RPM = 3700.0;
-        public static final double EXPEL_BALL_RPM = 3000.0;
+        public static final double EXPEL_BALL_RPM = 2000.0;
 
         // TODO: get this value
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
@@ -97,9 +98,10 @@ public final class Constants {
 
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
-        public static final int FEEDER_SENSOR_PORT = -1;
 
-        public static final double FEEDER_SPEED = 0.4;
+        public static final double FEEDER_SPEED = 0.15;
+
+        public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
     }
 
     public static class LimeLightConstants {
@@ -125,5 +127,9 @@ public final class Constants {
 
         public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
                 - (VISION_TARGET_HEIGHT_METERS / 2);
+
+        // TODO: calibrate
+        public static final Color RED_BALL_COLOR = new Color(0.50, 0.35, 0.13);
+        public static final Color BLUE_BALL_COLOR = new Color(0.14, 0.38, 0.47);
     }
 }

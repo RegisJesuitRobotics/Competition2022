@@ -31,6 +31,7 @@ public class IntakeRunCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         intake.setPercentage(0.0);
+        System.out.println("Thy havth finished");
     }
 
     // Returns true when the command should end.

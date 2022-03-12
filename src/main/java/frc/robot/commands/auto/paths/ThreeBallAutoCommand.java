@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
 import frc.robot.commands.drive.RotateDriveCommand;
-import frc.robot.commands.feeder.FeedOneBallCommand;
+import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
 import frc.robot.commands.intake.IntakeDeployCommand;
 import frc.robot.commands.intake.IntakeRunCommand;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
@@ -27,7 +27,7 @@ public class ThreeBallAutoCommand extends SequentialCommandGroup {
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
                 new RotateDriveCommand(-124.5, driveTrain), new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("3BallA", driveTrain),
-                        new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
+                        new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake)),
                 new ShooterAimStateCommand(AimState.FAR, shooter),
                 new LimeLightAllAlignCommand(3.436, limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners));

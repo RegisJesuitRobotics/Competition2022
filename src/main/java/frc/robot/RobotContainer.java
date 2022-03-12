@@ -14,11 +14,10 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.auto.paths.*;
 import frc.robot.commands.drive.ArcadeDriveCommand;
+import frc.robot.commands.drive.RotateDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
-import frc.robot.commands.feeder.FeedOneBallCommand;
-import frc.robot.commands.feeder.FeederRunCommand;
-import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
+import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
@@ -75,6 +74,7 @@ public class RobotContainer {
                 new FiveBallAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
+        Shuffleboard.getTab("DriveTrainRaw").add("Auto", autoRoutineChooser);
         Shuffleboard.getTab("DriveTrainRaw").add("Drive Style", teleopDriveStyle);
         configureButtonBindings();
     }
@@ -90,8 +90,10 @@ public class RobotContainer {
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
 
-        driverController.rightButton.whileHeld(new ConditionalCommand(
-                new IntakeRunAndLoadBallToWaitCommand(feeder, intake), new DoNothingCommand(), intake::isDeployed));
+        driverController.rightButton.whenHeld(new ConditionalCommand(
+                new ParallelCommandGroup(new IntakeRunCommand(intake),
+                        new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners)),
+                new DoNothingCommand(), intake::isDeployed));
 
         driverController.triangle.whileHeld(
                 new ConditionalCommand(new IntakeRunCommand(intake), new DoNothingCommand(), intake::isDeployed));
@@ -108,10 +110,10 @@ public class RobotContainer {
                 new OneBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
                 shooter::isAimingClose));
 
-        operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneCommand(feeder));
+        operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
         operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
         operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED, feeder));
-        operatorController.dPad.down.whenHeld(new FeedOneBallCommand(feeder));
+        operatorController.dPad.down.whenHeld(new FeedOneBallToShooterCommand(feeder));
 
         operatorController.triangle.whenHeld(new LimeLightAllAlignCommand(
                 ShooterConstants.FAR_SHOOTING_LOCATION_DISTANCE_METERS, limeLight, driveTrain));
@@ -133,6 +135,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return autoRoutineChooser.getSelected();
+        return new RotateDriveCommand(90, driveTrain);
+//        return autoRoutineChooser.getSelected();
     }
 }

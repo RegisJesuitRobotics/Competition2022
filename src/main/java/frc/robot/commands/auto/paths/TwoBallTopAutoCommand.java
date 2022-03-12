@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
 import frc.robot.commands.drive.RotateDriveCommand;
-import frc.robot.commands.feeder.FeedOneBallCommand;
+import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
 import frc.robot.commands.intake.IntakeDeployCommand;
 import frc.robot.commands.intake.IntakeRunCommand;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
@@ -25,12 +25,12 @@ public class TwoBallTopAutoCommand extends SequentialCommandGroup {
             Spinners spinners, LimeLight limeLight) {
         super(new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopA", driveTrain),
-                        new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
+                        new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake)),
                 new ShooterAimStateCommand(AimState.FAR, shooter), new RotateDriveCommand(145, driveTrain),
                 new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopB", driveTrain),
-                        new FeedOneBallCommand(feeder), new IntakeRunCommand(intake)),
+                        new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake)),
                 new OneBallShootSequenceCommand(ShooterConstants.EXPEL_BALL_RPM, feeder, shooter, spinners));
     }
 }
