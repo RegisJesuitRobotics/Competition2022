@@ -26,7 +26,7 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
             LimeLight limeLight) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                new RotateDriveCommand(-124.5, driveTrain), new IntakeDeployCommand(intake),
+                new RotateDriveCommand(104, driveTrain), new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("5BallA", driveTrain),
                         new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake)),
                 new ShooterAimStateCommand(AimState.FAR, shooter),

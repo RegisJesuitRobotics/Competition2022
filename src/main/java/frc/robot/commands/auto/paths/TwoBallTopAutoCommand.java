@@ -26,7 +26,7 @@ public class TwoBallTopAutoCommand extends SequentialCommandGroup {
         super(new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopA", driveTrain),
                         new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake)),
-                new ShooterAimStateCommand(AimState.FAR, shooter), new RotateDriveCommand(145, driveTrain),
+                new ShooterAimStateCommand(AimState.FAR, shooter), new RotateDriveCommand(170, driveTrain),
                 new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopB", driveTrain),

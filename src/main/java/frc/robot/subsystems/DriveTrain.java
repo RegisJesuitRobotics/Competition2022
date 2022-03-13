@@ -131,8 +131,11 @@ public class DriveTrain extends SubsystemBase {
         return new DifferentialDriveWheelSpeeds(getLeftEncoderRate(), getRightEncoderRate());
     }
 
+    /**
+     * @return -180 - 180. Unit circle (counter-clockwise positive)
+     */
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+        return -Math.IEEEremainder(gyro.getAngle(), 360);
     }
 
     public Rotation2d getRotation2d() {
