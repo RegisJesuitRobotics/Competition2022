@@ -39,16 +39,16 @@ public final class Constants {
     }
 
     public static class TrajectoryConstants {
-        public static final double S_VOLTS = 0.1518;
-        public static final double V_VOLT_SECONDS_PER_METER = 2.2596;
-        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.43163;
+        public static final double S_VOLTS = 0.14741;
+        public static final double V_VOLT_SECONDS_PER_METER = 2.2627;
+        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.46053;
 
-        public static final double P_DRIVE_VEL = 3.0842;
+        public static final double P_DRIVE_VEL = 3.1136;
 
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
 
-        public static final double P_ANGLE_POSITION_DEGREES = 0.04;
+        public static final double P_ANGLE_POSITION_DEGREES = 0.03;
         public static final double I_ANGLE_POSITION_DEGREES = 0.0;
         public static final double D_ANGLE_POSITION_DEGREES = 2.0589;
         public static final double ARB_FF_ANGLE_POSITION_DEGREES = 0.75;
@@ -99,7 +99,7 @@ public final class Constants {
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_SPEED = 0.10;
+        public static final double FEEDER_SPEED = 0.125;
 
         public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
     }

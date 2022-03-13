@@ -15,7 +15,6 @@ import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.climber.ClimberControllerControlCommand;
 import frc.robot.commands.auto.paths.*;
 import frc.robot.commands.drive.ArcadeDriveCommand;
-import frc.robot.commands.drive.RotateDriveCommand;
 import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.feeder.*;
@@ -145,7 +144,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-//        return autoRoutineChooser.getSelected();
-        return new RotateDriveCommand(-90, driveTrain);
+        return autoRoutineChooser.getSelected();
     }
 }

@@ -34,8 +34,7 @@ public class RotateDriveCommand extends CommandBase {
         double voltage = pidController.calculate(driveTrain.getHeading());
         voltage += Math.signum(voltage) * TrajectoryConstants.ARB_FF_ANGLE_POSITION_DEGREES;
 
-        // Gyro is increasing as clockwise
-        driveTrain.voltageDrive(voltage, -voltage);
+        driveTrain.voltageDrive(-voltage, voltage);
     }
 
     @Override

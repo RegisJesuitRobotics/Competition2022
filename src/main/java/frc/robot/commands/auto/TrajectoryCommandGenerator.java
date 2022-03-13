@@ -40,8 +40,10 @@ public class TrajectoryCommandGenerator {
                 new PIDController(P_DRIVE_VEL, 0, 0), new PIDController(P_DRIVE_VEL, 0, 0), driveTrain::voltageDrive,
                 driveTrain);
 
-        InstantCommand resetOdometryCommand = new InstantCommand(
-                () -> driveTrain.resetOdometry(trajectory.getInitialPose()));
+        InstantCommand resetOdometryCommand = new InstantCommand(() -> {
+            driveTrain.resetOdometry(trajectory.getInitialPose());
+            driveTrain.setTraj(trajectory);
+        });
 
         InstantCommand setBrakeOnCommand = new InstantCommand(() -> driveTrain.setBrakeMode(true));
 

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.LimeLightConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.LimeLight;
+import frc.robot.subsystems.LimeLight.LightMode;
 
 public class LimeLightAllAlignCommand extends CommandBase {
     private final LimeLight limeLight;
@@ -42,6 +43,7 @@ public class LimeLightAllAlignCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         driveTrain.arcadeDrive(0, 0);
+        limeLight.setLightMode(LightMode.OFF);
     }
 
     @Override

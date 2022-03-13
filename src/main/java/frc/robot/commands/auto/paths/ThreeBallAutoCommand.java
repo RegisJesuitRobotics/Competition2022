@@ -1,12 +1,14 @@
 package frc.robot.commands.auto.paths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
 import frc.robot.commands.drive.RotateDriveCommand;
 import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
 import frc.robot.commands.intake.IntakeDeployCommand;
 import frc.robot.commands.intake.IntakeRunCommand;
+import frc.robot.commands.intake.IntakeUnDeployCommand;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ShooterAimStateCommand;
@@ -25,11 +27,11 @@ public class ThreeBallAutoCommand extends SequentialCommandGroup {
             LimeLight limeLight) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                new RotateDriveCommand(104, driveTrain), new IntakeDeployCommand(intake),
+                new RotateDriveCommand(-121, driveTrain), new WaitCommand(0.5), new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("3BallA", driveTrain),
                         new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake)),
-                new ShooterAimStateCommand(AimState.FAR, shooter),
-                new LimeLightAllAlignCommand(3.436, limeLight, driveTrain),
+                new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
+                new LimeLightAllAlignCommand(0.0, limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners));
     }
 }

@@ -7,6 +7,7 @@ import frc.robot.commands.drive.RotateDriveCommand;
 import frc.robot.commands.feeder.FeedOneBallToShooterCommand;
 import frc.robot.commands.intake.IntakeDeployCommand;
 import frc.robot.commands.intake.IntakeRunCommand;
+import frc.robot.commands.intake.IntakeUnDeployCommand;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ShooterAimStateCommand;
@@ -26,9 +27,10 @@ public class TwoBallBottomAutoCommand extends SequentialCommandGroup {
         super(new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallBottomA", driveTrain),
                         new FeedOneBallToShooterCommand(feeder), new IntakeRunCommand(intake)),
-                new ShooterAimStateCommand(AimState.FAR, shooter), new RotateDriveCommand(170.0, driveTrain),
-                new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
+                new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
+                new RotateDriveCommand(170.0, driveTrain), new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
+                new IntakeDeployCommand(intake),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallBottomB", driveTrain),
                         new FeedOneBallToShooterCommand(feeder), new IntakeRunCommand(intake)),
                 TrajectoryCommandGenerator.getCommandFromFile("2BallBottomC", driveTrain),

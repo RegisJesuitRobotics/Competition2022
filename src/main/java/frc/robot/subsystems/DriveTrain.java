@@ -9,8 +9,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.drive.ToggleBrakeModeCommand;
@@ -32,6 +34,7 @@ public class DriveTrain extends SubsystemBase {
     private final DifferentialDrive differentialDrive = new DifferentialDrive(leftTop, rightTop);
 
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getRotation2d());
+    private final Field2d field2d = new Field2d();
 
     public DriveTrain() {
         leftTop.restoreFactoryDefaults();
@@ -67,6 +70,8 @@ public class DriveTrain extends SubsystemBase {
 
         Shuffleboard.getTab("DriveTrainRaw").addBoolean("Brake On?", this::isBrakeOn);
         Shuffleboard.getTab("DriveTrainRaw").add("Toggle Brake", new ToggleBrakeModeCommand(this));
+        Shuffleboard.getTab("DriveTrainRaw").addNumber("Gyro", this::getHeading);
+        Shuffleboard.getTab("DriveTrainRaw").add("field", field2d);
     }
 
     public void resetEncoders() {
@@ -77,6 +82,7 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         odometry.update(getRotation2d(), getLeftEncoderDistance(), getRightEncoderDistance());
+        field2d.setRobotPose(getPosition());
     }
 
     public Pose2d getPosition() {
@@ -164,5 +170,9 @@ public class DriveTrain extends SubsystemBase {
 
     public boolean isBrakeOn() {
         return leftTop.getIdleMode() == IdleMode.kBrake;
+    }
+
+    public void setTraj(Trajectory trajectory) {
+        field2d.getObject("traj1").setTrajectory(trajectory);
     }
 }
