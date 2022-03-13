@@ -83,8 +83,6 @@ public class RobotContainer {
 
         Shuffleboard.getTab("DriveTrainRaw").add("Auto", autoRoutineChooser);
         Shuffleboard.getTab("DriveTrainRaw").add("Drive Style", teleopDriveStyle);
-        Shuffleboard.getTab("DriveTrainRaw").add("Brake", new InstantCommand(() -> driveTrain.setBrakeMode(true)));
-        Shuffleboard.getTab("DriveTrainRaw").add("Coast", new InstantCommand(() -> driveTrain.setBrakeMode(false)));
         configureButtonBindings();
     }
 
