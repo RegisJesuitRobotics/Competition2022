@@ -13,7 +13,6 @@ import frc.robot.subsystems.Shooter.AimState;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
-// Setup anywhere directly facing and close to the hub, with space to go a meter back
 public class OneBallAutoCommand extends SequentialCommandGroup {
     public OneBallAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),

@@ -48,7 +48,8 @@ public class LimeLightAllAlignCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(limeLight.getHorizontalOffset()) < LimeLightConstants.LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE
+        return limeLight.hasValidTarget()
+                && Math.abs(limeLight.getHorizontalOffset()) < LimeLightConstants.LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE
                 && Math.abs(distanceError) < LimeLightConstants.LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS;
     }
 }

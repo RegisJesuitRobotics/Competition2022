@@ -1,9 +1,11 @@
-BlueBall1: (7.7, 0.285)
+BlueBall1: (7.632, 0.285) 
 BlueBall2: (5.12, 1.831)
 BlueBall3: (5.027, 6.249)
 RedBall1: (9.2, 0.3241)
 RedBall2: (4.539, 3.272)
 RedBall3: (6.097, 7.318)
+
+Ball Radius: 0.12065
 
 HPBall: (1.121, 1.179)
 

@@ -91,6 +91,7 @@ public final class Constants {
         public static final double FAR_DISTANCE_RPM = 4400.0;
         public static final double CLOSE_DISTANCE_RPM = 3700.0;
         public static final double EXPEL_BALL_RPM = 2000.0;
+        public static final double AUTO_EXPEL_RPM = 3000.0;
 
         // TODO: get this value
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
