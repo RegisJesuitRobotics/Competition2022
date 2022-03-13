@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FieldConstants;
 
-import static frc.robot.Constants.FeederConstants.FEEDER_PORT;
-import static frc.robot.Constants.FeederConstants.FEEDER_SENSOR_CONFIDENCE_LEVEL;
+import static frc.robot.Constants.FeederConstants.*;
 
 public class Feeder extends SubsystemBase {
     public enum FeederSensorStatus {
@@ -59,7 +58,7 @@ public class Feeder extends SubsystemBase {
     }
 
     public boolean isBallLoaded() {
-        return feederSensor.getProximity() > 650;
+        return feederSensor.getProximity() > FEEDER_SENSOR_PROXIMITY_LEVEL;
     }
 
     public double getEncoderRotations() {
