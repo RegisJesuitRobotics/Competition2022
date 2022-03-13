@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
+import frc.robot.commands.climber.ClimberControllerControlCommand;
 import frc.robot.commands.auto.paths.*;
 import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.RotateDriveCommand;
@@ -22,9 +23,13 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.limelight.LimeLightAllAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
+import frc.robot.joysticks.Logitech3DProController;
 import frc.robot.commands.shooter.TwoBallShootSequenceCommand;
 import frc.robot.joysticks.PlaystationController;
+import frc.robot.joysticks.PseudoXboxController;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.climber.LengthClimber;
+import frc.robot.subsystems.climber.RotationClimber;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
@@ -48,10 +53,13 @@ public class RobotContainer {
     private final LimeLight limeLight = new LimeLight();
 
     private final PlaystationController driverController = new PlaystationController(0);
-    private final PlaystationController operatorController = new PlaystationController(1);
+    private final PseudoXboxController operatorController = new PseudoXboxController(1);
+    private final Logitech3DProController operatorClimberController = new Logitech3DProController(2);
 
     private final SendableChooser<Command> autoRoutineChooser = new SendableChooser<>();
     private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
+    private final ClimberControllerControlCommand climberControlCommand = new ClimberControllerControlCommand(
+            operatorClimberController, lengthClimber, rotationClimber);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -114,7 +122,7 @@ public class RobotContainer {
 
         operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
         operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
-        operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED, feeder));
+        operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED * 2, feeder));
         operatorController.dPad.down.whenHeld(new FeedOneBallToShooterCommand(feeder));
 
         operatorController.triangle.whenHeld(new LimeLightAllAlignCommand(
@@ -122,7 +130,7 @@ public class RobotContainer {
         operatorController.circle.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
-        operatorController.share.whileHeld(new SpinnersRunCommand(spinners));
+        lengthClimber.setDefaultCommand(climberControlCommand);
 
         evaluateDriveStyle();
     }

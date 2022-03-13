@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FieldConstants;
 
@@ -35,15 +34,17 @@ public class Feeder extends SubsystemBase {
         colorMatch.addColorMatch(FieldConstants.BLUE_BALL_COLOR);
         colorMatch.addColorMatch(FieldConstants.RED_BALL_COLOR);
 
-        Shuffleboard.getTab("ColorSensor").addString("Detected", () -> getSensorStatus().name());
-        Shuffleboard.getTab("ColorSensor").addNumber("Confidence", () -> lastConfidence);
+        Shuffleboard.getTab("ShooterRaw").addString("Detected", () -> getSensorColor().name());
+        Shuffleboard.getTab("ShooterRaw").addNumber("Confidence", () -> lastConfidence);
+        Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);
+        Shuffleboard.getTab("ShooterRaw").addNumber("Proximity", feederSensor::getProximity);
     }
 
     public void setFeederPercent(double percent) {
         feederMotor.set(percent);
     }
 
-    public FeederSensorStatus getSensorStatus() {
+    public FeederSensorStatus getSensorColor() {
         ColorMatchResult matched = colorMatch.matchClosestColor(feederSensor.getColor());
 
         // If below minimum confidence level
@@ -57,14 +58,11 @@ public class Feeder extends SubsystemBase {
         return FeederSensorStatus.RED_BALL;
     }
 
-    public double getEncoderRotations() {
-        return feederEncoder.getPosition();
+    public boolean isBallLoaded() {
+        return feederSensor.getProximity() > 650;
     }
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("R", feederSensor.getColor().red);
-        SmartDashboard.putNumber("G", feederSensor.getColor().green);
-        SmartDashboard.putNumber("B", feederSensor.getColor().blue);
+    public double getEncoderRotations() {
+        return feederEncoder.getPosition();
     }
 }

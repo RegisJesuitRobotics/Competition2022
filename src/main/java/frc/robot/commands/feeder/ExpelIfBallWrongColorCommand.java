@@ -20,8 +20,8 @@ public class ExpelIfBallWrongColorCommand extends ConditionalCommand {
                 new OneBallShootSequenceCommand(ShooterConstants.EXPEL_BALL_RPM, feeder, shooter, spinners),
                 new InstantCommand(shooter::restorePreviousState)), new FinishInstantlyCommand(),
                 // If we are red alliance then run this if ball is blue
-                () -> (feeder.getSensorStatus() == ((DriverStation.getAlliance() == Alliance.Red)
+                () -> (feeder.getSensorColor() == ((DriverStation.getAlliance() == Alliance.Red)
                         ? FeederSensorStatus.BLUE_BALL
-                        : FeederSensorStatus.RED_BALL)) && feeder.getSensorStatus() != FeederSensorStatus.NOTHING);
+                        : FeederSensorStatus.RED_BALL)) && feeder.getSensorColor() != FeederSensorStatus.NOTHING);
     }
 }
