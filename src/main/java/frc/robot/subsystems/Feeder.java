@@ -59,7 +59,7 @@ public class Feeder extends SubsystemBase {
     }
 
     public boolean isBallLoaded() {
-        return feederSensor.getProximity() > 2000;
+        return feederSensor.getProximity() > 650;
     }
 
     public double getEncoderRotations() {

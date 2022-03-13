@@ -102,7 +102,7 @@ public class RobotContainer {
                 new OneBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
                 shooter::isAimingClose));
 
-        operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneCommand(feeder, spinners));
+        operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
         operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
         operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED * 2, feeder));
         operatorController.dPad.down.whenHeld(new FeedOneBallToShooterCommand(feeder));
