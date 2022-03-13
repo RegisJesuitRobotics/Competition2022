@@ -128,7 +128,6 @@ public final class Constants {
         public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
                 - (VISION_TARGET_HEIGHT_METERS / 2);
 
-        // TODO: calibrate
         public static final Color RED_BALL_COLOR = new Color(0.50, 0.35, 0.13);
         public static final Color BLUE_BALL_COLOR = new Color(0.14, 0.38, 0.47);
     }

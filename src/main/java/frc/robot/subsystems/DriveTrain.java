@@ -10,9 +10,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.drive.ToggleBrakeModeCommand;
 
 public class DriveTrain extends SubsystemBase {
     private final CANSparkMax leftTop = new CANSparkMax(DriveConstants.LEFT_TOP_PORT, MotorType.kBrushless);
@@ -31,7 +32,6 @@ public class DriveTrain extends SubsystemBase {
     private final DifferentialDrive differentialDrive = new DifferentialDrive(leftTop, rightTop);
 
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getRotation2d());
-    private final Field2d field2d = new Field2d();
 
     public DriveTrain() {
         leftTop.restoreFactoryDefaults();
@@ -64,6 +64,9 @@ public class DriveTrain extends SubsystemBase {
         rightTop.burnFlash();
         rightBack.burnFlash();
         rightFront.burnFlash();
+
+        Shuffleboard.getTab("DriveTrainRaw").addBoolean("Brake On?", this::isBrakeOn);
+        Shuffleboard.getTab("DriveTrainRaw").add("Toggle Brake", new ToggleBrakeModeCommand(this));
     }
 
     public void resetEncoders() {
@@ -74,7 +77,6 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         odometry.update(getRotation2d(), getLeftEncoderDistance(), getRightEncoderDistance());
-        field2d.setRobotPose(odometry.getPoseMeters());
     }
 
     public Pose2d getPosition() {
@@ -107,10 +109,6 @@ public class DriveTrain extends SubsystemBase {
 
     public double getRightEncoderDistance() {
         return rightEncoder.getPosition();
-    }
-
-    public double getAverageEncodersDistance() {
-        return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
     }
 
     /**
@@ -158,5 +156,13 @@ public class DriveTrain extends SubsystemBase {
             rightBack.setIdleMode(IdleMode.kCoast);
             rightFront.setIdleMode(IdleMode.kCoast);
         }
+    }
+
+    public void toggleBrakeMode() {
+        setBrakeMode(!isBrakeOn());
+    }
+
+    public boolean isBrakeOn() {
+        return leftTop.getIdleMode() == IdleMode.kBrake;
     }
 }
