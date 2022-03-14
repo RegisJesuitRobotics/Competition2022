@@ -94,9 +94,10 @@ public final class Constants {
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_SPEED = 0.15;
+        public static final double FEEDER_SPEED = 0.3;
 
         public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
+        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 650;
     }
 
     public static class LimeLightConstants {
@@ -123,7 +124,6 @@ public final class Constants {
         public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
                 - (VISION_TARGET_HEIGHT_METERS / 2);
 
-        // TODO: calibrate
         public static final Color RED_BALL_COLOR = new Color(0.50, 0.35, 0.13);
         public static final Color BLUE_BALL_COLOR = new Color(0.14, 0.38, 0.47);
     }

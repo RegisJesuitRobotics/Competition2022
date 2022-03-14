@@ -104,7 +104,7 @@ public class RobotContainer {
 
         operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
         operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
-        operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED, feeder));
+        operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED * 2, feeder));
         operatorController.dPad.down.whenHeld(new FeedOneBallToShooterCommand(feeder));
 
         operatorController.triangle.whenHeld(new LimeLightAllAlignCommand(
@@ -113,7 +113,6 @@ public class RobotContainer {
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
         lengthClimber.setDefaultCommand(climberControlCommand);
-        operatorController.share.whileHeld(new SpinnersRunCommand(spinners));
 
         evaluateDriveStyle();
     }
@@ -128,9 +127,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-//        return new InstantCommand(() -> shooter.setAimState(Value.kReverse))
-//                .andThen(new RunShooterAndFeederCommand(ShooterConstants.CLOSE_DISTANCE_RPM, shooter, feeder))
-//                .andThen(new SimpleAutoDriveCommand(-0.5, 0.0, driveTrain).withTimeout(1));
         return null;
     }
 }

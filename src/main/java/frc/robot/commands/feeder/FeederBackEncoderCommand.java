@@ -20,7 +20,7 @@ public class FeederBackEncoderCommand extends CommandBase {
 
     @Override
     public void execute() {
-        feeder.setFeederPercent(Math.signum(relativeTarget) * 0.1);
+        feeder.setFeederPercent(Math.signum(relativeTarget) * 0.125);
     }
 
     @Override
