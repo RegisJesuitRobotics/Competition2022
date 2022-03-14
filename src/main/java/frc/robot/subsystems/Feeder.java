@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ColorSensorV3.ProximitySensorMeasurementRate;
+import com.revrobotics.ColorSensorV3.ProximitySensorResolution;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,6 +35,8 @@ public class Feeder extends SubsystemBase {
         colorMatch.addColorMatch(FieldConstants.BLUE_BALL_COLOR);
         colorMatch.addColorMatch(FieldConstants.RED_BALL_COLOR);
 
+        feederSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
+                ProximitySensorMeasurementRate.kProxRate12ms);
         Shuffleboard.getTab("ShooterRaw").addString("Detected", () -> getSensorColor().name());
         Shuffleboard.getTab("ShooterRaw").addNumber("Confidence", () -> lastConfidence);
         Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);
