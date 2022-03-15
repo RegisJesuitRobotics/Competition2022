@@ -100,9 +100,10 @@ public final class Constants {
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_SPEED = 0.125;
+        public static final double FEEDER_SPEED = 0.3;
 
         public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
+        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 650;
     }
 
     public static class LimeLightConstants {

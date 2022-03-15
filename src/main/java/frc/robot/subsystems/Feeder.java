@@ -3,13 +3,14 @@ package frc.robot.subsystems;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ColorSensorV3.ProximitySensorMeasurementRate;
+import com.revrobotics.ColorSensorV3.ProximitySensorResolution;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FieldConstants;
 
-import static frc.robot.Constants.FeederConstants.FEEDER_PORT;
-import static frc.robot.Constants.FeederConstants.FEEDER_SENSOR_CONFIDENCE_LEVEL;
+import static frc.robot.Constants.FeederConstants.*;
 
 public class Feeder extends SubsystemBase {
     public enum FeederSensorStatus {
@@ -34,6 +35,8 @@ public class Feeder extends SubsystemBase {
         colorMatch.addColorMatch(FieldConstants.BLUE_BALL_COLOR);
         colorMatch.addColorMatch(FieldConstants.RED_BALL_COLOR);
 
+        feederSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
+                ProximitySensorMeasurementRate.kProxRate12ms);
         Shuffleboard.getTab("ShooterRaw").addString("Detected", () -> getSensorColor().name());
         Shuffleboard.getTab("ShooterRaw").addNumber("Confidence", () -> lastConfidence);
         Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);
@@ -59,7 +62,7 @@ public class Feeder extends SubsystemBase {
     }
 
     public boolean isBallLoaded() {
-        return feederSensor.getProximity() > 650;
+        return feederSensor.getProximity() > FEEDER_SENSOR_PROXIMITY_LEVEL;
     }
 
     public double getEncoderRotations() {
