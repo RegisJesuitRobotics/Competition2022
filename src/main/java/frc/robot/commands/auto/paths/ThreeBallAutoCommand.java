@@ -24,7 +24,7 @@ public class ThreeBallAutoCommand extends SequentialCommandGroup {
             LimeLight limeLight) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                new RotateDriveCommand(-121, driveTrain), new WaitCommand(0.5), new IntakeDeployCommand(intake),
+                new RotateDriveCommand(-124, driveTrain), new WaitCommand(0.5), new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("3BallA", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
                 new LimeLightAllAlignCommand(0.0, limeLight, driveTrain),

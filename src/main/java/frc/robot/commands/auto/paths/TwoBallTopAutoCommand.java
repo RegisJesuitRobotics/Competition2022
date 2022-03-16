@@ -30,6 +30,6 @@ public class TwoBallTopAutoCommand extends SequentialCommandGroup {
                 new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallTopB", driveTrain, intake, spinners, feeder),
                 new OneBallShootSequenceCommand(ShooterConstants.AUTO_EXPEL_RPM, feeder, shooter, spinners),
-                new UnIntakeBallCommand(intake, spinners, feeder));
+                new UnIntakeBallCommand(intake, spinners, feeder).withTimeout(1.0));
     }
 }

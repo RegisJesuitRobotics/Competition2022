@@ -39,6 +39,6 @@ public class TwoBallBottomAutoCommand extends SequentialCommandGroup {
                 new RunTrajectoryLoadingBallCommand("2BallBottomB", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake),
                 TrajectoryCommandGenerator.getCommandFromFile("2BallBottomC", driveTrain),
-                new UnIntakeBallCommand(intake, spinners, feeder));
+                new UnIntakeBallCommand(intake, spinners, feeder).withTimeout(1.0));
     }
 }
