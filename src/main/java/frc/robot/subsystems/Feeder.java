@@ -36,7 +36,7 @@ public class Feeder extends SubsystemBase {
         colorMatch.addColorMatch(FieldConstants.RED_BALL_COLOR);
 
         feederSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
-                ProximitySensorMeasurementRate.kProxRate12ms);
+                ProximitySensorMeasurementRate.kProxRate6ms);
         Shuffleboard.getTab("ShooterRaw").addString("Detected", () -> getSensorColor().name());
         Shuffleboard.getTab("ShooterRaw").addNumber("Confidence", () -> lastConfidence);
         Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);

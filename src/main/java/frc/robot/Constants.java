@@ -88,10 +88,11 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 1.0;
 
-        public static final double FAR_DISTANCE_RPM = 4400.0;
-        public static final double CLOSE_DISTANCE_RPM = 3700.0;
+        public static final double FAR_DISTANCE_RPM = 4500.0;
+        public static final double TWO_BALL_DISTANCE_RPM = 4300.0;
+        public static final double CLOSE_DISTANCE_RPM = 3800.0;
         public static final double EXPEL_BALL_RPM = 2000.0;
-        public static final double AUTO_EXPEL_RPM = 3000.0;
+        public static final double AUTO_EXPEL_RPM = 3500.0;
 
         // TODO: get this value
         public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
@@ -100,10 +101,10 @@ public final class Constants {
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_SPEED = 0.3;
+        public static final double FEEDER_SPEED = 0.2;
 
         public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
-        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 650;
+        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 480;
     }
 
     public static class LimeLightConstants {

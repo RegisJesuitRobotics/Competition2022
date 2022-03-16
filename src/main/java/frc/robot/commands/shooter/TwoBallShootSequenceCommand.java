@@ -14,12 +14,13 @@ public class TwoBallShootSequenceCommand extends ParallelRaceGroup {
                 // Wait for the shooter to warmup and while that is happening prepare the ball
                 parallel(new WaitForShooterWarmupCommand(shooterRPM, shooter),
                         new LoadBallToWaitingZoneCommand(feeder, spinners)),
+                new WaitCommand(0.2),
                 // Feed the ball as it has warmed up
                 new FeedOneBallToShooterCommand(feeder),
                 // Get shooter back up to speed and prepare ball
                 parallel(new WaitForShooterWarmupCommand(shooterRPM, shooter),
                         new LoadBallToWaitingZoneCommand(feeder, spinners)),
-//                new WaitCommand(0.1),
+                new WaitCommand(0.2),
                 // Feed the ball to shooter
                 new FeedOneBallToShooterCommand(feeder),
                 // Wait some time to make sure the ball is shot before stopping shooter

@@ -42,8 +42,6 @@ public class LimeLight extends SubsystemBase {
         limelightTab.addNumber("Target Area", this::getTargetArea);
         limelightTab.addNumber("Estimated Distance", this::getEstimatedDistance);
 
-        limelightTab.addCamera("Limelight", "Limelight", STREAM_URL);
-
         setLightMode(LightMode.OFF);
     }
 

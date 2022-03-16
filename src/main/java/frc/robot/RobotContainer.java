@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
@@ -71,14 +72,12 @@ public class RobotContainer {
 
         autoRoutineChooser.setDefaultOption("One Ball",
                 new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
-        autoRoutineChooser.addOption("Two Ball Bottom",
+        autoRoutineChooser.addOption("Two Ball Far Hanger",
                 new TwoBallBottomAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
-        autoRoutineChooser.addOption("Two Ball Top",
+        autoRoutineChooser.addOption("Two Ball Close Hanger",
                 new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
         autoRoutineChooser.addOption("Three Ball",
                 new ThreeBallAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
-        autoRoutineChooser.addOption("Five/Four Ball",
-                new FiveBallAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
         Shuffleboard.getTab("DriveTrainRaw").add("Auto", autoRoutineChooser);
@@ -93,18 +92,18 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        Trigger intakeDeployedTrigger = new Trigger(intake::isDeployed);
         // Driver
         driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
         driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
+        driverController.dPad.down.and(intakeDeployedTrigger)
+                .whileActiveContinuous(new UnIntakeBallCommand(intake, spinners, feeder));
 
-        driverController.rightButton.whenHeld(new ConditionalCommand(
-                new ParallelCommandGroup(new IntakeRunCommand(intake),
-                        new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners)),
-                new DoNothingCommand(), intake::isDeployed));
+        driverController.rightButton.and(intakeDeployedTrigger)
+                .whenActive(new ParallelCommandGroup(new IntakeRunCommand(intake),
+                        new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners)));
 
-        driverController.triangle.whileHeld(
-                new ConditionalCommand(new IntakeRunCommand(intake), new DoNothingCommand(), intake::isDeployed));
-
+        driverController.triangle.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(intake));
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
 
         // Operator

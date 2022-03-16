@@ -10,12 +10,18 @@ import frc.robot.subsystems.intake.Spinners;
 
 public class SpinnersRunCommand extends CommandBase {
     private final Spinners spinners;
+    private final double multiplier;
 
     /** Creates a new IntakeSpinnersRun. */
-    public SpinnersRunCommand(Spinners spinners) {
+    public SpinnersRunCommand(boolean negative, Spinners spinners) {
         this.spinners = spinners;
+        this.multiplier = negative ? -1 : 1;
 
         addRequirements(spinners);
+    }
+
+    public SpinnersRunCommand(Spinners spinners) {
+        this(false, spinners);
     }
 
     // Called when the command is initially scheduled.
@@ -25,7 +31,7 @@ public class SpinnersRunCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        spinners.setSpinners(IntakeConstants.SPINNER_SPEED);
+        spinners.setSpinners(IntakeConstants.SPINNER_SPEED * multiplier);
     }
 
     // Called once the command ends or is interrupted.
