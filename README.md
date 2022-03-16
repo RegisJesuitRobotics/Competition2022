@@ -13,3 +13,5 @@ Run `./gradlew spotlessApply` to reformat code.
 !["Operator controls playstation"](./images/OperatorControls.png)
 !["Operator controls logitech"](./images/OperatorControlsLogitech.png)
 
+## Autos
+A PDF file containing the auto paths can be found in [2022Autos.pdf](./2022Autos.pdf)
