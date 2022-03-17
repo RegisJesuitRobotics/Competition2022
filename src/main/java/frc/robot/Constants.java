@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -72,14 +71,13 @@ public final class Constants {
         public static final int RIGHT_CLIMBER_LENGTH_PORT = 11;
         public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
 
-        public static final double LENGTH_SPEED = 0.7;
         public static final double ROTATION_SPEED = 0.2;
     }
 
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
-        public static final double SHOOTER_VELOCITY_P = 0.220;
+        public static final double SHOOTER_VELOCITY_P = 0.200;
         public static final double SHOOTER_VELOCITY_S_VOLTS = 0.17322;
         public static final double SHOOTER_VELOCITY_V_VOLTS = 0.12609;
 
@@ -103,8 +101,7 @@ public final class Constants {
 
         public static final double FEEDER_SPEED = 0.2;
 
-        public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
-        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 480;
+        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 460;
     }
 
     public static class LimeLightConstants {
@@ -130,8 +127,5 @@ public final class Constants {
 
         public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
                 - (VISION_TARGET_HEIGHT_METERS / 2);
-
-        public static final Color RED_BALL_COLOR = new Color(0.50, 0.35, 0.13);
-        public static final Color BLUE_BALL_COLOR = new Color(0.14, 0.38, 0.47);
     }
 }

@@ -19,7 +19,7 @@ public class Feeder extends SubsystemBase {
 
     private final CANSparkMax feederMotor = new CANSparkMax(FEEDER_PORT, MotorType.kBrushless);
     private final RelativeEncoder feederEncoder = feederMotor.getEncoder();
-    private final ColorSensorV3 feederSensor = new ColorSensorV3(Port.kOnboard);
+    private final ColorSensorV3 feederSensor = new ColorSensorV3(Port.kMXP);
 
     public Feeder() {
         feederMotor.restoreFactoryDefaults();

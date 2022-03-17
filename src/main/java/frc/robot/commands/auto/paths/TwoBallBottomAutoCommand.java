@@ -12,7 +12,7 @@ import frc.robot.commands.intake.IntakeDeployCommand;
 import frc.robot.commands.intake.IntakeRunCommand;
 import frc.robot.commands.intake.IntakeUnDeployCommand;
 import frc.robot.commands.intake.UnIntakeBallCommand;
-import frc.robot.commands.limelight.LimeLightAllAlignCommand;
+import frc.robot.commands.limelight.LimeLightAlignCommand;
 import frc.robot.commands.shooter.ShooterAimStateCommand;
 import frc.robot.commands.shooter.TwoBallShootSequenceCommand;
 import frc.robot.subsystems.DriveTrain;
@@ -33,12 +33,13 @@ public class TwoBallBottomAutoCommand extends SequentialCommandGroup {
                         new IntakeRunCommand(intake), new LoadBallToWaitingZoneCommand(feeder, spinners)),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
                 new WaitCommand(0.5), new RotateDriveCommand(170.0, driveTrain),
-                new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
+                new LimeLightAlignCommand(limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
                 new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallBottomB", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake),
                 TrajectoryCommandGenerator.getCommandFromFile("2BallBottomC", driveTrain),
-                new UnIntakeBallCommand(intake, spinners, feeder).withTimeout(1.0));
+                new UnIntakeBallCommand(intake, spinners, feeder).withTimeout(1.0),
+                new ShooterAimStateCommand(AimState.CLOSE, shooter));
     }
 }

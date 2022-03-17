@@ -15,15 +15,13 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.climber.ClimberControllerControlCommand;
 import frc.robot.commands.auto.paths.*;
-import frc.robot.commands.drive.ArcadeDriveCommand;
-import frc.robot.commands.drive.SimpleAutoDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
-import frc.robot.commands.limelight.LimeLightAllAlignCommand;
+import frc.robot.commands.limelight.LimeLightAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
-import frc.robot.joysticks.Logitech3DProController;
+import frc.robot.joysticks.ThrustMaster;
 import frc.robot.commands.shooter.TwoBallShootSequenceCommand;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.joysticks.PseudoXboxController;
@@ -54,22 +52,17 @@ public class RobotContainer {
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PseudoXboxController operatorController = new PseudoXboxController(1);
-    private final Logitech3DProController operatorClimberController = new Logitech3DProController(2);
+    private final ThrustMaster operatorClimberController = new ThrustMaster(2);
 
     private final SendableChooser<Command> autoRoutineChooser = new SendableChooser<>();
-    private final SendableChooser<Command> teleopDriveStyle = new SendableChooser<>();
     private final ClimberControllerControlCommand climberControlCommand = new ClimberControllerControlCommand(
             operatorClimberController, lengthClimber, rotationClimber);
+    private final TankishDriveCommand tankishDriveCommand = new TankishDriveCommand(driveTrain, driverController);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        teleopDriveStyle.setDefaultOption("Tankish Drive (Aidan)",
-                new TankishDriveCommand(driveTrain, driverController));
-        teleopDriveStyle.addOption("Arcade Drive (Everyone else)",
-                new ArcadeDriveCommand(driveTrain, driverController));
-
         autoRoutineChooser.setDefaultOption("One Ball",
                 new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Two Ball Far Hanger",
@@ -81,7 +74,6 @@ public class RobotContainer {
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
         Shuffleboard.getTab("DriveTrainRaw").add("Auto", autoRoutineChooser);
-        Shuffleboard.getTab("DriveTrainRaw").add("Drive Style", teleopDriveStyle);
         configureButtonBindings();
     }
 
@@ -94,8 +86,6 @@ public class RobotContainer {
     private void configureButtonBindings() {
         Trigger intakeDeployedTrigger = new Trigger(intake::isDeployed);
         // Driver
-        driverController.dPad.right.whileHeld(new SimpleAutoDriveCommand(0.0, 0.3, driveTrain));
-        driverController.dPad.left.whileHeld(new SimpleAutoDriveCommand(0.0, -0.3, driveTrain));
         driverController.dPad.down.and(intakeDeployedTrigger)
                 .whileActiveContinuous(new UnIntakeBallCommand(intake, spinners, feeder));
 
@@ -121,18 +111,12 @@ public class RobotContainer {
         operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED * 2, feeder));
         operatorController.dPad.down.whenHeld(new FeedOneBallToShooterCommand(feeder));
 
-        operatorController.triangle.whenHeld(new LimeLightAllAlignCommand(
-                ShooterConstants.FAR_SHOOTING_LOCATION_DISTANCE_METERS, limeLight, driveTrain));
-        operatorController.circle.whenHeld(new LimeLightAllAlignCommand(-1, limeLight, driveTrain));
+        operatorController.circle.whenHeld(new LimeLightAlignCommand(limeLight, driveTrain));
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
         lengthClimber.setDefaultCommand(climberControlCommand);
 
-        evaluateDriveStyle();
-    }
-
-    public void evaluateDriveStyle() {
-        driveTrain.setDefaultCommand(teleopDriveStyle.getSelected());
+        driveTrain.setDefaultCommand(tankishDriveCommand);
     }
 
     /**

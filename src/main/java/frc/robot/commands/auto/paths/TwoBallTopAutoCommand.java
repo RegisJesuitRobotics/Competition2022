@@ -7,7 +7,7 @@ import frc.robot.commands.drive.RotateDriveCommand;
 import frc.robot.commands.intake.IntakeDeployCommand;
 import frc.robot.commands.intake.IntakeUnDeployCommand;
 import frc.robot.commands.intake.UnIntakeBallCommand;
-import frc.robot.commands.limelight.LimeLightAllAlignCommand;
+import frc.robot.commands.limelight.LimeLightAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ShooterAimStateCommand;
 import frc.robot.commands.shooter.TwoBallShootSequenceCommand;
@@ -25,11 +25,12 @@ public class TwoBallTopAutoCommand extends SequentialCommandGroup {
         super(new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallTopA", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
-                new RotateDriveCommand(170, driveTrain), new LimeLightAllAlignCommand(-1, limeLight, driveTrain),
+                new RotateDriveCommand(170, driveTrain), new LimeLightAlignCommand(limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
                 new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallTopB", driveTrain, intake, spinners, feeder),
                 new OneBallShootSequenceCommand(ShooterConstants.AUTO_EXPEL_RPM, feeder, shooter, spinners),
-                new UnIntakeBallCommand(intake, spinners, feeder).withTimeout(1.0));
+                new UnIntakeBallCommand(intake, spinners, feeder).withTimeout(1.0),
+                new ShooterAimStateCommand(AimState.CLOSE, shooter));
     }
 }

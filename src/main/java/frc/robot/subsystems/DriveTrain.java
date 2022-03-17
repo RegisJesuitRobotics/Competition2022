@@ -10,7 +10,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,8 +29,6 @@ public class DriveTrain extends SubsystemBase {
     private final RelativeEncoder rightEncoder = rightTop.getEncoder();
 
     private final AHRS gyro = new AHRS();
-
-    private final DifferentialDrive differentialDrive = new DifferentialDrive(leftTop, rightTop);
 
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getRotation2d());
     private final Field2d field2d = new Field2d();
@@ -94,19 +91,15 @@ public class DriveTrain extends SubsystemBase {
         odometry.resetPosition(pose, getRotation2d());
     }
 
-    public void arcadeDrive(double xSpeed, double zRotation) {
-        differentialDrive.arcadeDrive(xSpeed, zRotation);
-    }
-
     public void tankDrive(double leftSpeed, double rightSpeed) {
-        differentialDrive.tankDrive(leftSpeed, rightSpeed);
+        leftTop.set(leftSpeed);
+        rightTop.set(rightSpeed);
     }
 
     public void voltageDrive(double leftVoltage, double rightVoltage) {
         leftTop.setVoltage(leftVoltage);
         rightTop.setVoltage(rightVoltage);
 
-        differentialDrive.feed();
     }
 
     public double getLeftEncoderDistance() {
