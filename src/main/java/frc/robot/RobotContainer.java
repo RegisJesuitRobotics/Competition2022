@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,6 +22,7 @@ import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.limelight.LimeLightAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
+import frc.robot.commands.shooter.ShooterRunCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
 import frc.robot.joysticks.ThrustMaster;
 import frc.robot.commands.shooter.TwoBallShootSequenceCommand;
@@ -79,6 +82,7 @@ public class RobotContainer {
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
         Shuffleboard.getTab("DriveTrainRaw").add("Auto", autoRoutineChooser);
+        Shuffleboard.getTab("UtilsRaw").addNumber("Match Time", () -> Math.ceil(DriverStation.getMatchTime()));
         configureButtonBindings();
     }
 
@@ -113,15 +117,29 @@ public class RobotContainer {
 
         operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
         operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
-        operatorController.dPad.right.whileHeld(new FeederRunCommand(-FeederConstants.FEEDER_SPEED * 2, feeder));
-        operatorController.dPad.down.whenHeld(new FeedOneBallToShooterCommand(feeder));
+        operatorController.dPad.right.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_BACKWARD_SPEED, feeder));
+        operatorController.dPad.down.whileHeld(new ShooterRunCommand(-1000, shooter));
 
         operatorController.circle.whenHeld(new LimeLightAlignCommand(limeLight, driveTrain));
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
+        // When there are 50 seconds left remind drivers to climb
+        Trigger climbReminder = new Trigger(() -> DriverStation.getMatchTime() < 50 && DriverStation.getMatchTime() > 48
+                && DriverStation.isTeleop());
+        climbReminder.whenActive(() -> setBothRumble(true));
+        climbReminder.whenInactive(() -> setBothRumble(false));
+
         lengthClimber.setDefaultCommand(climberControlCommand);
 
         driveTrain.setDefaultCommand(tankishDriveCommand);
+    }
+
+    private void setBothRumble(boolean on) {
+        int value = on ? 1 : 0;
+        operatorController.setRumble(RumbleType.kRightRumble, value);
+        operatorController.setRumble(RumbleType.kLeftRumble, value);
+        driverController.setRumble(RumbleType.kRightRumble, value);
+        driverController.setRumble(RumbleType.kLeftRumble, value);
     }
 
     /**

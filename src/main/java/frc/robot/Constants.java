@@ -100,6 +100,7 @@ public final class Constants {
         public static final int FEEDER_PORT = 12;
 
         public static final double FEEDER_SPEED = 0.2;
+        public static final double FEEDER_BACKWARD_SPEED = -0.4;
 
         public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 460;
     }
@@ -110,9 +111,6 @@ public final class Constants {
 
         public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(19);
         public static final double MOUNT_ANGLE_DEGREES = 45.0;
-
-        public static final double P_LIMELIGHT_DISTANCE = 0.4;
-        public static final double LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS = 0.2;
 
         public static final double P_LIMELIGHT_ANGLE = 0.03;
         public static final double ARB_FF_LIMELIGHT_ANGLE = 0.2;
