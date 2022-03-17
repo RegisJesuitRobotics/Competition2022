@@ -71,6 +71,11 @@ public class RobotContainer {
                 new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
         autoRoutineChooser.addOption("Three Ball",
                 new ThreeBallAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+        autoRoutineChooser.addOption("Two Ball Far Hanger (No Steal)",
+                new TwoBallBottomNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+        autoRoutineChooser.addOption("Two Ball Close Hanger (No Steal)",
+                new TwoBallTopNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+        autoRoutineChooser.addOption("Tarmac Only", new TarmacOnlyCommand(driveTrain));
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
         Shuffleboard.getTab("DriveTrainRaw").add("Auto", autoRoutineChooser);

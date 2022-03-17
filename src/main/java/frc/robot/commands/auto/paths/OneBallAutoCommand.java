@@ -17,7 +17,7 @@ public class OneBallAutoCommand extends SequentialCommandGroup {
     public OneBallAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                TrajectoryCommandGenerator.getCommandFromFile("1MeterBack", driveTrain),
+                TrajectoryCommandGenerator.getCommandFromFile("2MeterBack", driveTrain),
                 new IntakeDeployCommand(intake), new ShooterAimStateCommand(AimState.CLOSE, shooter));
     }
 }
