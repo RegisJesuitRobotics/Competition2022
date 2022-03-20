@@ -68,8 +68,6 @@ public class RobotContainer {
     public RobotContainer() {
         autoRoutineChooser.setDefaultOption("One Ball",
                 new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
-        autoRoutineChooser.addOption("Two Ball Far Hanger",
-                new TwoBallBottomAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
         autoRoutineChooser.addOption("Two Ball Close Hanger",
                 new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
         autoRoutineChooser.addOption("Three Ball",
@@ -95,11 +93,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         Trigger intakeDeployedTrigger = new Trigger(intake::isDeployed);
         // Driver
-        driverController.dPad.down.and(intakeDeployedTrigger)
-                .whileActiveContinuous(new UnIntakeBallCommand(intake, spinners, feeder));
-
         driverController.rightButton.and(intakeDeployedTrigger)
-                .whenActive(new ParallelCommandGroup(new IntakeRunCommand(intake),
+                .whileActiveOnce(new ParallelCommandGroup(new IntakeRunCommand(intake),
                         new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners)));
 
         driverController.triangle.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(intake));

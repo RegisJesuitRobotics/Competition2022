@@ -3,12 +3,12 @@ package frc.robot.commands.auto.paths;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.auto.RunTrajectoryLoadingBallCommand;
+import frc.robot.commands.auto.TrajectoryCommandGenerator;
 import frc.robot.commands.drive.RotateDriveCommand;
 import frc.robot.commands.intake.IntakeDeployCommand;
+import frc.robot.commands.intake.IntakeRunCommand;
 import frc.robot.commands.intake.IntakeUnDeployCommand;
-import frc.robot.commands.intake.UnIntakeBallCommand;
 import frc.robot.commands.limelight.LimeLightAlignCommand;
-import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ShooterAimStateCommand;
 import frc.robot.commands.shooter.TwoBallShootSequenceCommand;
 import frc.robot.subsystems.DriveTrain;
@@ -25,12 +25,10 @@ public class TwoBallTopAutoCommand extends SequentialCommandGroup {
         super(new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallTopA", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
-                new RotateDriveCommand(170, driveTrain), new LimeLightAlignCommand(limeLight, driveTrain),
+                new RotateDriveCommand(171, driveTrain), new LimeLightAlignCommand(limeLight, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
-                new IntakeDeployCommand(intake),
-                new RunTrajectoryLoadingBallCommand("2BallTopB", driveTrain, intake, spinners, feeder),
-                new OneBallShootSequenceCommand(ShooterConstants.AUTO_EXPEL_RPM, feeder, shooter, spinners),
-                new UnIntakeBallCommand(intake, spinners, feeder).withTimeout(1.0),
-                new ShooterAimStateCommand(AimState.CLOSE, shooter));
+                new IntakeDeployCommand(intake), new ShooterAimStateCommand(AimState.CLOSE, shooter),
+                deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopB", driveTrain),
+                        new IntakeRunCommand(true, intake)));
     }
 }
