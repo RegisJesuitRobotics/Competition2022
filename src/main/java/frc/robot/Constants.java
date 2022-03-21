@@ -48,8 +48,6 @@ public final class Constants {
         public static final double RAMSETE_ZETA = 0.7;
 
         public static final double P_ANGLE_POSITION_DEGREES = 0.03;
-        public static final double I_ANGLE_POSITION_DEGREES = 0.0;
-        public static final double D_ANGLE_POSITION_DEGREES = 2.0589;
         public static final double ARB_FF_ANGLE_POSITION_DEGREES = 0.75;
     }
 
@@ -90,10 +88,6 @@ public final class Constants {
         public static final double TWO_BALL_DISTANCE_RPM = 4300.0;
         public static final double CLOSE_DISTANCE_RPM = 3800.0;
         public static final double EXPEL_BALL_RPM = 2000.0;
-        public static final double AUTO_EXPEL_RPM = 3500.0;
-
-        // TODO: get this value
-        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
     }
 
     public static class FeederConstants {
@@ -103,27 +97,5 @@ public final class Constants {
         public static final double FEEDER_BACKWARD_SPEED = -0.4;
 
         public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 460;
-    }
-
-    public static class LimeLightConstants {
-        public static final String NETWORK_TABLES_ID = "limelight";
-        public static final String STREAM_URL = "http://10.37.29.11:5800";
-
-        public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(19);
-        public static final double MOUNT_ANGLE_DEGREES = 45.0;
-
-        public static final double P_LIMELIGHT_ANGLE = 0.03;
-        public static final double ARB_FF_LIMELIGHT_ANGLE = 0.2;
-        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.5;
-    }
-
-    public static class FieldConstants {
-        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
-
-        public static final double VISION_TARGET_LENGTH_METERS = Units.inchesToMeters(5);
-        public static final double VISION_TARGET_HEIGHT_METERS = Units.inchesToMeters(2);
-
-        public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
-                - (VISION_TARGET_HEIGHT_METERS / 2);
     }
 }
