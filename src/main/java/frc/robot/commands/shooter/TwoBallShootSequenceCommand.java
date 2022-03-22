@@ -24,6 +24,6 @@ public class TwoBallShootSequenceCommand extends ParallelRaceGroup {
                 // Feed the ball to shooter
                 new FeedOneBallToShooterCommand(feeder),
                 // Wait some time to make sure the ball is shot before stopping shooter
-                new WaitCommand(0.3)));
+                new WaitCommand(0.2)));
     }
 }

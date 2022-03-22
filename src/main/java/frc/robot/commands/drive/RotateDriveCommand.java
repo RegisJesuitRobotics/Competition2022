@@ -14,9 +14,8 @@ public class RotateDriveCommand extends CommandBase {
         this.relativeDegrees = relativeDegrees;
         this.driveTrain = driveTrain;
 
-        pidController = new PIDController(TrajectoryConstants.P_ANGLE_POSITION_DEGREES,
-                TrajectoryConstants.I_ANGLE_POSITION_DEGREES, 0.0);
-//        pidController = new PIDController(0.01, 0.0, 0.0);
+        pidController = new PIDController(TrajectoryConstants.P_ANGLE_POSITION_DEGREES, 0.0, 0.0);
+
         pidController.enableContinuousInput(-180, 180);
         pidController.setTolerance(1.5);
 

@@ -20,7 +20,6 @@ import frc.robot.commands.auto.paths.*;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
-import frc.robot.commands.limelight.LimeLightAlignCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ShooterRunCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
@@ -51,7 +50,6 @@ public class RobotContainer {
     private final RotationClimber rotationClimber = new RotationClimber();
     private final Intake intake = new Intake();
     private final Spinners spinners = new Spinners();
-    private final LimeLight limeLight = new LimeLight();
 
     private final PlaystationController driverController = new PlaystationController(0);
     private final PseudoXboxController operatorController = new PseudoXboxController(1);
@@ -69,13 +67,13 @@ public class RobotContainer {
         autoRoutineChooser.setDefaultOption("One Ball",
                 new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Two Ball Close Hanger",
-                new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+                new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Three Ball",
-                new ThreeBallAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+                new ThreeBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Two Ball Far Hanger (No Steal)",
-                new TwoBallBottomNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+                new TwoBallBottomNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Two Ball Close Hanger (No Steal)",
-                new TwoBallTopNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners, limeLight));
+                new TwoBallTopNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Tarmac Only", new TarmacOnlyCommand(driveTrain));
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
@@ -115,7 +113,6 @@ public class RobotContainer {
         operatorController.dPad.right.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_BACKWARD_SPEED, feeder));
         operatorController.dPad.down.whileHeld(new ShooterRunCommand(-1000, shooter));
 
-        operatorController.circle.whenHeld(new LimeLightAlignCommand(limeLight, driveTrain));
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
         // When there are 50 seconds left remind drivers to climb
