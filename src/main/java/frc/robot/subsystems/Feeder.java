@@ -8,23 +8,18 @@ import com.revrobotics.ColorSensorV3.ProximitySensorResolution;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.FieldConstants;
 
 import static frc.robot.Constants.FeederConstants.*;
 
 public class Feeder extends SubsystemBase {
-    public enum FeederSensorStatus {
+    public enum FeederDetectedColor {
         RED_BALL,
         BLUE_BALL,
-        NOTHING
     }
-
-    private double lastConfidence = 0.0;
 
     private final CANSparkMax feederMotor = new CANSparkMax(FEEDER_PORT, MotorType.kBrushless);
     private final RelativeEncoder feederEncoder = feederMotor.getEncoder();
-    private final ColorSensorV3 feederSensor = new ColorSensorV3(Port.kOnboard);
-    private final ColorMatch colorMatch = new ColorMatch();
+    private final ColorSensorV3 feederSensor = new ColorSensorV3(Port.kMXP);
 
     public Feeder() {
         feederMotor.restoreFactoryDefaults();
@@ -32,13 +27,9 @@ public class Feeder extends SubsystemBase {
         feederMotor.setIdleMode(IdleMode.kCoast);
         feederMotor.burnFlash();
 
-        colorMatch.addColorMatch(FieldConstants.BLUE_BALL_COLOR);
-        colorMatch.addColorMatch(FieldConstants.RED_BALL_COLOR);
-
         feederSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
-                ProximitySensorMeasurementRate.kProxRate12ms);
+                ProximitySensorMeasurementRate.kProxRate6ms);
         Shuffleboard.getTab("ShooterRaw").addString("Detected", () -> getSensorColor().name());
-        Shuffleboard.getTab("ShooterRaw").addNumber("Confidence", () -> lastConfidence);
         Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);
         Shuffleboard.getTab("ShooterRaw").addNumber("Proximity", feederSensor::getProximity);
     }
@@ -47,18 +38,11 @@ public class Feeder extends SubsystemBase {
         feederMotor.set(percent);
     }
 
-    public FeederSensorStatus getSensorColor() {
-        ColorMatchResult matched = colorMatch.matchClosestColor(feederSensor.getColor());
-
-        // If below minimum confidence level
-        lastConfidence = matched.confidence;
-        if (matched.confidence < FEEDER_SENSOR_CONFIDENCE_LEVEL) {
-            return FeederSensorStatus.NOTHING;
+    public FeederDetectedColor getSensorColor() {
+        if (feederSensor.getRed() > feederSensor.getBlue()) {
+            return FeederDetectedColor.RED_BALL;
         }
-        if (matched.color.equals(FieldConstants.BLUE_BALL_COLOR)) {
-            return FeederSensorStatus.BLUE_BALL;
-        }
-        return FeederSensorStatus.RED_BALL;
+        return FeederDetectedColor.BLUE_BALL;
     }
 
     public boolean isBallLoaded() {

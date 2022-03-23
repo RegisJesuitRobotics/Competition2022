@@ -2,16 +2,16 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.joysticks.Logitech3DProController;
+import frc.robot.joysticks.ThrustMaster;
 import frc.robot.subsystems.climber.LengthClimber;
 import frc.robot.subsystems.climber.RotationClimber;
 
 public class ClimberControllerControlCommand extends CommandBase {
-    private final Logitech3DProController logitechController;
+    private final ThrustMaster logitechController;
     private final LengthClimber lengthClimber;
     private final RotationClimber rotationClimber;
 
-    public ClimberControllerControlCommand(Logitech3DProController logitechController, LengthClimber lengthClimber,
+    public ClimberControllerControlCommand(ThrustMaster logitechController, LengthClimber lengthClimber,
             RotationClimber rotationClimber) {
         this.logitechController = logitechController;
         this.lengthClimber = lengthClimber;
@@ -23,31 +23,12 @@ public class ClimberControllerControlCommand extends CommandBase {
     @Override
     public void execute() {
         // Either both-climbers buttons pressed
-        double speed = logitechController.throttle.getAxis();
-        boolean leftSet = false;
-        boolean rightSet = false;
-
-        boolean bothRetract = logitechController.buttonTen.get();
-        boolean bothExtend = logitechController.buttonNine.get();
-        if (bothExtend || bothRetract) {
-            if (bothExtend && bothRetract) {
-                // Both are pressed
-                lengthClimber.setBothPercent(0.0);
-            } else if (bothExtend) {
-                // Up is pressed
-                lengthClimber.setBothPercent(-speed);
-            } else {
-                // Down is pressed
-                lengthClimber.setBothPercent(speed);
-            }
-            return;
-        }
+        double speed = Math.abs(logitechController.throttle.getAxis() - 1);
 
         // Either left-climbers buttons pressed
-        boolean leftRetract = logitechController.buttonTwelve.get();
-        boolean leftExtend = logitechController.buttonEleven.get();
+        boolean leftRetract = logitechController.buttonEight.get();
+        boolean leftExtend = logitechController.buttonSeven.get();
         if (leftExtend || leftRetract) {
-            leftSet = true;
             if (leftExtend && leftRetract) {
                 // Both are pressed
                 lengthClimber.setLeftPercent(0.0);
@@ -59,13 +40,14 @@ public class ClimberControllerControlCommand extends CommandBase {
                 lengthClimber.setLeftPercent(speed);
             }
             // No early return because we need to check right still
+        } else {
+            lengthClimber.setLeftPercent(0.0);
         }
 
         // Either right-climbers buttons pressed
-        boolean rightRetract = logitechController.buttonEight.get();
-        boolean rightExtend = logitechController.buttonSeven.get();
+        boolean rightRetract = logitechController.buttonNine.get();
+        boolean rightExtend = logitechController.buttonSix.get();
         if (rightExtend || rightRetract) {
-            rightSet = true;
             if (rightExtend && rightRetract) {
                 // Both are pressed
                 lengthClimber.setRightPercent(0.0);
@@ -76,18 +58,12 @@ public class ClimberControllerControlCommand extends CommandBase {
                 // Down is pressed
                 lengthClimber.setRightPercent(speed);
             }
-        }
-
-        if (!rightSet) {
+        } else {
             lengthClimber.setRightPercent(0.0);
         }
-        if (!leftSet) {
-            lengthClimber.setLeftPercent(0.0);
-        }
 
-
-        boolean bothForward = logitechController.buttonThree.get();
-        boolean bothBackward = logitechController.buttonFour.get();
+        boolean bothForward = logitechController.buttonFourteen.get();
+        boolean bothBackward = logitechController.buttonFifteen.get();
         if (bothForward || bothBackward) {
             if (bothForward && bothBackward) {
                 rotationClimber.setRotationPercent(0.0);

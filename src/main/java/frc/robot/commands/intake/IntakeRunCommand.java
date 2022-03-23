@@ -10,9 +10,15 @@ import frc.robot.subsystems.intake.Intake;
 
 public class IntakeRunCommand extends CommandBase {
     private final Intake intake;
+    private final double multiplier;
 
     public IntakeRunCommand(Intake intake) {
+        this(false, intake);
+    }
+
+    public IntakeRunCommand(boolean negative, Intake intake) {
         this.intake = intake;
+        this.multiplier = negative ? -1 : 1;
 
         addRequirements(intake);
     }
@@ -24,14 +30,13 @@ public class IntakeRunCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intake.setPercentage(IntakeConstants.INTAKE_SPEED);
+        intake.setPercentage(IntakeConstants.INTAKE_SPEED * multiplier);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         intake.setPercentage(0.0);
-        System.out.println("Thy havth finished");
     }
 
     // Returns true when the command should end.

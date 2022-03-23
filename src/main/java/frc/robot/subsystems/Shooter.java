@@ -38,6 +38,8 @@ public class Shooter extends SubsystemBase {
 
     private double shooterTargetRPS = 0.0;
 
+    private boolean shootingClose = true;
+
     private final DoubleSolenoid shooterSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, SHOOTER_AIM_OPEN_PORT,
             SHOOTER_AIM_CLOSE_PORT);
 
@@ -73,6 +75,7 @@ public class Shooter extends SubsystemBase {
 
     public void setAimState(AimState aimState) {
         setAimState(aimState.value);
+        shootingClose = aimState == AimState.CLOSE;
     }
 
     private void setAimState(Value value) {
@@ -84,11 +87,10 @@ public class Shooter extends SubsystemBase {
     }
 
     public void toggleAimState() {
-        Value value = shooterSolenoid.get();
-        if (value == Value.kReverse) {
-            setAimState(Value.kForward);
+        if (shootingClose) {
+            setAimState(AimState.FAR);
         } else {
-            setAimState(Value.kReverse);
+            setAimState(AimState.CLOSE);
         }
     }
 
@@ -102,7 +104,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isAimingClose() {
-        return shooterSolenoid.get() == Value.kReverse;
+        return shootingClose;
     }
 
     @Override

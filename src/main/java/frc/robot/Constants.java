@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -33,20 +32,23 @@ public final class Constants {
         public static final double DISTANCE_PER_ROTATION = (WHEEL_DIAMETER_METERS * Math.PI) / (GEARING);
 
         // Distance between wheels of opposite sides
-        public static final double TRACK_WIDTH_METERS = Units.inchesToMeters(27.5);
+        public static final double TRACK_WIDTH_METERS = 0.7483;
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
                 TRACK_WIDTH_METERS);
     }
 
     public static class TrajectoryConstants {
-        public static final double S_VOLTS = 0.55345;
-        public static final double V_VOLT_SECONDS_PER_METER = 2.384;
-        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.15702;
+        public static final double S_VOLTS = 0.14741;
+        public static final double V_VOLT_SECONDS_PER_METER = 2.2627;
+        public static final double A_VOLT_SECONDS_SQUARED_PER_METER = 0.46053;
 
-        public static final double P_DRIVE_VEL = 2.5832;
+        public static final double P_DRIVE_VEL = 3.1136;
 
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
+
+        public static final double P_ANGLE_POSITION_DEGREES = 0.03;
+        public static final double ARB_FF_ANGLE_POSITION_DEGREES = 0.75;
     }
 
     public static class IntakeConstants {
@@ -67,14 +69,13 @@ public final class Constants {
         public static final int RIGHT_CLIMBER_LENGTH_PORT = 11;
         public static final int RIGHT_CLIMBER_ROTATION_PORT = 10;
 
-        public static final double LENGTH_SPEED = 0.7;
         public static final double ROTATION_SPEED = 0.2;
     }
 
     public static class ShooterConstants {
         public static final int SHOOTER_PORT = 13;
 
-        public static final double SHOOTER_VELOCITY_P = 0.220;
+        public static final double SHOOTER_VELOCITY_P = 0.200;
         public static final double SHOOTER_VELOCITY_S_VOLTS = 0.17322;
         public static final double SHOOTER_VELOCITY_V_VOLTS = 0.12609;
 
@@ -83,48 +84,18 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 1.0;
 
-        public static final double FAR_DISTANCE_RPM = 4400.0;
-        public static final double CLOSE_DISTANCE_RPM = 3700.0;
+        public static final double FAR_DISTANCE_RPM = 4500.0;
+        public static final double TWO_BALL_DISTANCE_RPM = 4300.0;
+        public static final double CLOSE_DISTANCE_RPM = 3800.0;
         public static final double EXPEL_BALL_RPM = 2000.0;
-
-        // TODO: get this value
-        public static final double FAR_SHOOTING_LOCATION_DISTANCE_METERS = Units.inchesToMeters(100);
     }
 
     public static class FeederConstants {
         public static final int FEEDER_PORT = 12;
 
-        public static final double FEEDER_SPEED = 0.3;
+        public static final double FEEDER_SPEED = 0.2;
+        public static final double FEEDER_BACKWARD_SPEED = -0.4;
 
-        public static final double FEEDER_SENSOR_CONFIDENCE_LEVEL = 0.90;
-        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 650;
-    }
-
-    public static class LimeLightConstants {
-        public static final String NETWORK_TABLES_ID = "limelight";
-        public static final String STREAM_URL = "http://10.37.29.11:5800";
-
-        public static final double MOUNT_HEIGHT_METERS = Units.inchesToMeters(19);
-        public static final double MOUNT_ANGLE_DEGREES = 45.0;
-
-        public static final double P_LIMELIGHT_DISTANCE = 0.4;
-        public static final double LIMELIGHT_DISTANCE_ACCEPTABLE_ERROR_METERS = 0.2;
-
-        public static final double P_LIMELIGHT_ANGLE = 0.03;
-        public static final double ARB_FF_LIMELIGHT_ANGLE = 0.2;
-        public static final double LIMELIGHT_ANGLE_ACCEPTABLE_ERROR_ANGLE = 0.5;
-    }
-
-    public static class FieldConstants {
-        public static final double HUB_HEIGHT_METERS = Units.inchesToMeters((8 * 12) + 8); // 8ft 8
-
-        public static final double VISION_TARGET_LENGTH_METERS = Units.inchesToMeters(5);
-        public static final double VISION_TARGET_HEIGHT_METERS = Units.inchesToMeters(2);
-
-        public static final double VISION_TARGET_DISTANCE_FROM_GROUND = HUB_HEIGHT_METERS
-                - (VISION_TARGET_HEIGHT_METERS / 2);
-
-        public static final Color RED_BALL_COLOR = new Color(0.50, 0.35, 0.13);
-        public static final Color BLUE_BALL_COLOR = new Color(0.14, 0.38, 0.47);
+        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 375;
     }
 }

@@ -9,7 +9,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.FinishInstantlyCommand;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Feeder.FeederSensorStatus;
+import frc.robot.subsystems.Feeder.FeederDetectedColor;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.AimState;
 import frc.robot.subsystems.intake.Spinners;
@@ -21,7 +21,7 @@ public class ExpelIfBallWrongColorCommand extends ConditionalCommand {
                 new InstantCommand(shooter::restorePreviousState)), new FinishInstantlyCommand(),
                 // If we are red alliance then run this if ball is blue
                 () -> (feeder.getSensorColor() == ((DriverStation.getAlliance() == Alliance.Red)
-                        ? FeederSensorStatus.BLUE_BALL
-                        : FeederSensorStatus.RED_BALL)) && feeder.getSensorColor() != FeederSensorStatus.NOTHING);
+                        ? FeederDetectedColor.BLUE_BALL
+                        : FeederDetectedColor.RED_BALL)) && feeder.isBallLoaded());
     }
 }

@@ -9,10 +9,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.drive.ToggleBrakeModeCommand;
 
 public class DriveTrain extends SubsystemBase {
     private final CANSparkMax leftTop = new CANSparkMax(DriveConstants.LEFT_TOP_PORT, MotorType.kBrushless);
@@ -28,10 +28,7 @@ public class DriveTrain extends SubsystemBase {
 
     private final AHRS gyro = new AHRS();
 
-    private final DifferentialDrive differentialDrive = new DifferentialDrive(leftTop, rightTop);
-
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getRotation2d());
-    private final Field2d field2d = new Field2d();
 
     public DriveTrain() {
         leftTop.restoreFactoryDefaults();
@@ -48,14 +45,15 @@ public class DriveTrain extends SubsystemBase {
         rightFront.follow(rightTop);
 
         leftTop.setInverted(true);
-        leftFront.setInverted(true);
-        leftBack.setInverted(true);
+        rightTop.setInverted(false);
 
         leftEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
         leftEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60); // Change from rpm to
 
         rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION);
-        rightEncoder.setPositionConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
+        rightEncoder.setVelocityConversionFactor(DriveConstants.DISTANCE_PER_ROTATION / 60);
+
+        resetEncoders();
 
         leftTop.burnFlash();
         leftBack.burnFlash();
@@ -63,6 +61,10 @@ public class DriveTrain extends SubsystemBase {
         rightTop.burnFlash();
         rightBack.burnFlash();
         rightFront.burnFlash();
+
+        Shuffleboard.getTab("DriveTrainRaw").addBoolean("Brake On?", this::isBrakeOn);
+        Shuffleboard.getTab("DriveTrainRaw").add("Toggle Brake", new ToggleBrakeModeCommand(this));
+        Shuffleboard.getTab("DriveTrainRaw").addNumber("Gyro", this::getHeading);
     }
 
     public void resetEncoders() {
@@ -73,7 +75,6 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         odometry.update(getRotation2d(), getLeftEncoderDistance(), getRightEncoderDistance());
-        field2d.setRobotPose(odometry.getPoseMeters());
     }
 
     public Pose2d getPosition() {
@@ -85,19 +86,15 @@ public class DriveTrain extends SubsystemBase {
         odometry.resetPosition(pose, getRotation2d());
     }
 
-    public void arcadeDrive(double xSpeed, double zRotation) {
-        differentialDrive.arcadeDrive(xSpeed, zRotation);
-    }
-
     public void tankDrive(double leftSpeed, double rightSpeed) {
-        differentialDrive.tankDrive(leftSpeed, rightSpeed);
+        leftTop.set(leftSpeed);
+        rightTop.set(rightSpeed);
     }
 
     public void voltageDrive(double leftVoltage, double rightVoltage) {
         leftTop.setVoltage(leftVoltage);
         rightTop.setVoltage(rightVoltage);
 
-        differentialDrive.feed();
     }
 
     public double getLeftEncoderDistance() {
@@ -126,8 +123,11 @@ public class DriveTrain extends SubsystemBase {
         return new DifferentialDriveWheelSpeeds(getLeftEncoderRate(), getRightEncoderRate());
     }
 
+    /**
+     * @return -180 - 180. Unit circle (counter-clockwise positive)
+     */
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+        return -Math.IEEEremainder(gyro.getAngle(), 360);
     }
 
     public Rotation2d getRotation2d() {
@@ -150,5 +150,13 @@ public class DriveTrain extends SubsystemBase {
             rightBack.setIdleMode(IdleMode.kCoast);
             rightFront.setIdleMode(IdleMode.kCoast);
         }
+    }
+
+    public void toggleBrakeMode() {
+        setBrakeMode(!isBrakeOn());
+    }
+
+    public boolean isBrakeOn() {
+        return leftTop.getIdleMode() == IdleMode.kBrake;
     }
 }
