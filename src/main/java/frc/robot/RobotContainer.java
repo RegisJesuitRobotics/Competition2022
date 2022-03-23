@@ -116,7 +116,7 @@ public class RobotContainer {
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
         // When there are 50 seconds left remind drivers to climb
-        Trigger climbReminder = new Trigger(() -> DriverStation.getMatchTime() < 50 && DriverStation.getMatchTime() > 48
+        Trigger climbReminder = new Trigger(() -> DriverStation.getMatchTime() < 55 && DriverStation.getMatchTime() > 53
                 && DriverStation.isTeleop());
         climbReminder.whenActive(() -> setBothRumble(true));
         climbReminder.whenInactive(() -> setBothRumble(false));
