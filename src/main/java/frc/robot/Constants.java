@@ -96,6 +96,6 @@ public final class Constants {
         public static final double FEEDER_SPEED = 0.2;
         public static final double FEEDER_BACKWARD_SPEED = -0.4;
 
-        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 460;
+        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 375;
     }
 }
