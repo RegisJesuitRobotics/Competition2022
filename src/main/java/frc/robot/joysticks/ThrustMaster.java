@@ -3,6 +3,7 @@ package frc.robot.joysticks;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+@SuppressWarnings("unused")
 public class ThrustMaster extends RaiderJoystick {
     public final JoystickButton buttonOne = new JoystickButton(this, 1);
     public final JoystickButton buttonTwo = new JoystickButton(this, 2);

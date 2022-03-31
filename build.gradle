@@ -1,7 +1,6 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2022.4.1"
-    id 'com.diffplug.spotless' version '6.1.2'
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -87,25 +86,3 @@ deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
-spotless {
-    enforceCheck false
-    java {
-        target fileTree('.') {
-            include '**/*.java'
-            exclude '**/build/**', '**/build-*/**'
-        }
-        toggleOffOn()
-        eclipse().configFile('RJFormat.xml')
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-}
-
-
-tasks.register('updateGitHooks', Copy) {
-    from file('./scripts/pre-commit')
-    into './.git/hooks'
-}
-
-compileJava.dependsOn updateGitHooks

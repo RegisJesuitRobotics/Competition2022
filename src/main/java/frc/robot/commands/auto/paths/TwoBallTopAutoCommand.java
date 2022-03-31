@@ -1,6 +1,7 @@
 package frc.robot.commands.auto.paths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.auto.RunTrajectoryLoadingBallCommand;
 import frc.robot.commands.auto.TrajectoryCommandGenerator;
@@ -23,9 +24,10 @@ public class TwoBallTopAutoCommand extends SequentialCommandGroup {
         super(new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallTopA", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
+                new WaitCommand(0.5),
                 new RotateDriveCommand(171, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
-                new IntakeDeployCommand(intake), new ShooterAimStateCommand(AimState.CLOSE, shooter),
+                new IntakeDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
                 deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopB", driveTrain),
                         new IntakeRunCommand(true, intake)));
     }

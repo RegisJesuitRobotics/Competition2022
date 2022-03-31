@@ -1,7 +1,10 @@
 package frc.robot.commands.shooter;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.feeder.FeedOneBallToShooterCommand;
 import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
 import frc.robot.subsystems.Feeder;
@@ -20,7 +23,7 @@ public class TwoBallShootSequenceCommand extends ParallelRaceGroup {
                 // Get shooter back up to speed and prepare ball
                 parallel(new WaitForShooterWarmupCommand(shooterRPM, shooter),
                         new LoadBallToWaitingZoneCommand(feeder, spinners)),
-                new WaitCommand(0.2),
+                new WaitCommand(0.5),
                 // Feed the ball to shooter
                 new FeedOneBallToShooterCommand(feeder),
                 // Wait some time to make sure the ball is shot before stopping shooter

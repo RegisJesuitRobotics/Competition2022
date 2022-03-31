@@ -20,6 +20,7 @@ import frc.robot.commands.auto.paths.*;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
+import frc.robot.commands.shooter.EjectBall;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ShooterRunCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
@@ -64,7 +65,8 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        autoRoutineChooser.setDefaultOption("One Ball",
+        autoRoutineChooser.setDefaultOption("One Ball No Tarmac", new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners));
+        autoRoutineChooser.addOption("One Ball With Tarmac",
                 new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Two Ball Close Hanger",
                 new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners));
@@ -90,6 +92,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         Trigger intakeDeployedTrigger = new Trigger(intake::isDeployed);
+
         // Driver
         driverController.rightButton.and(intakeDeployedTrigger)
                 .whileActiveOnce(new ParallelCommandGroup(new IntakeRunCommand(intake),
@@ -97,15 +100,12 @@ public class RobotContainer {
 
         driverController.triangle.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(intake));
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
+        driverController.x.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(true, intake));
 
         // Operator
         operatorController.rightButton.whenHeld(new ConditionalCommand(
                 new TwoBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
-                shooter::isAimingClose));
-        operatorController.leftButton.whenHeld(new ConditionalCommand(
-                new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                new OneBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
+                new TwoBallShootSequenceCommand(ShooterConstants.EDGE_TARMAC_RPM, feeder, shooter, spinners),
                 shooter::isAimingClose));
 
         operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
@@ -115,23 +115,21 @@ public class RobotContainer {
 
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
-        // When there are 50 seconds left remind drivers to climb
+        // When there are 55 seconds left remind drivers to climb
         Trigger climbReminder = new Trigger(() -> DriverStation.getMatchTime() < 55 && DriverStation.getMatchTime() > 53
                 && DriverStation.isTeleop());
-        climbReminder.whenActive(() -> setBothRumble(true));
-        climbReminder.whenInactive(() -> setBothRumble(false));
+        climbReminder.whenActive(() -> setOperatorRumble(true));
+        climbReminder.whenInactive(() -> setOperatorRumble(false));
 
         lengthClimber.setDefaultCommand(climberControlCommand);
 
         driveTrain.setDefaultCommand(tankishDriveCommand);
     }
 
-    private void setBothRumble(boolean on) {
+    private void setOperatorRumble(boolean on) {
         int value = on ? 1 : 0;
         operatorController.setRumble(RumbleType.kRightRumble, value);
         operatorController.setRumble(RumbleType.kLeftRumble, value);
-        driverController.setRumble(RumbleType.kRightRumble, value);
-        driverController.setRumble(RumbleType.kLeftRumble, value);
     }
 
     /**

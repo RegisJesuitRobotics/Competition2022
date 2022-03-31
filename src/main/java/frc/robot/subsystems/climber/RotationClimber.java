@@ -18,6 +18,9 @@ public class RotationClimber extends SubsystemBase {
 
         rightClimberRotation.follow(leftClimberRotation, true);
 
+        rightClimberRotation.setSmartCurrentLimit(30);
+        leftClimberRotation.setSmartCurrentLimit(30);
+
         leftClimberRotation.burnFlash();
         rightClimberRotation.burnFlash();
     }

@@ -21,11 +21,11 @@ public class ThreeBallAutoCommand extends SequentialCommandGroup {
     public ThreeBallAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder,
             Spinners spinners) {
         super(new ShooterAimStateCommand(AimState.CLOSE, shooter),
-                new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
+                new OneBallShootSequenceCommand(ShooterConstants.THREE_BALL_CLOSE, feeder, shooter, spinners),
                 new RotateDriveCommand(-124, driveTrain), new WaitCommand(0.5), new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("3BallA", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
-                new TwoBallShootSequenceCommand(ShooterConstants.FAR_DISTANCE_RPM, feeder, shooter, spinners),
-                new ShooterAimStateCommand(AimState.CLOSE, shooter));
+                new TwoBallShootSequenceCommand(ShooterConstants.THREE_BALL_RPM, feeder, shooter, spinners),
+                new ShooterAimStateCommand(AimState.FAR, shooter));
     }
 }

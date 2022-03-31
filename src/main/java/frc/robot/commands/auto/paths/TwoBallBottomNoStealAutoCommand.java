@@ -30,6 +30,6 @@ public class TwoBallBottomNoStealAutoCommand extends SequentialCommandGroup {
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
                 new WaitCommand(0.5), new RotateDriveCommand(170.0, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
-                new ShooterAimStateCommand(AimState.CLOSE, shooter));
+                new ShooterAimStateCommand(AimState.FAR, shooter));
     }
 }

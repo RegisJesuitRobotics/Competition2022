@@ -26,6 +26,7 @@ public class Intake extends SubsystemBase {
         intakeMotor.restoreFactoryDefaults();
         intakeMotor.setInverted(true);
         intakeMotor.setIdleMode(IdleMode.kCoast);
+        intakeMotor.setSmartCurrentLimit(20);
 
         intakeMotor.burnFlash();
     }
