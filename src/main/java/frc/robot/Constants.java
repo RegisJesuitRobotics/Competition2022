@@ -85,8 +85,11 @@ public final class Constants {
         public static final double SHOOTER_GEARING = 1.0;
 
         public static final double FAR_DISTANCE_RPM = 4500.0;
-        public static final double TWO_BALL_DISTANCE_RPM = 4300.0;
+        public static final double TWO_BALL_DISTANCE_RPM = 4500.0;
+        public static final double THREE_BALL_RPM = 4600.0;
+        public static final double THREE_BALL_CLOSE = 3900.0;
         public static final double CLOSE_DISTANCE_RPM = 3800.0;
+        public static final double EDGE_TARMAC_RPM = 4150.0;
         public static final double EXPEL_BALL_RPM = 2000.0;
     }
 
@@ -96,6 +99,6 @@ public final class Constants {
         public static final double FEEDER_SPEED = 0.2;
         public static final double FEEDER_BACKWARD_SPEED = -0.4;
 
-        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 375;
+        public static final double FEEDER_SENSOR_PROXIMITY_LEVEL = 450;
     }
 }

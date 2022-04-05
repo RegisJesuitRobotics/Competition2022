@@ -12,8 +12,6 @@ import frc.robot.subsystems.intake.*;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeSpinnersRunCommand extends ParallelCommandGroup {
-    private final double INTAKE_SPEED = 0.7;
-
     /** Creates a new IntakeSpinnersRun. */
     public IntakeSpinnersRunCommand(Intake intake, Spinners spinners) {
         // Add your commands in the addCommands() call, e.g.
