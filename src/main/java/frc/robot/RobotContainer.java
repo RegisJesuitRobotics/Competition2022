@@ -20,7 +20,6 @@ import frc.robot.commands.auto.paths.*;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
-import frc.robot.commands.shooter.EjectBall;
 import frc.robot.commands.shooter.OneBallShootSequenceCommand;
 import frc.robot.commands.shooter.ShooterRunCommand;
 import frc.robot.commands.shooter.ToggleAimCommand;
@@ -65,7 +64,8 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        autoRoutineChooser.setDefaultOption("One Ball No Tarmac", new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners));
+        autoRoutineChooser.setDefaultOption("One Ball No Tarmac",
+                new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners));
         autoRoutineChooser.addOption("One Ball With Tarmac",
                 new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
         autoRoutineChooser.addOption("Two Ball Close Hanger",

@@ -1,10 +1,8 @@
 package frc.robot.commands.shooter;
 
-import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.feeder.FeedOneBallToShooterCommand;
 import frc.robot.commands.feeder.LoadBallToWaitingZoneCommand;
 import frc.robot.subsystems.Feeder;

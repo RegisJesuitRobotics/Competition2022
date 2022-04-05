@@ -23,7 +23,7 @@ public class ClimberControllerControlCommand extends CommandBase {
     @Override
     public void execute() {
         // Either both-climbers buttons pressed
-        double speed = Math.abs(logitechController.throttle.getAxis() - 1) * 0.5;
+        double speed = Math.abs(logitechController.throttle.getAxis() - 1);
 
         // Either left-climbers buttons pressed
         boolean leftRetract = logitechController.buttonEight.get();
@@ -34,7 +34,7 @@ public class ClimberControllerControlCommand extends CommandBase {
                 lengthClimber.setLeftPercent(0.0);
             } else if (leftExtend) {
                 // Up is pressed
-                lengthClimber.setLeftPercent(-speed * 1.5);
+                lengthClimber.setLeftPercent(-speed);
             } else {
                 // Down is pressed
                 lengthClimber.setLeftPercent(speed);
@@ -53,7 +53,7 @@ public class ClimberControllerControlCommand extends CommandBase {
                 lengthClimber.setRightPercent(0.0);
             } else if (rightExtend) {
                 // Up is pressed
-                lengthClimber.setRightPercent(-speed * 1.5);
+                lengthClimber.setRightPercent(-speed);
             } else {
                 // Down is pressed
                 lengthClimber.setRightPercent(speed);
