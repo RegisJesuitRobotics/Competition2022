@@ -17,13 +17,16 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
 public class TwoBallTopNoStealAutoCommand extends SequentialCommandGroup {
-    public TwoBallTopNoStealAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder,
-            Spinners spinners) {
-        super(new IntakeDeployCommand(intake),
+    public TwoBallTopNoStealAutoCommand(
+            DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners
+    ) {
+        super(
+                new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallTopA", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
                 new WaitCommand(0.5), new RotateDriveCommand(170, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
-                new ShooterAimStateCommand(AimState.FAR, shooter));
+                new ShooterAimStateCommand(AimState.FAR, shooter)
+        );
     }
 }

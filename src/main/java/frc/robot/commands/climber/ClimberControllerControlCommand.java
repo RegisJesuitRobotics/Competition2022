@@ -11,8 +11,9 @@ public class ClimberControllerControlCommand extends CommandBase {
     private final LengthClimber lengthClimber;
     private final RotationClimber rotationClimber;
 
-    public ClimberControllerControlCommand(ThrustMaster logitechController, LengthClimber lengthClimber,
-            RotationClimber rotationClimber) {
+    public ClimberControllerControlCommand(
+            ThrustMaster logitechController, LengthClimber lengthClimber, RotationClimber rotationClimber
+    ) {
         this.logitechController = logitechController;
         this.lengthClimber = lengthClimber;
         this.rotationClimber = rotationClimber;

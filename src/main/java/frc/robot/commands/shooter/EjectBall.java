@@ -10,8 +10,12 @@ import frc.robot.subsystems.intake.Spinners;
 
 public class EjectBall extends ParallelRaceGroup {
     public EjectBall(double shooterRPM, Shooter shooter, Feeder feeder, Spinners spinners) {
-        super(new ShooterRunCommand(shooterRPM, shooter), sequence(new WaitForShooterWarmupCommand(shooterRPM, shooter),
-                new WaitCommand(0.5),
-                new FeederAndSpinnersRunCommand(FeederConstants.FEEDER_SPEED, feeder, spinners).withTimeout(0.3)));
+        super(
+                new ShooterRunCommand(shooterRPM, shooter),
+                sequence(
+                        new WaitForShooterWarmupCommand(shooterRPM, shooter), new WaitCommand(0.5),
+                        new FeederAndSpinnersRunCommand(FeederConstants.FEEDER_SPEED, feeder, spinners).withTimeout(0.3)
+                )
+        );
     }
 }

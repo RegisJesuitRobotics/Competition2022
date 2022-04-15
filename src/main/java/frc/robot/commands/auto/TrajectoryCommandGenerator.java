@@ -33,15 +33,17 @@ public class TrajectoryCommandGenerator {
             return null;
         }
 
-        RamseteCommand ramseteCommand = new RamseteCommand(trajectory, driveTrain::getPosition,
-                new RamseteController(RAMSETE_B, RAMSETE_ZETA),
+        RamseteCommand ramseteCommand = new RamseteCommand(
+                trajectory, driveTrain::getPosition, new RamseteController(RAMSETE_B, RAMSETE_ZETA),
                 new SimpleMotorFeedforward(S_VOLTS, V_VOLT_SECONDS_PER_METER, A_VOLT_SECONDS_SQUARED_PER_METER),
                 Constants.DriveConstants.DRIVE_KINEMATICS, driveTrain::getWheelSpeeds,
                 new PIDController(P_DRIVE_VEL, 0, 0), new PIDController(P_DRIVE_VEL, 0, 0), driveTrain::voltageDrive,
-                driveTrain);
+                driveTrain
+        );
 
         InstantCommand resetOdometryCommand = new InstantCommand(
-                () -> driveTrain.resetOdometry(trajectory.getInitialPose()));
+                () -> driveTrain.resetOdometry(trajectory.getInitialPose())
+        );
 
         InstantCommand setBrakeOnCommand = new InstantCommand(() -> driveTrain.setBrakeMode(true));
 

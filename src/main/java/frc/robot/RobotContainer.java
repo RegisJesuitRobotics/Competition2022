@@ -57,25 +57,34 @@ public class RobotContainer {
 
     private final SendableChooser<Command> autoRoutineChooser = new SendableChooser<>();
     private final ClimberControllerControlCommand climberControlCommand = new ClimberControllerControlCommand(
-            operatorClimberController, lengthClimber, rotationClimber);
+            operatorClimberController, lengthClimber, rotationClimber
+    );
     private final TankishDriveCommand tankishDriveCommand = new TankishDriveCommand(driveTrain, driverController);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        autoRoutineChooser.setDefaultOption("One Ball No Tarmac",
-                new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners));
-        autoRoutineChooser.addOption("One Ball With Tarmac",
-                new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
-        autoRoutineChooser.addOption("Two Ball Close Hanger",
-                new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners));
-        autoRoutineChooser.addOption("Three Ball",
-                new ThreeBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
-        autoRoutineChooser.addOption("Two Ball Far Hanger (No Steal)",
-                new TwoBallBottomNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners));
-        autoRoutineChooser.addOption("Two Ball Close Hanger (No Steal)",
-                new TwoBallTopNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners));
+        autoRoutineChooser.setDefaultOption(
+                "One Ball No Tarmac",
+                new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners)
+        );
+        autoRoutineChooser.addOption(
+                "One Ball With Tarmac", new OneBallAutoCommand(driveTrain, intake, shooter, feeder, spinners)
+        );
+        autoRoutineChooser.addOption(
+                "Two Ball Close Hanger", new TwoBallTopAutoCommand(driveTrain, intake, shooter, feeder, spinners)
+        );
+        autoRoutineChooser
+                .addOption("Three Ball", new ThreeBallAutoCommand(driveTrain, intake, shooter, feeder, spinners));
+        autoRoutineChooser.addOption(
+                "Two Ball Far Hanger (No Steal)",
+                new TwoBallBottomNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners)
+        );
+        autoRoutineChooser.addOption(
+                "Two Ball Close Hanger (No Steal)",
+                new TwoBallTopNoStealAutoCommand(driveTrain, intake, shooter, feeder, spinners)
+        );
         autoRoutineChooser.addOption("Tarmac Only", new TarmacOnlyCommand(driveTrain));
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
@@ -94,19 +103,25 @@ public class RobotContainer {
         Trigger intakeDeployedTrigger = new Trigger(intake::isDeployed);
 
         // Driver
-        driverController.rightButton.and(intakeDeployedTrigger)
-                .whileActiveOnce(new ParallelCommandGroup(new IntakeRunCommand(intake),
-                        new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners)));
+        driverController.rightButton.and(intakeDeployedTrigger).whileActiveOnce(
+                new ParallelCommandGroup(
+                        new IntakeRunCommand(intake),
+                        new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners)
+                )
+        );
 
         driverController.triangle.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(intake));
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
         driverController.x.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(true, intake));
 
         // Operator
-        operatorController.rightButton.whenHeld(new ConditionalCommand(
-                new TwoBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
-                new TwoBallShootSequenceCommand(ShooterConstants.EDGE_TARMAC_RPM, feeder, shooter, spinners),
-                shooter::isAimingClose));
+        operatorController.rightButton.whenHeld(
+                new ConditionalCommand(
+                        new TwoBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners),
+                        new TwoBallShootSequenceCommand(ShooterConstants.EDGE_TARMAC_RPM, feeder, shooter, spinners),
+                        shooter::isAimingClose
+                )
+        );
 
         operatorController.dPad.up.whenHeld(new LoadBallToWaitingZoneAndCheckColorCommand(feeder, shooter, spinners));
         operatorController.dPad.left.whileHeld(new FeederRunCommand(FeederConstants.FEEDER_SPEED, feeder));
@@ -116,8 +131,9 @@ public class RobotContainer {
         operatorController.square.whenPressed(new ToggleAimCommand(shooter));
 
         // When there are 55 seconds left remind drivers to climb
-        Trigger climbReminder = new Trigger(() -> DriverStation.getMatchTime() < 55 && DriverStation.getMatchTime() > 53
-                && DriverStation.isTeleop());
+        Trigger climbReminder = new Trigger(
+                () -> DriverStation.getMatchTime() < 55 && DriverStation.getMatchTime() > 53 && DriverStation.isTeleop()
+        );
         climbReminder.whenActive(() -> setOperatorRumble(true));
         climbReminder.whenInactive(() -> setOperatorRumble(false));
 
