@@ -10,13 +10,18 @@ import frc.robot.subsystems.intake.Spinners;
 
 public class OneBallShootSequenceCommand extends ParallelRaceGroup {
     public OneBallShootSequenceCommand(double shooterRPM, Feeder feeder, Shooter shooter, Spinners spinners) {
-        super(new ShooterRunCommand(shooterRPM, shooter), sequence(
-                // Wait for the shooter to warmup and while that is happening prepare the ball
-                parallel(new WaitForShooterWarmupCommand(shooterRPM, shooter),
-                        new LoadBallToWaitingZoneCommand(feeder, spinners)),
-                // Feed the ball as it has warmed up
-                new FeedOneBallToShooterCommand(feeder),
-                // Make sure the ball is through before stopping the shooter
-                new WaitCommand(0.3)));
+        super(
+                new ShooterRunCommand(shooterRPM, shooter), sequence(
+                        // Wait for the shooter to warmup and while that is happening prepare the ball
+                        parallel(
+                                new WaitForShooterWarmupCommand(shooterRPM, shooter),
+                                new LoadBallToWaitingZoneCommand(feeder, spinners)
+                        ),
+                        // Feed the ball as it has warmed up
+                        new FeedOneBallToShooterCommand(feeder),
+                        // Make sure the ball is through before stopping the shooter
+                        new WaitCommand(0.3)
+                )
+        );
     }
 }

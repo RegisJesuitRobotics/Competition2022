@@ -9,10 +9,12 @@ import static frc.robot.Constants.ClimberConstants.LEFT_CLIMBER_LENGTH_PORT;
 import static frc.robot.Constants.ClimberConstants.RIGHT_CLIMBER_LENGTH_PORT;
 
 public class LengthClimber extends SubsystemBase {
-    private final CANSparkMax leftClimberLength = new CANSparkMax(LEFT_CLIMBER_LENGTH_PORT,
-            CANSparkMaxLowLevel.MotorType.kBrushless);
-    private final CANSparkMax rightClimberLength = new CANSparkMax(RIGHT_CLIMBER_LENGTH_PORT,
-            CANSparkMaxLowLevel.MotorType.kBrushless);
+    private final CANSparkMax leftClimberLength = new CANSparkMax(
+            LEFT_CLIMBER_LENGTH_PORT, CANSparkMaxLowLevel.MotorType.kBrushless
+    );
+    private final CANSparkMax rightClimberLength = new CANSparkMax(
+            RIGHT_CLIMBER_LENGTH_PORT, CANSparkMaxLowLevel.MotorType.kBrushless
+    );
 
     public LengthClimber() {
         rightClimberLength.restoreFactoryDefaults();

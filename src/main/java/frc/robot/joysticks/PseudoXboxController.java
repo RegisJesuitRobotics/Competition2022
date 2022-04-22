@@ -19,10 +19,12 @@ public class PseudoXboxController extends RaiderJoystick {
     public final JoystickButton share = new JoystickButton(this, Button.kBack.value);
     public final JoystickButton options = new JoystickButton(this, Button.kStart.value);
 
-    public final ThumbStick leftThumb = new ThumbStick(this, Button.kLeftStick.value, Axis.kLeftX.value,
-            Axis.kLeftY.value);
-    public final ThumbStick rightThumb = new ThumbStick(this, Button.kRightStick.value, Axis.kRightX.value,
-            Axis.kRightY.value);
+    public final ThumbStick leftThumb = new ThumbStick(
+            this, Button.kLeftStick.value, Axis.kLeftX.value, Axis.kLeftY.value
+    );
+    public final ThumbStick rightThumb = new ThumbStick(
+            this, Button.kRightStick.value, Axis.kRightX.value, Axis.kRightY.value
+    );
 
     public final DPad dPad = new DPad(this);
 

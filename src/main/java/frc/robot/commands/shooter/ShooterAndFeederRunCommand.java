@@ -10,12 +10,17 @@ import frc.robot.subsystems.intake.Spinners;
 
 public class ShooterAndFeederRunCommand extends ParallelRaceGroup {
     public ShooterAndFeederRunCommand(double shooterRPM, Shooter shooter, Feeder feeder, Spinners spinners) {
-        super(new ShooterRunCommand(shooterRPM, shooter),
-                sequence(new WaitForShooterWarmupCommand(shooterRPM, shooter), new WaitCommand(0.5),
+        super(
+                new ShooterRunCommand(shooterRPM, shooter),
+                sequence(
+                        new WaitForShooterWarmupCommand(shooterRPM, shooter), new WaitCommand(0.5),
                         sequence(
                                 new FeederAndSpinnersRunCommand(FeederConstants.FEEDER_SPEED, feeder, spinners)
                                         .withTimeout(0.3),
                                 new WaitCommand(0.5),
-                                new FeederAndSpinnersRunCommand(FeederConstants.FEEDER_SPEED, feeder, spinners))));
+                                new FeederAndSpinnersRunCommand(FeederConstants.FEEDER_SPEED, feeder, spinners)
+                        )
+                )
+        );
     }
 }

@@ -30,8 +30,9 @@ public class Shooter extends SubsystemBase {
 
     private final CANSparkMax shooterMotor = new CANSparkMax(SHOOTER_PORT, MotorType.kBrushless);
     private final RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
-    private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(SHOOTER_VELOCITY_S_VOLTS,
-            SHOOTER_VELOCITY_V_VOLTS);
+    private final SimpleMotorFeedforward shooterFeedForward = new SimpleMotorFeedforward(
+            SHOOTER_VELOCITY_S_VOLTS, SHOOTER_VELOCITY_V_VOLTS
+    );
     private final PIDController shooterPidController = new PIDController(SHOOTER_VELOCITY_P, 0.0, 0.0);
     private final SlewRateLimiter rateLimiter = new SlewRateLimiter(2000);
     private AimState previousState = AimState.CLOSE;
@@ -40,8 +41,9 @@ public class Shooter extends SubsystemBase {
 
     private boolean shootingClose = true;
 
-    private final DoubleSolenoid shooterSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, SHOOTER_AIM_OPEN_PORT,
-            SHOOTER_AIM_CLOSE_PORT);
+    private final DoubleSolenoid shooterSolenoid = new DoubleSolenoid(
+            PneumaticsModuleType.REVPH, SHOOTER_AIM_OPEN_PORT, SHOOTER_AIM_CLOSE_PORT
+    );
 
     public Shooter() {
         // We have to use rotations per second instead of the native unit of rotations

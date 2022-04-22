@@ -19,15 +19,20 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
 public class TwoBallTopAutoCommand extends SequentialCommandGroup {
-    public TwoBallTopAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder,
-            Spinners spinners) {
-        super(new IntakeDeployCommand(intake),
+    public TwoBallTopAutoCommand(
+            DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners
+    ) {
+        super(
+                new IntakeDeployCommand(intake),
                 new RunTrajectoryLoadingBallCommand("2BallTopA", driveTrain, intake, spinners, feeder),
                 new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
                 new WaitCommand(0.5), new RotateDriveCommand(171, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
                 new IntakeDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
-                deadline(TrajectoryCommandGenerator.getCommandFromFile("2BallTopB", driveTrain),
-                        new IntakeRunCommand(true, intake)));
+                deadline(
+                        TrajectoryCommandGenerator.getCommandFromFile("2BallTopB", driveTrain),
+                        new IntakeRunCommand(true, intake)
+                )
+        );
     }
 }

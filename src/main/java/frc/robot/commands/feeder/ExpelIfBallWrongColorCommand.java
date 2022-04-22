@@ -16,12 +16,16 @@ import frc.robot.subsystems.intake.Spinners;
 
 public class ExpelIfBallWrongColorCommand extends ConditionalCommand {
     public ExpelIfBallWrongColorCommand(Feeder feeder, Shooter shooter, Spinners spinners) {
-        super(new SequentialCommandGroup(new InstantCommand(() -> shooter.setTemporaryState(AimState.FAR)),
-                new OneBallShootSequenceCommand(ShooterConstants.EXPEL_BALL_RPM, feeder, shooter, spinners),
-                new InstantCommand(shooter::restorePreviousState)), new FinishInstantlyCommand(),
+        super(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> shooter.setTemporaryState(AimState.FAR)),
+                        new OneBallShootSequenceCommand(ShooterConstants.EXPEL_BALL_RPM, feeder, shooter, spinners),
+                        new InstantCommand(shooter::restorePreviousState)
+                ), new FinishInstantlyCommand(),
                 // If we are red alliance then run this if ball is blue
                 () -> (feeder.getSensorColor() == ((DriverStation.getAlliance() == Alliance.Red)
                         ? FeederDetectedColor.BLUE_BALL
-                        : FeederDetectedColor.RED_BALL)) && feeder.isBallLoaded());
+                        : FeederDetectedColor.RED_BALL)) && feeder.isBallLoaded()
+        );
     }
 }

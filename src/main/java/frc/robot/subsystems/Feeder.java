@@ -27,8 +27,9 @@ public class Feeder extends SubsystemBase {
         feederMotor.setIdleMode(IdleMode.kCoast);
         feederMotor.burnFlash();
 
-        feederSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
-                ProximitySensorMeasurementRate.kProxRate6ms);
+        feederSensor.configureProximitySensor(
+                ProximitySensorResolution.kProxRes11bit, ProximitySensorMeasurementRate.kProxRate6ms
+        );
         Shuffleboard.getTab("ShooterRaw").addString("Detected", () -> getSensorColor().name());
         Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);
         Shuffleboard.getTab("ShooterRaw").addNumber("Proximity", feederSensor::getProximity);

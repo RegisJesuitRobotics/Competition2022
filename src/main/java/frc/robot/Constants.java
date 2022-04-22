@@ -34,7 +34,8 @@ public final class Constants {
         // Distance between wheels of opposite sides
         public static final double TRACK_WIDTH_METERS = 0.7483;
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(
-                TRACK_WIDTH_METERS);
+                TRACK_WIDTH_METERS
+        );
     }
 
     public static class TrajectoryConstants {

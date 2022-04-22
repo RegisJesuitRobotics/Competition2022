@@ -9,9 +9,12 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
 public class RunTrajectoryLoadingBallCommand extends ParallelDeadlineGroup {
-    public RunTrajectoryLoadingBallCommand(String trajectoryName, DriveTrain driveTrain, Intake intake,
-            Spinners spinners, Feeder feeder) {
-        super(TrajectoryCommandGenerator.getCommandFromFile(trajectoryName, driveTrain),
-                new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake));
+    public RunTrajectoryLoadingBallCommand(
+            String trajectoryName, DriveTrain driveTrain, Intake intake, Spinners spinners, Feeder feeder
+    ) {
+        super(
+                TrajectoryCommandGenerator.getCommandFromFile(trajectoryName, driveTrain),
+                new LoadBallToWaitingZoneCommand(feeder, spinners), new IntakeRunCommand(intake)
+        );
     }
 }

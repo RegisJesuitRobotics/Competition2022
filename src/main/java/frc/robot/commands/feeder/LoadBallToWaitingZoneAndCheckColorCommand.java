@@ -10,7 +10,9 @@ import frc.robot.subsystems.intake.Spinners;
 
 public class LoadBallToWaitingZoneAndCheckColorCommand extends SequentialCommandGroup {
     public LoadBallToWaitingZoneAndCheckColorCommand(Feeder feeder, Shooter shooter, Spinners spinners) {
-        super(new ProxyScheduleCommand(new LoadBallToWaitingZoneCommand(feeder, spinners)), new WaitCommand(0.08),
-                new ScheduleCommand(new ExpelIfBallWrongColorCommand(feeder, shooter, spinners)));
+        super(
+                new ProxyScheduleCommand(new LoadBallToWaitingZoneCommand(feeder, spinners)), new WaitCommand(0.08),
+                new ScheduleCommand(new ExpelIfBallWrongColorCommand(feeder, shooter, spinners))
+        );
     }
 }

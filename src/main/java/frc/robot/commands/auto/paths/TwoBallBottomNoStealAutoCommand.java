@@ -20,16 +20,20 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
 
 public class TwoBallBottomNoStealAutoCommand extends SequentialCommandGroup {
-    public TwoBallBottomNoStealAutoCommand(DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder,
-            Spinners spinners) {
-        super(new IntakeDeployCommand(intake),
+    public TwoBallBottomNoStealAutoCommand(
+            DriveTrain driveTrain, Intake intake, Shooter shooter, Feeder feeder, Spinners spinners
+    ) {
+        super(
+                new IntakeDeployCommand(intake),
                 new ParallelDeadlineGroup(
-                        sequence(TrajectoryCommandGenerator.getCommandFromFile("2BallBottomA", driveTrain),
-                                new WaitCommand(0.7)),
-                        new IntakeRunCommand(intake), new LoadBallToWaitingZoneCommand(feeder, spinners)),
-                new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
+                        sequence(
+                                TrajectoryCommandGenerator.getCommandFromFile("2BallBottomA", driveTrain),
+                                new WaitCommand(0.7)
+                        ), new IntakeRunCommand(intake), new LoadBallToWaitingZoneCommand(feeder, spinners)
+                ), new IntakeUnDeployCommand(intake), new ShooterAimStateCommand(AimState.FAR, shooter),
                 new WaitCommand(0.5), new RotateDriveCommand(170.0, driveTrain),
                 new TwoBallShootSequenceCommand(ShooterConstants.TWO_BALL_DISTANCE_RPM, feeder, shooter, spinners),
-                new ShooterAimStateCommand(AimState.FAR, shooter));
+                new ShooterAimStateCommand(AimState.FAR, shooter)
+        );
     }
 }
