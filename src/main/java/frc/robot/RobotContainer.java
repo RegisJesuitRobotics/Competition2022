@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.*;
@@ -32,6 +34,8 @@ import frc.robot.subsystems.climber.LengthClimber;
 import frc.robot.subsystems.climber.RotationClimber;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.Spinners;
+
+import java.util.Map;
 
 
 /**
@@ -59,7 +63,11 @@ public class RobotContainer {
     private final ClimberControllerControlCommand climberControlCommand = new ClimberControllerControlCommand(
             operatorClimberController, lengthClimber, rotationClimber
     );
-    private final TankishDriveCommand tankishDriveCommand = new TankishDriveCommand(driveTrain, driverController);
+    private final NetworkTableEntry maxSpeedEntry = Shuffleboard.getTab("OutreachRaw").add("Max Speed", 0.8)
+            .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1.0)).getEntry();
+    private final TankishDriveCommand tankishDriveCommand = new TankishDriveCommand(
+            () -> maxSpeedEntry.getDouble(0.8), driveTrain, driverController
+    );
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.

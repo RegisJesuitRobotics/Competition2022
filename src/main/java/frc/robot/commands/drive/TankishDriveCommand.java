@@ -4,11 +4,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.joysticks.PlaystationController;
 import frc.robot.subsystems.DriveTrain;
 
+import java.util.function.DoubleSupplier;
+
 public class TankishDriveCommand extends CommandBase {
     private final DriveTrain driveTrain;
     private final PlaystationController driverController;
+    private final DoubleSupplier maxSpeed;
 
-    public TankishDriveCommand(DriveTrain driveTrain, PlaystationController driverController) {
+    public TankishDriveCommand(DoubleSupplier maxSpeed, DriveTrain driveTrain, PlaystationController driverController) {
+        this.maxSpeed = maxSpeed;
         this.driveTrain = driveTrain;
         this.driverController = driverController;
 
@@ -36,7 +40,7 @@ public class TankishDriveCommand extends CommandBase {
         } else if (turn < 0) {
             leftSpeed += turn * speed;
         }
-        driveTrain.tankDrive(leftSpeed * 0.8, rightSpeed * 0.8);
+        driveTrain.tankDrive(leftSpeed * maxSpeed.getAsDouble(), rightSpeed * maxSpeed.getAsDouble());
     }
 
     @Override
