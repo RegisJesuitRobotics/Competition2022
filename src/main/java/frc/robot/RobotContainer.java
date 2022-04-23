@@ -19,6 +19,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.DoNothingCommand;
 import frc.robot.commands.climber.ClimberControllerControlCommand;
 import frc.robot.commands.auto.paths.*;
+import frc.robot.commands.drive.ArcadeDriveCommand;
 import frc.robot.commands.drive.TankishDriveCommand;
 import frc.robot.commands.feeder.*;
 import frc.robot.commands.intake.*;
@@ -60,6 +61,7 @@ public class RobotContainer {
     private final ThrustMaster operatorClimberController = new ThrustMaster(2);
 
     private final SendableChooser<Command> autoRoutineChooser = new SendableChooser<>();
+    private final SendableChooser<Command> teleopChooser = new SendableChooser<>();
     private final ClimberControllerControlCommand climberControlCommand = new ClimberControllerControlCommand(
             operatorClimberController, lengthClimber, rotationClimber
     );
@@ -69,10 +71,17 @@ public class RobotContainer {
             () -> maxSpeedEntry.getDouble(0.8), driveTrain, driverController
     );
 
+    private final ArcadeDriveCommand arcadeDriveCommand = new ArcadeDriveCommand(
+            () -> maxSpeedEntry.getDouble(0.8), driveTrain, driverController
+    );
+
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        DriverStation.silenceJoystickConnectionWarning(true);
+
         autoRoutineChooser.setDefaultOption(
                 "One Ball No Tarmac",
                 new OneBallShootSequenceCommand(ShooterConstants.CLOSE_DISTANCE_RPM, feeder, shooter, spinners)
@@ -96,7 +105,13 @@ public class RobotContainer {
         autoRoutineChooser.addOption("Tarmac Only", new TarmacOnlyCommand(driveTrain));
         autoRoutineChooser.addOption("Do Nothing", new DoNothingCommand());
 
+        teleopChooser.addOption("tank", tankishDriveCommand);
+        teleopChooser.setDefaultOption("Arcade", arcadeDriveCommand);
+
         Shuffleboard.getTab("DriveTrainRaw").add("Auto", autoRoutineChooser);
+        Shuffleboard.getTab("DriveTrainRaw").add("Drive Style", teleopChooser);
+        Shuffleboard.getTab("DriveTrainRaw").add("Evaluate", new InstantCommand(this::evaluateDriveStyle));
+        evaluateDriveStyle();
         Shuffleboard.getTab("UtilsRaw").addNumber("Match Time", () -> Math.ceil(DriverStation.getMatchTime()));
         configureButtonBindings();
     }
@@ -121,6 +136,7 @@ public class RobotContainer {
         driverController.triangle.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(intake));
         driverController.circle.whenPressed(new IntakeToggleCommand(intake));
         driverController.x.and(intakeDeployedTrigger).whileActiveContinuous(new IntakeRunCommand(true, intake));
+        Shuffleboard.getTab("Intake").add(new IntakeToggleCommand(intake));
 
         // Operator
         operatorController.rightButton.whenHeld(
@@ -146,8 +162,12 @@ public class RobotContainer {
         climbReminder.whenInactive(() -> setOperatorRumble(false));
 
         lengthClimber.setDefaultCommand(climberControlCommand);
+    }
 
-        driveTrain.setDefaultCommand(tankishDriveCommand);
+    private void evaluateDriveStyle() {
+        if (driveTrain.getDefaultCommand() != null)
+            driveTrain.getDefaultCommand().cancel();
+        driveTrain.setDefaultCommand(teleopChooser.getSelected());
     }
 
     private void setOperatorRumble(boolean on) {

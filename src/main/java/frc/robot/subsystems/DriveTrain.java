@@ -9,6 +9,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -89,6 +91,11 @@ public class DriveTrain extends SubsystemBase {
     public void tankDrive(double leftSpeed, double rightSpeed) {
         leftTop.set(leftSpeed);
         rightTop.set(rightSpeed);
+    }
+
+    public void arcadeDrive(double xSpeed, double zRotation, double limit) {
+        WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(xSpeed, zRotation, false);
+        tankDrive(wheelSpeeds.left * limit, wheelSpeeds.right * limit);
     }
 
     public void voltageDrive(double leftVoltage, double rightVoltage) {
