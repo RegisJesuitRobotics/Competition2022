@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -52,6 +53,12 @@ public class Shooter extends SubsystemBase {
         shooterMotor.setInverted(true);
         shooterMotor.setIdleMode(IdleMode.kCoast);
         shooterEncoder.setVelocityConversionFactor(1 / (SHOOTER_GEARING * 60));
+
+        // Increase velocity measurement frame
+        shooterMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 10);
+        shooterMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 255);
+        shooterMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
+
         shooterMotor.burnFlash();
 
         ShuffleboardTab shooterTab = Shuffleboard.getTab("ShooterRaw");

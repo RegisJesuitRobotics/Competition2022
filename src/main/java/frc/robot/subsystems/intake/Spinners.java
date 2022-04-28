@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.intake;
 
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -15,6 +16,8 @@ public class Spinners extends SubsystemBase {
     /** Creates a new Spinners. */
     public Spinners() {
         spinner.setInverted(false);
+
+        spinner.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
     }
 
     public void setSpinners(double speed) {

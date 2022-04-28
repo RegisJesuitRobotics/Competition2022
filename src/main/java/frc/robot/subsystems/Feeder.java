@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.ColorSensorV3.ProximitySensorMeasurementRate;
 import com.revrobotics.ColorSensorV3.ProximitySensorResolution;
 import edu.wpi.first.wpilibj.I2C.Port;
@@ -25,6 +26,8 @@ public class Feeder extends SubsystemBase {
         feederMotor.restoreFactoryDefaults();
         feederMotor.setInverted(true);
         feederMotor.setIdleMode(IdleMode.kCoast);
+        feederMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 255);
+        feederMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
         feederMotor.burnFlash();
 
         feederSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
