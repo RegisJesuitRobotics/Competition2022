@@ -75,7 +75,6 @@ public class Shooter extends SubsystemBase {
         shooterTargetRPS = rpm / 60;
     }
 
-
     public double getShooterRPM() {
         return shooterEncoder.getVelocity() * 60;
     }

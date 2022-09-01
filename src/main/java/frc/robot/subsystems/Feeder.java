@@ -4,8 +4,6 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
-import com.revrobotics.ColorSensorV3.ProximitySensorMeasurementRate;
-import com.revrobotics.ColorSensorV3.ProximitySensorResolution;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,11 +28,9 @@ public class Feeder extends SubsystemBase {
         feederMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
         feederMotor.burnFlash();
 
-        feederSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
-                ProximitySensorMeasurementRate.kProxRate6ms);
         Shuffleboard.getTab("ShooterRaw").addString("Detected", () -> getSensorColor().name());
-        Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);
-        Shuffleboard.getTab("ShooterRaw").addNumber("Proximity", feederSensor::getProximity);
+//        Shuffleboard.getTab("ShooterRaw").addBoolean("BallLoaded?", this::isBallLoaded);
+//        Shuffleboard.getTab("ShooterRaw").addNumber("Proximity", feederSensor::getProximity);
     }
 
     public void setFeederPercent(double percent) {
@@ -50,6 +46,7 @@ public class Feeder extends SubsystemBase {
 
     public boolean isBallLoaded() {
         return feederSensor.getProximity() > FEEDER_SENSOR_PROXIMITY_LEVEL;
+//        return true;
     }
 
     public double getEncoderRotations() {

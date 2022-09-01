@@ -1,0 +1,65 @@
+{
+  "NetworkTables": {
+    "SmartDashboard": {
+      "open": true
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/DriveTrain": "Subsystem",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/PIDController[10]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[11]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[12]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[5]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[7]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[8]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[9]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/Shuffleboard/Auto/Chooser": "String Chooser",
+      "/Shuffleboard/Auto/Field": "Field2d",
+      "/Shuffleboard/Auto/Gyro": "Gyro"
+    },
+    "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Auto/Field": {
+        "Robot": {
+          "length": 0.7599999904632568,
+          "weight": 2.0,
+          "width": 0.6399999856948853
+        },
+        "height": 7.315199851989746,
+        "traj": {
+          "arrows": false,
+          "length": 0.10000000149011612,
+          "selectable": false,
+          "weight": 1.0,
+          "width": 0.10000000149011612
+        },
+        "units": "feet",
+        "width": 16.763999938964844,
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables Log": {
+    "visible": true
+  },
+  "NetworkTables Settings": {
+    "dsClient": false,
+    "mode": "Server",
+    "serverTeam": "3729",
+    "visible": false
+  }
+}
