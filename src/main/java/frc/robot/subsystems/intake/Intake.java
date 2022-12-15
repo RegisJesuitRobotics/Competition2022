@@ -7,6 +7,7 @@ package frc.robot.subsystems.intake;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -27,6 +28,10 @@ public class Intake extends SubsystemBase {
         intakeMotor.setInverted(true);
         intakeMotor.setIdleMode(IdleMode.kCoast);
         intakeMotor.setSmartCurrentLimit(20);
+
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 255);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 255);
+        intakeMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
 
         intakeMotor.burnFlash();
     }

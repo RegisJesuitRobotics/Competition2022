@@ -84,7 +84,7 @@ public final class Constants {
 
         public static final double SHOOTER_GEARING = 1.0;
 
-        public static final double FAR_DISTANCE_RPM = 4500.0;
+        public static final double IDLE_RPM = 600.0;
         public static final double TWO_BALL_DISTANCE_RPM = 4500.0;
         public static final double THREE_BALL_RPM = 4600.0;
         public static final double THREE_BALL_CLOSE = 3900.0;

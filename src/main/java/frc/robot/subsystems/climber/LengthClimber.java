@@ -3,6 +3,7 @@ package frc.robot.subsystems.climber;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.ClimberConstants.LEFT_CLIMBER_LENGTH_PORT;
@@ -26,6 +27,14 @@ public class LengthClimber extends SubsystemBase {
 
         leftClimberLength.setSmartCurrentLimit(40);
         rightClimberLength.setSmartCurrentLimit(40);
+
+        leftClimberLength.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 255);
+        leftClimberLength.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 255);
+        leftClimberLength.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
+
+        rightClimberLength.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 255);
+        rightClimberLength.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 255);
+        rightClimberLength.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
 
         rightClimberLength.burnFlash();
         leftClimberLength.burnFlash();

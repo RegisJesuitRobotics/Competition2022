@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -55,6 +56,14 @@ public class DriveTrain extends SubsystemBase {
 
         resetEncoders();
 
+        applyLeaderStatusFrames(leftTop);
+        applyFollowerStatusFrames(leftFront);
+        applyFollowerStatusFrames(leftBack);
+
+        applyLeaderStatusFrames(rightTop);
+        applyFollowerStatusFrames(rightFront);
+        applyFollowerStatusFrames(rightBack);
+
         leftTop.burnFlash();
         leftBack.burnFlash();
         leftFront.burnFlash();
@@ -65,6 +74,17 @@ public class DriveTrain extends SubsystemBase {
         Shuffleboard.getTab("DriveTrainRaw").addBoolean("Brake On?", this::isBrakeOn);
         Shuffleboard.getTab("DriveTrainRaw").add("Toggle Brake", new ToggleBrakeModeCommand(this));
         Shuffleboard.getTab("DriveTrainRaw").addNumber("Gyro", this::getHeading);
+    }
+
+    private static void applyFollowerStatusFrames(CANSparkMax follower) {
+        follower.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 255);
+        follower.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 255);
+        follower.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 255);
+        follower.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
+    }
+
+    private static void applyLeaderStatusFrames(CANSparkMax leader) {
+        leader.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 255);
     }
 
     public void resetEncoders() {
